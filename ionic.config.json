@@ -1,0 +1,7 @@
+{
+  "name": "d-lama-webapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
