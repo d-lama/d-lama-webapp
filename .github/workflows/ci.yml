@@ -28,5 +28,5 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Use workflow YAML from another repository
-        uses: ./ops-d-lama-service/.github/workflows/d-lama-webapp-ci.yml
+        uses: DavidFeu/ops-d-lama-service/.github/workflows/d-lama-webapp-ci.yml@main
           
