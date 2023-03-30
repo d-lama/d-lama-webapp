@@ -24,9 +24,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Use workflow YAML from another repository
         uses: DavidFeu/ops-d-lama-service/.github/workflows/d-lama-webapp-ci.yml@main
           
