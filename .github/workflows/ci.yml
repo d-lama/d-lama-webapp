@@ -24,40 +24,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout Repo
-        uses: actions/checkout@v3  
-        
-      - name: Set up Node.js  
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-        
-      - name: Install Dependencies
-        run: npm install
-        
-      - name: Build
-        run: npm run build
-        
-      - name: Run Tests
-        run: npm run test
-        
-      - name: Install Ionic CLI
-        run: npm install -g @ionic/cli
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Build Ionic app
-        run: ionic build
-
-      - name: Run Ionic tests
-        run: ionic test
-      
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Use workflow YAML from another repository
+        uses: ops-d-lama-service/.github/workflows/d-lama-webapp-ci.yml
           
