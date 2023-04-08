@@ -22,6 +22,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Registration from "./pages/Registration";
+import RegistrationSucceed from "./pages/RegistrationSucceed";
 
 setupIonicReact();
 

@@ -11,6 +11,7 @@ import {
     IonToolbar,
     useIonAlert
 } from '@ionic/react';
+import {Input} from "../components/forms/Input";
 
 function Registration() {
     const [presentAlert] = useIonAlert();
@@ -41,13 +42,7 @@ function Registration() {
                         height: '80vh'
                     }}>
                         <form style={{width: '80%', maxWidth: '400px'}} onSubmit={handleSubmit}>
-                            <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Enter First Name</IonLabel>
-                                <IonInput className="ion-text-center" type="text"
-                                          placeholder="Max"></IonInput>
-                                <IonNote slot="helper">Enter a valid name</IonNote>
-                                <IonNote slot="error">Invalid email</IonNote>
-                            </IonItem>
+                            <Input inputName={"Enter First Name"} placeholder={"Max"} helperText={"Enter a valid name"} errorText={"Invalid email"}/>
 
                             <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
                                 <IonLabel className="ion-text-center" position="floating">Enter Last Name</IonLabel>
