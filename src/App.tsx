@@ -21,6 +21,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
 
@@ -33,7 +34,8 @@ const App: React.FC = () => (
         <Route exact path="/home">
           {/*<Home/>*/}
           {/*<Registration/>*/}
-          <RegistrationSucceed/>
+          {/*<RegistrationSucceed/>*/}
+          <Login />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
