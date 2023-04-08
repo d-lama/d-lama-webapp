@@ -43,45 +43,13 @@ function Registration() {
                     }}>
                         <form style={{width: '80%', maxWidth: '400px'}} onSubmit={handleSubmit}>
                             <Input inputName={"Enter First Name"} placeholder={"Max"} helperText={"Enter a valid name"} errorText={"Invalid email"}/>
-
-                            <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Enter Last Name</IonLabel>
-                                <IonInput className="ion-text-center" type="text"
-                                          placeholder="Muster"></IonInput>
-                                <IonNote slot="helper">Enter a valid name</IonNote>
-                                <IonNote slot="error">Invalid email</IonNote>
-                            </IonItem>
-
-                            <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Enter Email</IonLabel>
-                                <IonInput className="ion-text-center" type="email"
-                                          placeholder="max.muster@gmail.com"></IonInput>
-                                <IonNote slot="helper">Enter a valid email</IonNote>
-                                <IonNote slot="error">Invalid password</IonNote>
-                            </IonItem>
-
-                            <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Enter Password</IonLabel>
-                                <IonInput className="ion-text-center" type="password"
-                                          placeholder="**************"></IonInput>
-                                <IonNote slot="helper">Enter a valid password</IonNote>
-                                <IonNote slot="error">Invalid password</IonNote>
-                            </IonItem>
-
-                            <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Confirm Password</IonLabel>
-                                <IonInput className="ion-text-center" type="password"
-                                          placeholder="**************"></IonInput>
-                                <IonNote slot="helper">Confirm the password</IonNote>
-                                <IonNote slot="error">Invalid password</IonNote>
-                            </IonItem>
-
-
+                            <Input inputName={"Enter Last Name"} placeholder={"Muster"} helperText={"Enter a valid name"} errorText={"Invalid email"}/>
+                            <Input inputName={"Enter Email"} placeholder={"max.muster@gmail.com"} helperText={"Enter a valid email"} errorText={"Invalid password"}/>
+                            <Input inputName={"Enter Password"} placeholder={"**************"} helperText={"Enter a valid password"} errorText={"Invalid password"}/>
+                            <Input inputName={"Confirm Password"} placeholder={"**************"} helperText={"Confirm the password"} errorText={"Invalid password"}/>
                             <IonItem  id="{{error}}" style={{marginBottom: '15px'}}>
                                 {labelText && <IonLabel className="ion-text-center"color="danger">{labelText}</IonLabel>}
                             </IonItem>
-
-
                             <IonButton size="large" className="ion-text-center" expand="block" shape="round"
                                        onClick={() =>
                                            presentAlert({

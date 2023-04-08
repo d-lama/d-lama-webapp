@@ -10,7 +10,7 @@ export interface InputProps{
 }
 export function Input(props:InputProps) {
     return (
-        <IonItem fill="outline" style={{marginBottom: '15px'}} shape='round'>
+        <IonItem fill="outline" style={{marginTop: '15px'}} shape='round'>
             <IonLabel className="ion-text-center" position="floating">{props.inputName}</IonLabel>
             <IonInput className="ion-text-center" type="text"
                       placeholder={props.placeholder}></IonInput>
