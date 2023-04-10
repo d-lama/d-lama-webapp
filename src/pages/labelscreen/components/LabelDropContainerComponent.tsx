@@ -1,42 +1,68 @@
-import React from 'react';
-import {} from '@ionic/react';
-
+import React, {useState} from 'react';
 import './LabelDropContainerComponent.css';
 
 const LabelDropContainerComponent: React.FC<{labelName:string, labelColor:string, isVertical:boolean, size?:number}> = ({labelName, labelColor, isVertical , size = 100}) => {
     if (isVertical) {
-        return verticalContainer(labelName, labelColor, size);
+        return (
+            <VerticalContainer labelName={labelName} labelColor={labelColor} height={size} />
+        );
     }
 
-    return horizontalContainer(labelName, labelColor, size);
+    return (
+        <HorizontalContainer labelName={labelName} labelColor={labelColor} width={size} />
+    );
 }
 
-function horizontalContainer(labelName: string, labelColor: string, width:number) {
+const HorizontalContainer:  React.FC<{labelName:string, labelColor:string, width:number}> = ({
+    labelName,
+    labelColor,
+    width
+}) => {
+    const [isChildVisible, setIsChildVisible] = useState(false);
+
     let horizontalStyle = {
         width: width + "%",
-        "background-color": "#" + labelColor,
+        backgroundColor: "#" + labelColor,
         height: "100%"
     };
 
+    let backgroundColor =  {
+        backgroundColor: "#" + labelColor
+    }
+
     return (
-        <div className={"dropContainer"}  style={horizontalStyle}>
-            <div className={"labelName"}>{labelName}</div>
+        <div className={"dropContainer"}  style={horizontalStyle} onDragEnter={() => setIsChildVisible(true)} onDragLeave={() => setIsChildVisible(false)} onDrop={tagInfo}>
+            <div className={`labelName ${isChildVisible ? '' : 'notvisible'}`} style={backgroundColor}>{labelName}</div>
         </div>
     );
 }
 
-function verticalContainer(labelName: string, labelColor: string, height:number) {
+const VerticalContainer: React.FC<{labelName:string, labelColor:string, height:number}> = ({
+   labelName,
+   labelColor,
+   height
+}) => {
+    const [isChildVisible, setIsChildVisible] = useState(false);
+
     let verticalStyle = {
         height: height + "%",
-        "background-color": "#" + labelColor,
+        backgroundColor: "#" + labelColor,
         width: "100%"
     };
 
+    let backgroundColor =  {
+        backgroundColor: "#" + labelColor
+    }
+
     return (
-        <div className={"dropContainer"} style={verticalStyle}>
-            <div className={"labelName"}>{labelName}</div>
+        <div className={"dropContainer"} style={verticalStyle} onMouseEnter={() => setIsChildVisible(true)} onMouseLeave={() => setIsChildVisible(false)}>
+            <div className={`labelName ${isChildVisible ? '' : 'notvisible'}`} style={backgroundColor}>{labelName}</div>
         </div>
     );
+}
+
+function tagInfo() {
+
 }
 
 export default LabelDropContainerComponent;

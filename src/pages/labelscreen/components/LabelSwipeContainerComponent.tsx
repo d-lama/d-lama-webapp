@@ -8,6 +8,7 @@ import LabelDropContainerComponent from "./LabelDropContainerComponent";
 const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:{name:string, color:string}[]}> = ({numberOfContainers, labels}) => {
     let labelItems = getLabelItems()
     let currIndex = 0;
+    let taggedInfo = [];
 
     if (numberOfContainers > 8) {
         numberOfContainers = 8;
@@ -18,23 +19,23 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
     return (
         <IonGrid className={"screenHeight"}>
             <IonRow>
-                <IonCol>
+                <IonCol className={"horizontalWidth"}>
                     <LabelDropContainerComponent labelName={labels[3].name} labelColor={labels[3].color} isVertical={false} />
                 </IonCol>
             </IonRow>
             <IonRow className={"growScreen"}>
-                <IonCol size={"0.5"}>
+                <IonCol size={"1"}>
                     <LabelDropContainerComponent labelName={labels[0].name} labelColor={labels[0].color} isVertical={true} />
                 </IonCol>
-                <IonCol size={"11"} className={"centerCard"}>
+                <IonCol size={"10"} className={"centerCard"}>
                     <CardLabelComponent cardSubtitle={""} cardTitle={labelItems[currIndex].title} content={labelItems[currIndex].description}/>
                 </IonCol>
-                <IonCol size={"0.5"}>
+                <IonCol size={"1"}>
                     <LabelDropContainerComponent labelName={labels[1].name} labelColor={labels[1].color} isVertical={true} />
                 </IonCol>
             </IonRow>
             <IonRow>
-                <IonCol>
+                <IonCol className={"horizontalWidth"}>
                     <LabelDropContainerComponent labelName={labels[2].name} labelColor={labels[2].color} isVertical={false} />
                 </IonCol>
             </IonRow>
