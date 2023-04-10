@@ -3,3 +3,8 @@ ion-card-header.ios {
     display: flex;
     flex-flow: column-reverse;
 }
+
+.labelingCard {
+    min-width: 300px;
+    max-width: 300px;
+}

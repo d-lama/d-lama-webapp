@@ -1,0 +1,13 @@
+.screenHeight {
+    height: 90%
+}
+
+.growScreen {
+    height: 97%
+}
+
+.centerCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

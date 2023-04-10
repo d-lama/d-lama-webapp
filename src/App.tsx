@@ -33,7 +33,7 @@ const App: React.FC = () => (
           <Home />
         </Route>
         <Route exact path="/label">
-          <LabelScreen projectDescription={""} projectTitle={""} />
+          <LabelScreen maxNumberOfLabels={150} progress={50} containerNumber={4} labels={getLabels()}/>
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
@@ -42,5 +42,14 @@ const App: React.FC = () => (
     </IonReactRouter>
   </IonApp>
 );
+
+function getLabels() {
+  return [
+      {name:"Cat", color:"ECD407"},
+      {name:"Dog", color:"0956BF"},
+      {name:"Fish", color:"379711"},
+      {name:"Bird", color:"D72600"},
+  ]
+}
 
 export default App;

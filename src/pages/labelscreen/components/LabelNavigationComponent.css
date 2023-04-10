@@ -1,0 +1,29 @@
+ion-col {
+    text-align: center;
+}
+
+.labelingProgress {
+    background-color: lightgreen;
+    height: 30px;
+    margin: -7px;
+    max-width: 100%;
+    position: absolute;
+}
+
+.labelingProgressText {
+    height: 30px;
+    margin: -7px;
+    left: 5px;
+    bottom: 7px;
+    width: 100%;
+    position: absolute;
+}
+
+.maxLabelingProgress {
+    background-color: lightgray;
+    text-align: center;
+    height: 30px;
+    margin-top: 3px;
+    color: #fff;
+    padding: 7px;
+}
