@@ -10,11 +10,19 @@ import { Gesture, GestureConfig, createGesture } from '@ionic/core';
 
 import './CardLabelComponent.css';
 
-const CardLabelComponent: React.FC<{
+interface Props {
     cardTitle: string;
     cardSubtitle: string;
     content: string;
-}> = ({ cardTitle, cardSubtitle, content }) => {
+    onSwipe: (direction: string) => void;
+}
+
+const CardLabelComponent: React.FC<Props> = ({
+    cardTitle,
+    cardSubtitle,
+    content,
+    onSwipe,
+}) => {
     useEffect(() => {
         const gesture = initGesture();
         gesture.enable();
@@ -43,12 +51,16 @@ const CardLabelComponent: React.FC<{
                 style.transition = '0.3s ease-out';
                 if (ev.deltaY < -windowHeight / 6) {
                     style.transform = `translateY(-${windowHeight * 1.5}px)`;
+                    onSwipe('up');
                 } else if (ev.deltaY > windowHeight / 6) {
                     style.transform = `translateY(${windowHeight * 1.5}px)`;
+                    onSwipe('down');
                 } else if (ev.deltaX > window.innerWidth / 2) {
                     style.transform = `translateX(${window.innerWidth * 1.5}px)`;
+                    onSwipe('right');
                 } else if (ev.deltaX < -window.innerWidth / 2) {
                     style.transform = `translateX(-${window.innerWidth * 1.5}px)`;
+                    onSwipe('left');
                 } else {
                     style.transform = '';
                 }

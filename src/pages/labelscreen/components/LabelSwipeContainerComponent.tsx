@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {IonGrid, IonRow, IonCol} from '@ionic/react';
 
 import './LabelSwipeContainerComponent.css';
@@ -6,6 +6,14 @@ import CardLabelComponent from "./CardLabelComponent";
 import LabelDropContainerComponent from "./LabelDropContainerComponent";
 
 const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:{name:string, color:string}[]}> = ({numberOfContainers, labels}) => {
+    const [swipeDirection, setSwipeDirection] = useState<string>('');
+
+    function handleSwipe(direction: string) {
+        setSwipeDirection(direction);
+
+        // TODO: add label to taggedInfo and notify LabelDropContainerComponent for fancy animation
+    }
+
     let labelItems = getLabelItems()
     let currIndex = 0;
     let taggedInfo = [];
@@ -28,7 +36,7 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
                     <LabelDropContainerComponent labelName={labels[0].name} labelColor={labels[0].color} isVertical={true} />
                 </IonCol>
                 <IonCol size={"10"} className={"centerCard"}>
-                    <CardLabelComponent cardSubtitle={""} cardTitle={labelItems[currIndex].title} content={labelItems[currIndex].description}/>
+                    <CardLabelComponent cardSubtitle={""} cardTitle={labelItems[currIndex].title} content={labelItems[currIndex].description} onSwipe={handleSwipe}/>
                 </IonCol>
                 <IonCol size={"1"}>
                     <LabelDropContainerComponent labelName={labels[1].name} labelColor={labels[1].color} isVertical={true} />
