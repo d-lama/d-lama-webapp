@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import './Login.css';
 import {
-    IonButton, IonContent,
+    IonButton,
+    IonContent,
     IonHeader,
-    IonInput,
     IonItem,
-    IonLabel, IonNote,
+    IonLabel,
     IonPage,
     IonTitle,
     IonToolbar,
     useIonAlert
 } from '@ionic/react';
+import {Input, InputType} from "../components/forms/Input";
+import {Button, ButtonType} from "../components/forms/Button";
 
 function Login() {
     const [presentAlert] = useIonAlert();
     const [labelText, setLabelText] = useState('');
-    const handleSubmit = function (event: { preventDefault: () => void; }) {
+    const handleLogin = function (event: { preventDefault: () => void; }) {
         // Handle user authentication logic here
         event.preventDefault()
         setLabelText('Invalid username or password!');
@@ -27,12 +29,13 @@ function Login() {
     return (
         <>
             <IonPage>
+                <IonHeader class="ion-no-border" mode={"md"}>
+                    <IonToolbar>
+                        <IonTitle style={{fontSize: '3rem', fontWeight: 'bold', marginTop: '60px'}}
+                                  className="ion-text-center">D-LAMA</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
                 <IonContent>
-                    <IonHeader class="ion-no-border">
-                        <IonToolbar>
-                            <IonTitle style={{fontSize: '3rem',fontWeight:'bold', marginTop:'60px'}} className="ion-text-center">D-LAMA</IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -40,43 +43,26 @@ function Login() {
                         justifyContent: 'center',
                         height: '80vh'
                     }}>
-                        <form style={{width: '80%', maxWidth: '400px'}} onSubmit={handleSubmit}>
-                            <IonItem fill="outline" style={{marginBottom: '30px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Email</IonLabel>
-                                <IonInput className="ion-text-center" type="email"
-                                          placeholder="max.muster@gmail.com"></IonInput>
-                                <IonNote slot="helper">Enter a valid email</IonNote>
-                                <IonNote slot="error">Invalid email</IonNote>
+                        <form style={{width: '80%', maxWidth: '400px'}} onSubmit={handleLogin}>
+                            <Input inputName={"Email"} placeholder={"max.muster@gmail.com"}
+                                   helperText={"Enter a valid email"} errorText={"Invalid email"} inputType={InputType.email}/>
+                            <Input inputName={"Password"} placeholder={"**************"}
+                                   helperText={"Enter a valid password"} errorText={"error"} inputType={InputType.password}/>
+                            <IonItem id="{{error}}" style={{marginBottom: '20px'}}>
+                                {labelText &&
+                                    <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>}
                             </IonItem>
-
-                            <IonItem fill="outline" style={{marginBottom: '20px'}} shape='round'>
-                                <IonLabel className="ion-text-center" position="floating">Password</IonLabel>
-                                <IonInput className="ion-text-center" type="password"
-                                          placeholder="**************"></IonInput>
-                                <IonNote slot="helper">Enter a valid password</IonNote>
-                                <IonNote slot="error">Invalid password</IonNote>
-                            </IonItem>
-
-
-                            <IonItem  id="{{error}}" style={{marginBottom: '20px'}}>
-                                {labelText && <IonLabel className="ion-text-center"color="danger">{labelText}</IonLabel>}
-                            </IonItem>
-
-
-                                <IonButton type={"submit"} size="large" className="ion-text-center" expand="block" shape="round"
-                                           style={{marginBottom: '30px'}}
-                                >Login
-                                </IonButton>
-                                <IonButton size="large" className="ion-text-center" expand="block" shape="round"
-                                           onClick={() =>
-                                               presentAlert({
-                                                   header: 'Attention!',
-                                                   message: 'Registration page not yet implemented!',
-                                                   buttons: ['OK'],
-                                               })
-                                           }
-                                >Sign Up
-                                </IonButton>
+                            <Button buttonType={ButtonType.submit} buttonText={"Login"}></Button>
+                            <IonButton size="large" className="ion-text-center" expand="block" shape="round"
+                                       onClick={() =>
+                                           presentAlert({
+                                               header: 'Attention!',
+                                               message: 'Registration page not yet implemented!',
+                                               buttons: ['OK'],
+                                           })
+                                       }
+                            >Sign Up
+                            </IonButton>
                         </form>
                     </div>
                 </IonContent>
