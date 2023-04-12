@@ -4,21 +4,23 @@ import React from "react";
 
 export enum ButtonType {
     button = "button",
-    reset = "reset",
     submit = "submit",
 }
 
 
 export interface ButtonProps {
-    buttonText:string,
-    buttonType: ButtonType
+    buttonText: string,
+    buttonType?: ButtonType | ButtonType.button,
+    color?: string | "primary",
+    link?: string
 }
 
 export function Button(props: ButtonProps) {
     return (
-        <IonButton type={props.buttonType} size="large" className="ion-text-center" expand="block"
+        <IonButton routerLink={props.link} type={props.buttonType} size="large" className="ion-text-center"
+                   expand="block"
                    shape="round"
-                   style={{marginBottom: '30px'}}
+                   style={{marginBottom: '30px'}} color={props.color}
         >{props.buttonText}
         </IonButton>
     )

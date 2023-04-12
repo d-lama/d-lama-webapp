@@ -1,21 +1,19 @@
 import React, {useState} from 'react';
 import './Registration.css';
 import {
-    IonButton,
     IonContent,
     IonHeader,
     IonItem,
     IonLabel,
     IonPage,
     IonTitle,
-    IonToolbar,
-    useIonAlert
+    IonToolbar
 } from '@ionic/react';
 import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
 
+
 function Registration() {
-    const [presentAlert] = useIonAlert();
     const [labelText, setLabelText] = useState('');
     const handleSubmit = function (event: { preventDefault: () => void; }) {
         // Handle user authentication logic here
@@ -29,7 +27,7 @@ function Registration() {
     return (
         <>
             <IonPage>
-                <IonHeader class="ion-no-border">
+                <IonHeader class="ion-no-border" mode={"md"}>
                     <IonToolbar>
                         <IonTitle style={{fontSize: '3rem', fontWeight: 'bold', marginTop: '60px'}}
                                   className="ion-text-center">D-LAMA</IonTitle>
@@ -47,29 +45,22 @@ function Registration() {
                             <Input inputName={"Enter First Name"} placeholder={"Max"} helperText={"Enter a valid name"}
                                    errorText={"Invalid email"} inputType={InputType.text}/>
                             <Input inputName={"Enter Last Name"} placeholder={"Muster"}
-                                   helperText={"Enter a valid name"} errorText={"Invalid email"} inputType={InputType.text}/>
+                                   helperText={"Enter a valid name"} errorText={"Invalid email"}
+                                   inputType={InputType.text}/>
                             <Input inputName={"Enter Email"} placeholder={"max.muster@gmail.com"}
-                                   helperText={"Enter a valid email"} errorText={"Invalid password"} inputType={InputType.email}/>
+                                   helperText={"Enter a valid email"} errorText={"Invalid password"}
+                                   inputType={InputType.email}/>
                             <Input inputName={"Enter Password"} placeholder={"**************"}
-                                   helperText={"Enter a valid password"} errorText={"Invalid password"} inputType={InputType.password}/>
+                                   helperText={"Enter a valid password"} errorText={"Invalid password"}
+                                   inputType={InputType.password}/>
                             <Input inputName={"Confirm Password"} placeholder={"**************"}
-                                   helperText={"Confirm the password"} errorText={"Invalid password"} inputType={InputType.password}/>
+                                   helperText={"Confirm the password"} errorText={"Invalid password"}
+                                   inputType={InputType.password}/>
                             <IonItem id="{{error}}" style={{marginBottom: '15px'}}>
                                 {labelText &&
                                     <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>}
                             </IonItem>
-                            <Button buttonText={"Register"} buttonType={ButtonType.submit}></Button>
-{/*                            <IonButton type={"submit"} size="large" className="ion-text-center" expand="block"
-                                       shape="round"
-                                                              onClick={() =>
-                                                                    presentAlert({
-                                                                        header: 'Attention!',
-                                                                        message: 'Registration verification not yet implemented!',
-                                                                        buttons: ['OK'],
-                                                                    })
-                                                                }
-                            >Register
-                            </IonButton>*/}
+                            <Button buttonText={"Register"} buttonType={ButtonType.submit} color={"primary"}></Button>
                         </form>
                     </div>
                 </IonContent>

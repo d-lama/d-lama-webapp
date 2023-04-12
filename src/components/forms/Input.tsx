@@ -5,20 +5,19 @@ export enum InputType {
     email = "email",
     number = "number",
     password = "password",
-    search = "search",
-    tel = "tel",
     text = "text",
     url = "url",
 }
 
-export interface InputProps{
+export interface InputProps {
     inputName: string,
     placeholder: string,
     helperText: string,
     errorText: string
-    inputType:InputType
+    inputType: InputType
 }
-export function Input(props:InputProps) {
+
+export function Input(props: InputProps) {
     return (
         <IonItem fill="outline" style={{marginTop: '15px'}} shape='round' mode={"md"}>
             <IonLabel className="ion-text-center" position="floating">{props.inputName}</IonLabel>

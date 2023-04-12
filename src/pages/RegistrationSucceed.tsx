@@ -1,33 +1,30 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './RegistrationSucceed.css';
 import {
     IonAvatar,
-    IonButton, IonContent,
+    IonContent,
     IonHeader,
-    IonInput,
     IonItem,
-    IonLabel, IonNote,
+    IonLabel,
     IonPage,
     IonTitle,
-    IonToolbar,
-    useIonAlert
+    IonToolbar
 } from '@ionic/react';
+import {Button, ButtonType} from "../components/forms/Button";
+
 
 function RegistrationSucceed() {
-    const [presentAlert] = useIonAlert();
-    const [labelText, setLabelText] = useState('');
-
 
     return (
         <>
             <IonPage>
+                <IonHeader class="ion-no-border" mode={"md"}>
+                    <IonToolbar>
+                        <IonTitle style={{fontSize: '3rem', fontWeight: 'bold', marginTop: '60px'}}
+                                  className="ion-text-center">D-LAMA</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
                 <IonContent>
-                    <IonHeader class="ion-no-border">
-                        <IonToolbar>
-                            <IonTitle style={{fontSize: '3rem', fontWeight: 'bold', marginTop: '60px'}}
-                                      className="ion-text-center">D-LAMA</IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -35,30 +32,25 @@ function RegistrationSucceed() {
                         justifyContent: 'center',
                         height: '80vh'
                     }}>
-                        <form style={{width: '80%', maxWidth: '400px'}}>
-                            <div className={'custom-border'}>
+                        <div className={'custom-border'}>
                             <>
                                 <IonAvatar className="item-avatar">
-                                    <img alt="Silhouette of a person's head"
-                                         src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
+                                    <svg width="230" height="217" viewBox="0 0 250 215" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <ellipse cx="115" cy="108.5" rx="115" ry="108.5" fill="#D9D9D9"/>
+                                        <line x1="62.6537" y1="116.535" x2="108.654" y2="157.535" stroke="#2dd36f"
+                                              strokeWidth="20"/>
+                                        <line x1="103.474" y1="148.415" x2="173.474" y2="68.415" stroke="#2dd36f"
+                                              strokeWidth="20"/>
+                                    </svg>
                                 </IonAvatar>
                             </>
                             <IonItem style={{marginBottom: '15px'}}>
-                                <IonLabel className="ion-text-center" color="success">Registration suceeded</IonLabel>
+                                <IonLabel className="ion-text-center" color="success">Registration succeeded</IonLabel>
                             </IonItem>
-                            <IonButton size="large" className="ion-text-center" expand="block" shape="round"
-                                       color={'success'}
-                                       onClick={() =>
-                                           presentAlert({
-                                               header: 'Attention!',
-                                               message: 'Login not yet integrated!',
-                                               buttons: ['OK'],
-                                           })
-                                       }
-                            >LOGIN NOW
-                            </IonButton>
-                            </div>
-                        </form>
+                            <Button link={"/login"} buttonText={"LOGIN NOW"} buttonType={ButtonType.button}
+                                    color={"success"}></Button>
+                        </div>
                     </div>
                 </IonContent>
             </IonPage>
