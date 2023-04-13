@@ -24,21 +24,49 @@ const CardLabelComponent: React.FC<Props> = ({
     onSwipe,
 }) => {
     useEffect(() => {
-        const gesture = initGesture();
-        gesture.enable();
+        const gestureY = initGesture("y");
+        const gestureX = initGesture("x");
+        gestureX.enable();
+        gestureY.enable();
         return () => {
-            gesture.destroy();
+            gestureX.destroy();
+            gestureY.destroy();
         };
-    }, []);
+    });
 
-    function initGesture(): Gesture {
+    function initGesture(direction:string): Gesture {
         const el = document.querySelector('.labelingCard') as HTMLElement;
         const style = el.style;
         const windowHeight = window.innerHeight;
-        const options: GestureConfig = {
+        const Xoptions: GestureConfig = {
             el,
             gestureName: 'card-swipe',
-            direction: undefined, // allow swiping in both x and y directions
+            direction: 'x', // allow swiping in both x and y directions
+            onStart: () => {
+                style.transition = 'none';
+            },
+            onMove: (ev) => {
+                style.transform = `translate(${ev.deltaX}px, ${ev.deltaY}px) rotate(${
+                    ev.deltaX / 20
+                }deg)`;
+            },
+            onEnd: (ev) => {
+                style.transition = '0.3s ease-out';
+                if (ev.deltaX > window.innerWidth / 2) {
+                    style.transform = `translateX(${window.innerWidth * 1.5}px)`;
+                    onSwipe('right');
+                } else if (ev.deltaX < -window.innerWidth / 2) {
+                    style.transform = `translateX(-${window.innerWidth * 1.5}px)`;
+                    onSwipe('left');
+                } else {
+                    style.transform = '';
+                }
+            },
+        };
+        const Yoptions: GestureConfig = {
+            el,
+            gestureName: 'card-swipe',
+            direction: 'y', // allow swiping in both x and y directions
             onStart: () => {
                 style.transition = 'none';
             },
@@ -55,17 +83,14 @@ const CardLabelComponent: React.FC<Props> = ({
                 } else if (ev.deltaY > windowHeight / 6) {
                     style.transform = `translateY(${windowHeight * 1.5}px)`;
                     onSwipe('down');
-                } else if (ev.deltaX > window.innerWidth / 2) {
-                    style.transform = `translateX(${window.innerWidth * 1.5}px)`;
-                    onSwipe('right');
-                } else if (ev.deltaX < -window.innerWidth / 2) {
-                    style.transform = `translateX(-${window.innerWidth * 1.5}px)`;
-                    onSwipe('left');
                 } else {
                     style.transform = '';
                 }
             },
         };
+
+        const options = direction === "x" ? Xoptions : Yoptions;
+
         return createGesture(options);
     }
 
