@@ -7,7 +7,7 @@ import './LabelNavigationComponent.css';
 const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:number}> = ({progress, maxNumberOfLabels }) => {
     return (
 
-        <IonGrid>
+        <IonGrid className={"navigationLabelingTop"}>
             <IonRow>
                 <IonCol size={"2"}>
                     <IonButton size="small"><IonIcon slot="icon-only" icon={returnDownBackOutline}></IonIcon></IonButton>

@@ -1,5 +1,5 @@
 .screenHeight {
-    height: 83%;
+    height: 84%;
     --ion-grid-padding: 0px;
 }
 
@@ -15,4 +15,8 @@
 
 .horizontalWidth {
     height: 30px;
+}
+
+.labelingGrid {
+    padding: 0px;
 }

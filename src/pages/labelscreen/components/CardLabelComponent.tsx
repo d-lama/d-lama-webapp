@@ -38,7 +38,7 @@ const CardLabelComponent: React.FC<Props> = ({
         const el = document.querySelector('.labelingCard') as HTMLElement;
         const style = el.style;
         const windowHeight = window.innerHeight;
-        const Xoptions: GestureConfig = {
+        const xOptions: GestureConfig = {
             el,
             gestureName: 'card-swipe',
             direction: 'x', // allow swiping in both x and y directions
@@ -63,7 +63,7 @@ const CardLabelComponent: React.FC<Props> = ({
                 }
             },
         };
-        const Yoptions: GestureConfig = {
+        const yOptions: GestureConfig = {
             el,
             gestureName: 'card-swipe',
             direction: 'y', // allow swiping in both x and y directions
@@ -89,7 +89,7 @@ const CardLabelComponent: React.FC<Props> = ({
             },
         };
 
-        const options = direction === "x" ? Xoptions : Yoptions;
+        const options = direction === "x" ? xOptions : yOptions;
 
         return createGesture(options);
     }

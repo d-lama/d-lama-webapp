@@ -27,3 +27,9 @@ ion-col {
     color: #fff;
     padding: 7px;
 }
+
+.navigationLabelingTop {
+    z-index: 2;
+    position: relative;
+    background-color: #fff;
+}

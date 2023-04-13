@@ -5,13 +5,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 }
 
 
 .labelName {
     overflow: visible;
     padding: 10px;
-    z-index: 2;
+    z-index: 3;
     color: #fff;
 }
 
