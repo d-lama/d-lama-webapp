@@ -3,21 +3,21 @@ import { IonButton, IonIcon } from '@ionic/react'
 import { play } from 'ionicons/icons'
 import './CustomButton.css'
 
-interface CustomButtonProps {
-    title: string;
-    progress: number;
+interface ICustomButtonProps {
+    title: string,
+    progress: number
 }
 
-export const CustomButton: React.FC<CustomButtonProps> = ({ title, progress }) => {
+export const CustomButton: React.FC<ICustomButtonProps> = ({ title, progress }) => {
     const progressBarStyle: React.CSSProperties = {
         width: `${progress}%`
-    };
+    }
 
     return (
-        <IonButton className='customBtn-btn'>
+        <IonButton className='customBtn-btn' fill="outline">
             <div className='customBtn-progressBar' style={progressBarStyle}></div>
             <span className='customBtn-title'>{title}</span>
             <IonIcon icon={play} className='customBtn-icon' />
         </IonButton>
-    );
-};
+    )
+}
