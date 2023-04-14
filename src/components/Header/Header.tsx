@@ -3,8 +3,8 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react'
-
 import './Header.css'
+import { DarkModeToggle } from './DarkModeToggle';
 
 export const Header: React.FC = () => {
     return (
@@ -13,7 +13,8 @@ export const Header: React.FC = () => {
         // mode={"md"}
         <IonHeader class="ion-no-border">
             <IonToolbar>
-                <IonTitle className="title ion-text-center">D-LAMA</IonTitle>
+                <IonTitle className="header-title ion-text-center">D-LAMA</IonTitle>
+                <DarkModeToggle />
             </IonToolbar>
         </IonHeader>
     );

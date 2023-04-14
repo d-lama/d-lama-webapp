@@ -1,5 +1,13 @@
-.title {
+.header-title {
     font-size: 2.5rem;
     font-weight: bold;
     margin-top: .25rem;
+}
+
+ion-header {
+    border-bottom: 1px solid var(--ion-color-primary-contrast);
+}
+
+ion-toolbar {
+    padding: .5rem;
 }
