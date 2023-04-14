@@ -10,7 +10,7 @@ export const ProjectGrid: React.FC = () => {
         <IonGrid>
             <IonRow>
                 {projects.map((project) => (
-                    <IonCol size="6">
+                    <IonCol size="6" key={project.id}>
                         <CustomButton
                             key={project.id}
                             title={project.title}
