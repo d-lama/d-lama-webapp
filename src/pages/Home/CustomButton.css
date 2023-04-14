@@ -1,0 +1,27 @@
+.btn {
+    position: relative;
+    padding-right: 0;
+    width: 100%;
+}
+
+.title {
+    font-size: 2rem;
+    z-index: 1;
+}
+
+.progressBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #48EB08CC;
+    z-index: 0;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 2rem;
+}
