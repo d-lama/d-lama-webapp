@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './Registration.css';
 import {
     IonContent,
     IonHeader,

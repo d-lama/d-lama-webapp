@@ -52,16 +52,6 @@ export function Login() {
                                     <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>}
                             </IonItem>
                             <Button buttonType={ButtonType.submit} buttonText={"Login"} color={"primary"}></Button>
-                            {/*                            <IonButton size="large" className="ion-text-center" expand="block" shape="round"
-                                       onClick={() =>
-                                           presentAlert({
-                                               header: 'Attention!',
-                                               message: 'Registration page not yet implemented!',
-                                               buttons: ['OK'],
-                                           })
-                                       }
-                            >Sign Up
-                            </IonButton>*/}
                             <Button link={"/registration"} buttonText={"Sign Up"}
                                     buttonType={ButtonType.button}></Button>
                         </form>
