@@ -9,7 +9,7 @@ export const DarkModeToggle: React.FC = () => {
     useEffect(() => {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             setDarkMode(true)
-            document.body.classList.toggle('dark');
+            document.body.classList.add('dark');
         }
     }, [])
 
