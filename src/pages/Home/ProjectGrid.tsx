@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { CustomButton } from './CustomButton';
+import { ProjectButton } from './ProjectButton';
 import { useProjects } from '../../hooks/useProjects';
 
 export const ProjectGrid: React.FC = () => {
@@ -11,7 +11,7 @@ export const ProjectGrid: React.FC = () => {
             <IonRow>
                 {projects.map((project) => (
                     <IonCol size="6" key={project.id}>
-                        <CustomButton
+                        <ProjectButton
                             key={project.id}
                             title={project.title}
                             progress={project.progress}

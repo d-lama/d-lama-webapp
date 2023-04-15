@@ -1,4 +1,4 @@
-.customBtn-btn {
+.projectBtn-btn {
     position: relative;
     padding-right: 0;
     border-radius: 25px;
@@ -9,14 +9,14 @@
     --background-activated: var(--ion-color-light);
 }
 
-.customBtn-title {
+.projectBtn-title {
     color: var(--ion-color-primary-contrast);
     font-weight: bold;
     font-size: 1.5rem;
     z-index: 1;
 }
 
-.customBtn-progressBar {
+.projectBtn-progressBar {
     position: fixed;
     top: 0;
     left: 0;
@@ -25,7 +25,7 @@
     z-index: 1;
 }
 
-.customBtn-icon {
+.projectBtn-icon {
     position: absolute;
     top: 50%;
     right: 0;
