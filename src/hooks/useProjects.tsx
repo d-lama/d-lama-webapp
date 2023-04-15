@@ -11,6 +11,7 @@ export interface IProjectData {
 export const useProjects = () => {
     const [projects, setProjects] = useState<IProjectData[]>([]);
 
+    // TODO: fetch from real api and remove mocks
     const fetchProjects = async () => {
         // const response = await axios.get(
         //   "https://fakestoreapi.com/products"

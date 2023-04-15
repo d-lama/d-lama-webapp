@@ -6,6 +6,7 @@ import { add } from 'ionicons/icons';
 
 export const Home: React.FC = () => {
   const handleAddProject = () => {
+    // TODO: route to add project page
     console.log('click');
   }
 
