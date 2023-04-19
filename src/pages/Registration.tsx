@@ -10,6 +10,7 @@ import {
 } from '@ionic/react';
 import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
+import axios from "axios";
 
 
 function Registration() {
@@ -26,13 +27,24 @@ function Registration() {
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
-    const handleSubmit = function (event: { preventDefault: () => void; }) {
-        // Handle user authentication logic here
-        event.preventDefault()
-        setLabelText('Invalid username or password!');
-        setTimeout(() => {
-            setLabelText('');
-        }, 3000);
+    const handleSubmit = function () {
+        axios.post('/api/register', {
+            fistname: mask.firstName,
+            lastname: mask.lastName,
+            email: mask.email,
+            password: mask.password,
+
+        })
+            .then(function () {
+                window.location.href = '/registrationSucceed';
+            })
+            .catch(function (error) {
+                console.log(error);
+                setLabelText('Invalid username or password!');
+                setTimeout(() => {
+                    setLabelText('');
+                }, 3000);
+            });
     }
 
     return (
@@ -52,7 +64,7 @@ function Registration() {
                         justifyContent: 'center',
                         height: '80vh'
                     }}>
-                        <form style={{width: '80%', maxWidth: '400px'}} onSubmit={handleSubmit}>
+                        <form style={{width: '80%', maxWidth: '400px'}} data-testid="registration-form" onSubmit={handleSubmit}>
                             <Input
                                 name={"firstName"}
                                 change={handleChange}
@@ -97,7 +109,7 @@ function Registration() {
                                 {labelText &&
                                     <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>}
                             </IonItem>
-                            <Button buttonText={"Register"} buttonType={ButtonType.submit} color={"primary"}></Button>
+                            <Button data-testid="register-button" buttonText={"Register"} buttonType={ButtonType.submit}  color={"primary"}></Button>
                         </form>
                     </div>
                 </IonContent>
