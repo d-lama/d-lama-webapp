@@ -1,0 +1,27 @@
+.publicProjectAdd-btn {
+  position: relative;
+  padding-right: 0;
+  border-radius: 25px;
+  width: 100%;
+  height: 4rem;
+  --border-color: var(--ion-color-light);
+  --background-hover: none;
+  --background-activated: var(--ion-color-light);
+}
+
+.publicProjectAdd-title {
+  color: var(--ion-color-primary-contrast);
+  font-weight: bold;
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+.publicProjectAdd-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  z-index: 1;
+  color: var(--ion-color-primary-contrast);
+}
