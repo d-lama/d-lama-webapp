@@ -21,7 +21,6 @@ export default function Login() {
     })
 
     function handleChange(e: { target: { name: any; value: any; }; }) {
-        console.log(e.target.value)
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
@@ -36,7 +35,6 @@ export default function Login() {
                 window.location.href = '/home';
             })
             .catch(function (error) {
-                console.log(error);
                 setLabelText('Invalid email or password!');
                 setTimeout(() => {
                     setLabelText('');
