@@ -1,0 +1,8 @@
+.centered {
+    position: absolute;
+    left: 35%;
+}
+
+.custom-input {
+    border-radius: 20px;
+}
