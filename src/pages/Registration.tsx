@@ -20,27 +20,40 @@ function Registration() {
         lastName: "",
         email: "",
         password: "",
+        confirmPassword: ""
     })
 
+    function isValidEmail(email: string) {
+        return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+    }
+
     function handleChange(e: { target: { name: any; value: any; }; }) {
-        console.log(e.target.value)
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
-    const handleSubmit = function () {
+    const handleSubmit = function (e: React.SyntheticEvent) {
+        e.preventDefault()
+        if (!isValidEmail(mask.email)) {
+            setLabelText('Invalid email!');
+            return;
+        }
+        if (mask.password !== mask.confirmPassword) {
+            setLabelText('Confirm password is not the same!');
+            return;
+        }
         axios.post('/api/register', {
             fistname: mask.firstName,
             lastname: mask.lastName,
             email: mask.email,
             password: mask.password,
+            confirmPassword: mask.confirmPassword
 
         })
             .then(function () {
                 window.location.href = '/registrationSucceed';
             })
-            .catch(function (error) {
-                console.log(error);
-                setLabelText('Invalid username or password!');
+            .catch(function () {
+                setLabelText('Connection failed!');
                 setTimeout(() => {
                     setLabelText('');
                 }, 3000);
@@ -64,7 +77,8 @@ function Registration() {
                         justifyContent: 'center',
                         height: '80vh'
                     }}>
-                        <form style={{width: '80%', maxWidth: '400px'}} data-testid="registration-form" onSubmit={handleSubmit}>
+                        <form style={{width: '80%', maxWidth: '400px'}} data-testid="registration-form"
+                              onSubmit={handleSubmit}>
                             <Input
                                 name={"firstName"}
                                 change={handleChange}
@@ -98,7 +112,7 @@ function Registration() {
                                 errorText={"Invalid password"}
                                 inputType={InputType.password}/>
                             <Input
-                                name={"password"}
+                                name={"confirmPassword"}
                                 change={handleChange}
                                 inputName={"Confirm Password"}
                                 placeholder={"**************"}
@@ -109,7 +123,8 @@ function Registration() {
                                 {labelText &&
                                     <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>}
                             </IonItem>
-                            <Button data-testid="register-button" buttonText={"Register"} buttonType={ButtonType.submit}  color={"primary"}></Button>
+                            <Button data-testid="register-button" buttonText={"Register"} buttonType={ButtonType.submit}
+                                    color={"primary"}></Button>
                         </form>
                     </div>
                 </IonContent>
