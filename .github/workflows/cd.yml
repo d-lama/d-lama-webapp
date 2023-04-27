@@ -15,7 +15,7 @@ jobs:
       - name: Show where is triggered from
         run: |
           echo d-lama-webapp ci/cd pipeline is triggered.
-  # This workflow contains a single job called "build"
+  
   cd:
     needs:
       - pre
