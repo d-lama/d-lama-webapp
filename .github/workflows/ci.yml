@@ -21,7 +21,6 @@ jobs:
       - pre
     uses: d-lama/ops-d-lama-service/.github/workflows/d-lama-webapp-ci.yml@main
     with:
-    secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       PA_TOKEN: ${{ secrets.PA_TOKEN }}
