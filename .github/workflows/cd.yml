@@ -19,7 +19,7 @@ jobs:
   cd:
     needs:
       - pre
-    uses: d-lama/ops-d-lama-webapp/.github/workflows/d-lama-webapp-cd.yml@main
+    uses: d-lama/ops-d-lama-service/.github/workflows/d-lama-webapp-cd.yml@main
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
