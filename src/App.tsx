@@ -25,13 +25,12 @@ import Login from "./pages/login/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
 import React, {useEffect, useState} from "react";
-import LoginDesktop from "./pages/login/LoginDesktop";
-import LoginMobile from "./pages/login/LoginMobile";
+
 
 setupIonicReact();
 
 const App: React.FC = () => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         function handleResize() {
@@ -41,8 +40,8 @@ const App: React.FC = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    return (
 
+    return (
         <IonApp>
             <IonReactRouter>
                 <IonRouterOutlet>
@@ -53,7 +52,7 @@ const App: React.FC = () => {
                         <Registration/>
                     </Route>
                     <Route exact path="/login">
-                        {windowWidth >= 768 ? <LoginDesktop /> : <LoginMobile />}
+                        <Login/>
                     </Route>
                     <Route exact path="/registrationsucceed">
                         <RegistrationSucceed/>
