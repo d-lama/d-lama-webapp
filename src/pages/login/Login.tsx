@@ -9,11 +9,11 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import {Input, InputType} from "../components/forms/Input";
-import {Button, ButtonType} from "../components/forms/Button";
+import {Input, InputType} from "../../components/forms/Input";
+import {Button, ButtonType} from "../../components/forms/Button";
 import axios from "axios";
 
-export default function Login() {
+export default function Login(props:any) {
     const [labelText, setLabelText] = useState('');
     const [mask, setMask] = useState({
         email: "",
@@ -32,7 +32,8 @@ export default function Login() {
             password: mask.password,
         })
             .then(function () {
-                window.location.href = '/home';
+                props.onLoginSuccess()
+                //window.location.href = '/home';
             })
             .catch(function (error) {
                 setLabelText('Invalid email or password!');
