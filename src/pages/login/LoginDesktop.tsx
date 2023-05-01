@@ -7,9 +7,9 @@ import './LoginDesktop.css';
 export default function LoginDesktop(props: any) {
     return (
         <IonPage>
-            <IonHeader class="ion-no-border" mode={"md"}>
+            <IonHeader mode={"md"}>
                 <IonToolbar>
-                    <IonTitle style={{fontSize: '4rem', fontWeight: 'bold', marginTop: '80px'}}
+                    <IonTitle style={{fontSize: '4rem', fontWeight: 'bold', marginTop: '20px', marginBottom:'20px'}}
                               className="ion-text-center">D-LAMA</IonTitle>
                 </IonToolbar>
             </IonHeader>
