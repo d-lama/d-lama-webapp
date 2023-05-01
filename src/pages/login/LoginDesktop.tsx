@@ -46,9 +46,16 @@ export default function LoginDesktop(props: any) {
                             {props.labelText &&
                                 <IonLabel className="ion-text-center" color="danger">{props.labelText}</IonLabel>}
                         </IonItem>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+
+
+                        }}>
                         <Button buttonType={ButtonType.submit} buttonText={"Login"} color={"success"}></Button>
                         <Button link={"/registration"} buttonText={"Sign Up"}
                                 buttonType={ButtonType.button} color={"success"}></Button>
+                        </div>
                     </form>
                 </div>
             </IonContent>
