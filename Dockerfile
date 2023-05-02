@@ -24,6 +24,9 @@ COPY --from=build /dist /usr/share/nginx/html
 
 # Copy Nginx configuration file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx-browserslist.map /etc/nginx/
+
+
 
 # Expose port 4343 for HTTPS -> 443 in Kubernetes
 EXPOSE 4343
