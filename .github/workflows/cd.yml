@@ -11,7 +11,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   pre:
-    runs-on: ubuntu-latest4
+    runs-on: ubuntu-latest
     steps:
       - name: Show where is triggered from
         run: |
