@@ -28,18 +28,10 @@ export default function Login() {
   const handleLogin = function (e: React.SyntheticEvent) {
     e.preventDefault();
     axios
-      .post(
-        API_URL + "/user/authToken",
-        {
-          email: mask.email,
-          password: mask.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        }
-      )
+      .post(API_URL + "/user/authToken", {
+        email: mask.email,
+        password: mask.password,
+      })
       .then(() => {
         window.location.href = "/home";
       })
