@@ -28,7 +28,7 @@ import "./theme/variables.css";
 
 setupIonicReact();
 
-export const API_URL = "http://backend.dlama-stage.pm4.init-lab.ch/api";
+export const API_URL = "https://backend.dlama-stage.pm4.init-lab.ch/api";
 
 const App: React.FC = () => (
   <IonApp>
