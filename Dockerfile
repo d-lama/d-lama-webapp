@@ -17,15 +17,14 @@ COPY . .
 RUN npm run build
 
 # Use the official Nginx base image
-FROM nginx:stable-alpine
+#FROM nginx:stable-alpine
 
 # Copy the React app build output to the Nginx container
-COPY --from=build /dist /usr/share/nginx/html
+#COPY --from=build /dist /usr/share/nginx/html
 
 # Copy Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx-browserslist.map /etc/nginx/
-
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
+#COPY ./nginx-browserslist.map /etc/nginx/
 
 
 # Expose port 4343 for HTTPS -> 443 in Kubernetes
@@ -34,4 +33,5 @@ EXPOSE 443
 
 
 # Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
+CMD [ "npx", "serve", "build" ]
