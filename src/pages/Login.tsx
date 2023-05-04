@@ -12,10 +12,12 @@ import React, { useState } from "react";
 import { API_URL } from "../App";
 import { Button, ButtonType } from "../components/forms/Button";
 import { Input, InputType } from "../components/forms/Input";
+import { isEmailValid } from "../helper/formHelper";
 import "./Login.css";
 
 export default function Login() {
-  const [labelText, setLabelText] = useState("");
+  const [errorText, setErrorText] = useState("");
+  const [responseText, setResponseText] = useState("");
   const [mask, setMask] = useState({
     email: "",
     password: "",
@@ -27,6 +29,17 @@ export default function Login() {
 
   const handleLogin = function (e: React.SyntheticEvent) {
     e.preventDefault();
+
+    if (!isEmailValid(mask.email)) {
+      setErrorText("Format of email is not valid");
+      return;
+    }
+
+    if (mask.password.length <= 10) {
+      setErrorText("Min length of password is 10 characters long");
+      return;
+    }
+
     axios
       .post(API_URL + "/user/authToken", {
         email: mask.email,
@@ -36,14 +49,7 @@ export default function Login() {
         window.location.href = "/home";
       })
       .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          setLabelText(error.message);
-        } else {
-          setLabelText("Invalid email or password!");
-          setTimeout(() => {
-            setLabelText("");
-          }, 3000);
-        }
+        setResponseText(error.response.data);
       });
   };
 
@@ -86,7 +92,9 @@ export default function Login() {
                 helperText={"Enter a valid email"}
                 errorText={"Invalid email"}
                 inputType={InputType.email}
+                required={true}
               />
+
               <Input
                 name={"password"}
                 inputName={"Password"}
@@ -95,19 +103,30 @@ export default function Login() {
                 helperText={"Enter a valid password"}
                 errorText={"error"}
                 inputType={InputType.password}
+                required={true}
+                minLength={10}
               />
+
               <IonItem id="{{error}}" style={{ marginBottom: "20px" }}>
-                {labelText && (
+                {errorText && (
+                  <IonLabel className="ion-text-center" color="warning">
+                    {errorText}
+                  </IonLabel>
+                )}
+
+                {responseText && (
                   <IonLabel className="ion-text-center" color="danger">
-                    {labelText}
+                    {responseText}
                   </IonLabel>
                 )}
               </IonItem>
+
               <Button
                 buttonType={ButtonType.submit}
                 buttonText={"Login"}
                 color={"primary"}
               ></Button>
+
               <Button
                 link={"/registration"}
                 buttonText={"Sign Up"}
