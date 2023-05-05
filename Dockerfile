@@ -32,7 +32,7 @@ COPY --from=0 /dist/ /var/www/d-lama-webapp/
 COPY d-lama-webapp /etc/nginx/sites-available/
 
 # Create a symlink to enable the site
-RUN ln -s /etc/nginx/sites-available/d-lama-webapp /etc/nginx/sites-enabled/
+RUN mkdir -p /etc/nginx/sites-enabled/ && ln -s /etc/nginx/sites-available/d-lama-webapp /etc/nginx/sites-enabled/
 
 # Expose the port that NGINX will run on
 EXPOSE 80
