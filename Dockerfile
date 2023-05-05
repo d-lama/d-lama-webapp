@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build -- --output-path dist
+RUN npm run build -- --outDir dist
 
 # Use the official NGINX image as the base image for the second stage
 FROM nginx:stable-alpine
