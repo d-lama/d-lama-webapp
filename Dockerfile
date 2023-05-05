@@ -20,10 +20,10 @@ RUN npm run build -- --outDir dist
 FROM nginx:stable-alpine
 
 # Remove the default NGINX configuration
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/nginx.conf
 
 # Copy the new NGNIX configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files from the Node.js image to the NGINX HTML directory
 COPY --from=0 /dist/ /var/www/d-lama-webapp/
