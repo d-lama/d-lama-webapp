@@ -1,5 +1,5 @@
-# Use the official Node.js image as the base image
-FROM node:14 AS build
+# Fetching the latest node image on apline linux
+FROM node:alpine AS builder
 
 # Set the working directory
 WORKDIR /
@@ -14,25 +14,16 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build -- --outDir dist
+RUN npm run build
 
-# Use the official NGINX image as the base image for the second stage
-FROM nginx:stable-alpine
-
-# Remove the default NGINX configuration
-RUN rm /etc/nginx/nginx.conf
-
-# Copy the new NGNIX configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Fetching the latest nginx image
+FROM nginx
 
 # Copy the built application files from the Node.js image to the NGINX HTML directory
-COPY --from=0 /dist/ /var/www/d-lama-webapp/
+COPY --from=builder /build /usr/share/nginx/html
 
-# Copy the custom NGINX configuration file for the application
-COPY d-lama-webapp /etc/nginx/sites-available/
-
-# Create a symlink to enable the site
-RUN mkdir -p /etc/nginx/sites-enabled/ && ln -s /etc/nginx/sites-available/d-lama-webapp /etc/nginx/sites-enabled/
+# Copy the new NGNIX configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose the port that NGINX will run on
 EXPOSE 80
