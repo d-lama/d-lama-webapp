@@ -1,5 +1,0 @@
-map $http_user_agent $outdated {
-  default                                   0;
-  "~MSIE [0-9]+"                            1; # ie 1-10
-  "~Trident\/[0-9]+"                        1; # ie 11
-}

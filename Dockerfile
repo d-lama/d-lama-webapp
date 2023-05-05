@@ -1,37 +1,38 @@
-# Use the official Node.js base image
-FROM node:latest AS build
+# Use the official Node.js image as the base image
+FROM node:14 AS build
 
 # Set the working directory
 WORKDIR /
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json and package-lock.json into the container
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code into the container
 COPY . .
 
-# Build the React app for production
-RUN npm run build
+# Build the application
+RUN npm run build -- --output-path dist
 
-# Use the official Nginx base image
-#FROM nginx:stable-alpine
+# Use the official NGINX image as the base image for the second stage
+FROM nginx:stable-alpine
 
-# Copy the React app build output to the Nginx container
-#COPY --from=build /dist /usr/share/nginx/html
+# Remove the default NGINX configuration
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy Nginx configuration file
-#COPY nginx.conf /etc/nginx/conf.d/default.conf
-#COPY ./nginx-browserslist.map /etc/nginx/
+# Copy the built application files from the Node.js image to the NGINX HTML directory
+COPY --from=0 /dist/ /var/www/d-lama-webapp/
 
+# Copy the custom NGINX configuration file for the application
+COPY nginx/d-lama-webapp /etc/nginx/sites-available/
 
-# Expose port 4343 for HTTPS -> 443 in Kubernetes
+# Create a symlink to enable the site
+RUN ln -s /etc/nginx/sites-available/d-lama-webapp /etc/nginx/sites-enabled/
+
+# Expose the port that NGINX will run on
 EXPOSE 80
-EXPOSE 443
 
-
-# Start Nginx
-#CMD ["nginx", "-g", "daemon off;"]
-CMD [ "npx", "serve", "build" ]
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
