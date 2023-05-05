@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx
 
 # Copy the built application files from the Node.js image to the NGINX HTML directory
-COPY --from=builder /build /usr/share/nginx/html
+COPY --from=builder /dist /usr/share/nginx/html
 
 # Copy the new NGNIX configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
