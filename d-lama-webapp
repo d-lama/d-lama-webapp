@@ -1,0 +1,10 @@
+server {
+	listen 80;
+	listen [::]:80;
+	server_name d-lama-webapp.dev;
+	root /var/www/d-lama-webapp/;
+	index index.html index.htm;
+	location / {
+		try_files $uri /index.html =404;
+	}
+}

@@ -22,11 +22,14 @@ FROM nginx:stable-alpine
 # Remove the default NGINX configuration
 RUN rm /etc/nginx/conf.d/default.conf
 
+# Copy the new NGNIX configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy the built application files from the Node.js image to the NGINX HTML directory
 COPY --from=0 /dist/ /var/www/d-lama-webapp/
 
 # Copy the custom NGINX configuration file for the application
-COPY nginx/d-lama-webapp /etc/nginx/sites-available/
+COPY d-lama-webapp /etc/nginx/sites-available/
 
 # Create a symlink to enable the site
 RUN ln -s /etc/nginx/sites-available/d-lama-webapp /etc/nginx/sites-enabled/
@@ -36,4 +39,3 @@ EXPOSE 80
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
-
