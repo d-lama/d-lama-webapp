@@ -1,32 +1,32 @@
-# Use the official Node.js base image
-FROM node:latest AS build
+# Fetching the latest node image on apline linux
+FROM node:alpine AS builder
 
 # Set the working directory
 WORKDIR /
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json and package-lock.json into the container
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code into the container
 COPY . .
 
-# Build the React app for production
+# Build the application
 RUN npm run build
 
-# Use the official Nginx base image
-FROM nginx:stable-alpine
+# Fetching the latest nginx image
+FROM nginx
 
-# Copy the React app build output to the Nginx container
-COPY --from=build /dist /usr/share/nginx/html
+# Copy the built application files from the Node.js image to the NGINX HTML directory
+COPY --from=builder /dist /usr/share/nginx/html
 
-# Copy Nginx configuration file
+# Copy the new NGNIX configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 4343 for HTTPS -> 443 in Kubernetes
-EXPOSE 4343
+# Expose the port that NGINX will run on
+EXPOSE 80
 
-# Start Nginx
+# Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
