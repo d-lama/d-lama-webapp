@@ -18,3 +18,4 @@ The *D-LAMA WebApp* is the Front-End of the D-LAMA Application. It uses the Java
 - [Schazad Mohammad](https://github.com/schazadm)
 - [Rebekka von Wartburg](https://github.com/vonwareb)
 - [Noah Lichtenecker](https://github.com/noegeler)
+
