@@ -1,0 +1,28 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CD
+env:
+  DESTINATION: 'Webapp'
+
+on:
+  release:
+    types: [published]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  pre:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show where is triggered from
+        run: |
+          echo d-lama-webapp ci/cd pipeline is triggered.
+  
+  cd:
+    needs:
+      - pre
+    uses: d-lama/ops-d-lama-service/.github/workflows/d-lama-webapp-cd.yml@main
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      PP_DLAMA_TOKEN: ${{ secrets.PP_DLAMA_TOKEN }}
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
