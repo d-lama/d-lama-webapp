@@ -10,7 +10,7 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import {Button, ButtonType} from "../../components/forms/Button";
+import {Button, ButtonType} from "../../../components/forms/Button";
 
 
 function RegistrationSucceed() {
@@ -35,7 +35,7 @@ function RegistrationSucceed() {
                         <div className={'custom-border'}>
                             <>
                                 <IonAvatar className="item-avatar">
-                                    <svg width="230" height="217" viewBox="0 0 250 215" fill="none"
+                                    <svg width="240" height="217" viewBox="-20 0 250 215" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <ellipse cx="115" cy="108.5" rx="115" ry="108.5" fill="#D9D9D9"/>
                                         <line x1="62.6537" y1="116.535" x2="108.654" y2="157.535" stroke="#2dd36f"

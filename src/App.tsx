@@ -23,7 +23,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Login from "./pages/login/Login";
 import Registration from "./pages/registration/Registration";
-import RegistrationSucceed from "./pages/registration/RegistrationSucceed";
+import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
 import React, {useEffect, useState} from "react";
 
 
@@ -54,7 +54,7 @@ const App: React.FC = () => {
                     <Route exact path="/login">
                         <Login/>
                     </Route>
-                    <Route exact path="/registrationsucceed">
+                    <Route exact path="/registrationSucceed">
                         <RegistrationSucceed/>
                     </Route>
                     <Route exact path="/">
