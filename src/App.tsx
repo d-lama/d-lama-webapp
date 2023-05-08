@@ -21,35 +21,49 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
-import React from "react";
+import React, {useEffect, useState} from "react";
+
 
 setupIonicReact();
 
-const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonRouterOutlet>
-                <Route exact path="/home">
-                    <Home/>
-                </Route>
-                <Route exact path="/registration">
-                    <Registration/>
-                </Route>
-                <Route exact path="/login">
-                    <Login/>
-                </Route>
-                <Route exact path="/registrationsucceed">
-                    <RegistrationSucceed/>
-                </Route>
-                <Route exact path="/">
-                    <Redirect to="/home"/>
-                </Route>
-            </IonRouterOutlet>
-        </IonReactRouter>
-    </IonApp>
-);
+const App: React.FC = () => {
+    const [, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
+        <IonApp>
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <Route exact path="/home">
+                        <Home/>
+                    </Route>
+                    <Route exact path="/registration">
+                        <Registration/>
+                    </Route>
+                    <Route exact path="/login">
+                        <Login/>
+                    </Route>
+                    <Route exact path="/registrationsucceed">
+                        <RegistrationSucceed/>
+                    </Route>
+                    <Route exact path="/">
+                        <Redirect to="/home"/>
+                    </Route>
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </IonApp>
+    );
+};
 
 export default App;
