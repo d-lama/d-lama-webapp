@@ -22,8 +22,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Login from "./pages/login/Login";
-import Registration from "./pages/Registration";
-import RegistrationSucceed from "./pages/RegistrationSucceed";
+import Registration from "./pages/registration/Registration";
+import RegistrationSucceed from "./pages/registration/RegistrationSucceed";
 import React, {useEffect, useState} from "react";
 
 

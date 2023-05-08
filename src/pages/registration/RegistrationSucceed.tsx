@@ -10,7 +10,7 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import {Button, ButtonType} from "../components/forms/Button";
+import {Button, ButtonType} from "../../components/forms/Button";
 
 
 function RegistrationSucceed() {

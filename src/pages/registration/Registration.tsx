@@ -8,8 +8,8 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import {Input, InputType} from "../components/forms/Input";
-import {Button, ButtonType} from "../components/forms/Button";
+import {Input, InputType} from "../../components/forms/Input";
+import {Button, ButtonType} from "../../components/forms/Button";
 import axios from "axios";
 
 
