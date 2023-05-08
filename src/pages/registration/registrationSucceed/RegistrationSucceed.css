@@ -11,6 +11,6 @@
 .custom-border {
     padding: 30px;
     border: 1px solid gray;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
     border-radius: 8px 8px 8px 8px;
 }

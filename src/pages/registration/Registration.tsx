@@ -4,7 +4,7 @@ import RegistrationMobile from "./RegistrationMobile";
 import RegistrationDesktop from "./RegistrationDesktop";
 
 
-function Registration() {
+export default function Registration() {
     const [labelText, setLabelText] = useState('');
     const [mask, setMask] = useState({
         firstName: "",
@@ -78,5 +78,3 @@ function Registration() {
 
     );
 }
-
-export default Registration;
