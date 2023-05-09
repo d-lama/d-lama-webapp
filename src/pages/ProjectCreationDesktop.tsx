@@ -16,7 +16,6 @@ import axios from "axios";
 import './ProjectCreationDesktop.css';
 
 
-
 export default function ProjectCreationDesktop() {
     const [labelText, setLabelText] = useState('');
     const [selection, setSelection] = useState(null);
@@ -24,9 +23,9 @@ export default function ProjectCreationDesktop() {
         projectName: "",
         projectType: "",
         addLabel: "",
-        uploadData: "",
-        formData:''
+        uploadData: ""
     })
+
     function clearSelection() {
         setSelection(null);
     }
@@ -34,9 +33,10 @@ export default function ProjectCreationDesktop() {
     function handleChange(e: { target: { name: any; value: any; }; }) {
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
-    const [selectedFile, setSelectedFile] = useState(null);
 
-    function handleFileInputChange(event:any) {
+    const [, setSelectedFile] = useState(null);
+
+    function handleFileInputChange(event: any) {
         setSelectedFile(event.target.files[0]);
     }
 
@@ -47,23 +47,7 @@ export default function ProjectCreationDesktop() {
         // z.B. mit fetch oder axios
         e.preventDefault()
         axios.post('/api/register', {
-            formData: mask.formData,
-
-        })
-            .then(function () {
-                window.location.href = '/home';
-            })
-            .catch(function () {
-                setLabelText('Connection failed!');
-                setTimeout(() => {
-                    setLabelText('');
-                }, 3000);
-            });
-    }
-
-    const handleSubmit = function (e: React.SyntheticEvent) {
-        e.preventDefault()
-        axios.post('/api/register', {
+            formData: formData,
             projectName: mask.projectName,
             projectType: mask.projectType,
             addLabel: mask.addLabel,
@@ -118,22 +102,25 @@ export default function ProjectCreationDesktop() {
                                 errorText={"Invalid type"}
                                 inputType={InputType.text}/>
                             <IonList>
-                                <IonItem fill="outline" style={{marginTop: '15px', position:'center'}} shape='round' mode={"md"}>
+                                <IonItem fill="outline" style={{marginTop: '15px', position: 'center'}} shape='round'
+                                         mode={"md"}>
                                     <IonSelect
                                         value={selection}
                                         onIonChange={(e) => setSelection(e.detail.value)}
                                         placeholder="add needed label"
                                         multiple={true}
                                         onIonCancel={clearSelection}
-                                        >
+                                    >
                                         <IonSelectOption value="positive">positive</IonSelectOption>
                                         <IonSelectOption value="negative">negative</IonSelectOption>
                                         <IonSelectOption value="neutral">neutral</IonSelectOption>
                                     </IonSelect>
                                 </IonItem>
                             </IonList>
-                            <IonItem fill="outline" style={{marginTop: '15px', marginBottom: '15px'}} shape='round' mode={"md"}>
-                                <input className="file-upload" type="file" onChange={handleFileInputChange} placeholder={"Choose file"}/>
+                            <IonItem fill="outline" style={{marginTop: '15px', marginBottom: '15px'}} shape='round'
+                                     mode={"md"}>
+                                <input className="file-upload" type="file" onChange={handleFileInputChange}
+                                       placeholder={"Choose file"}/>
                             </IonItem>
                             {labelText &&
                                 <IonItem id="{{error}}" style={{marginBottom: '15px'}}>
