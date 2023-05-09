@@ -25,6 +25,7 @@ import Login from "./pages/login/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
 import React, {useEffect, useState} from "react";
+import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
 
 
 setupIonicReact();
@@ -56,6 +57,9 @@ const App: React.FC = () => {
                     </Route>
                     <Route exact path="/registrationsucceed">
                         <RegistrationSucceed/>
+                    </Route>
+                    <Route exact path="/projectcreation">
+                        <ProjectCreationDesktop/>
                     </Route>
                     <Route exact path="/">
                         <Redirect to="/home"/>
