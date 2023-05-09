@@ -13,9 +13,11 @@ import { API_URL } from "../App";
 import { Button, ButtonType } from "../components/forms/Button";
 import { Input, InputType } from "../components/forms/Input";
 import { isEmailValid } from "../helper/formHelper";
+import { useUserStore } from "../store/userStore";
 import "./Login.css";
 
 export default function Login() {
+  const { setToken } = useUserStore.getState();
   const [errorText, setErrorText] = useState("");
   const [responseText, setResponseText] = useState("");
   const [mask, setMask] = useState({
@@ -35,17 +37,13 @@ export default function Login() {
       return;
     }
 
-    if (mask.password.length <= 10) {
-      setErrorText("Min length of password is 10 characters long");
-      return;
-    }
-
     axios
       .post(API_URL + "/user/authToken", {
         email: mask.email,
         password: mask.password,
       })
-      .then(() => {
+      .then((res) => {
+        setToken(res.data);
         window.location.href = "/home";
       })
       .catch((error) => {
