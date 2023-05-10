@@ -1,37 +1,33 @@
-import { decodeJwt } from "jose";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-interface IUserData {
+interface IUser {
   UserId: number;
   name: string;
   email: string;
-  jti: string;
   IsAdmin: boolean;
-  nbf: number;
-  exp: number;
-  iat: number;
-  iss: string;
-  aud: string;
 }
 
 interface IUserStoreState {
-  user: IUserData | null;
-  token: string;
-  setToken: (newToken: string) => void;
-  clearToken: () => void;
+  user: IUser | null;
+  setUser: (user: IUser) => void;
+  clearUser: () => void;
 }
 
-export const useUserStore = create<IUserStoreState>((set) => ({
-  token: "",
-  user: null,
-  setToken: (newToken: string) => {
-    set((state) => ({
-      ...state,
-      token: newToken,
-      user: decodeJwt(newToken) as unknown as IUserData,
-    }));
-  },
-  clearToken: () => {
-    set({ token: "", user: null });
-  },
-}));
+export const useUserStore = create(
+  persist<IUserStoreState>(
+    (set) => ({
+      user: null,
+      setUser: (newUser: IUser) => {
+        set({ user: newUser });
+      },
+      clearUser: () => {
+        set({ user: null });
+      },
+    }),
+    {
+      name: "userStore",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);

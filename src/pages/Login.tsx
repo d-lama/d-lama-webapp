@@ -13,11 +13,13 @@ import { API_URL } from "../App";
 import { Button, ButtonType } from "../components/forms/Button";
 import { Input, InputType } from "../components/forms/Input";
 import { isEmailValid } from "../helper/formHelper";
+import { useAuthStore } from "../store/authStore";
 import { useUserStore } from "../store/userStore";
 import "./Login.css";
 
 export default function Login() {
-  const { setToken } = useUserStore.getState();
+  const { decodedData, setToken } = useAuthStore();
+  const { setUser } = useUserStore();
   const [errorText, setErrorText] = useState("");
   const [responseText, setResponseText] = useState("");
   const [mask, setMask] = useState({
@@ -44,6 +46,16 @@ export default function Login() {
       })
       .then((res) => {
         setToken(res.data);
+        if (decodedData == null || decodedData == undefined) {
+          setResponseText("An error occurred processing the request");
+          return;
+        }
+        setUser({
+          UserId: decodedData.UserId,
+          email: decodedData.email,
+          name: decodedData.name,
+          IsAdmin: decodedData.IsAdmin,
+        });
         window.location.href = "/home";
       })
       .catch((error) => {
