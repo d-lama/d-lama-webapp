@@ -6,6 +6,7 @@ export enum InputType {
   password = "password",
   text = "text",
   url = "url",
+  date = "date",
 }
 
 export interface InputProps {
