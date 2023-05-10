@@ -1,5 +1,4 @@
 import { IonInput, IonItem, IonLabel, IonNote } from "@ionic/react";
-import React from "react";
 
 export enum InputType {
   email = "email",
@@ -7,7 +6,6 @@ export enum InputType {
   password = "password",
   text = "text",
   url = "url",
-  date = "date",
 }
 
 export interface InputProps {
@@ -18,6 +16,9 @@ export interface InputProps {
   change?: any;
   helperText?: string;
   errorText: string;
+  minLength?: number;
+  maxLength?: number;
+  required?: boolean;
 }
 
 export function Input(props: InputProps) {
@@ -37,6 +38,9 @@ export function Input(props: InputProps) {
         type={props.inputType}
         placeholder={props.placeholder}
         onIonChange={props.change}
+        minlength={props.minLength}
+        maxlength={props.maxLength}
+        required={props.required}
       ></IonInput>
       <IonNote slot="helper">{props.helperText}</IonNote>
       <IonNote slot="error">{props.errorText}</IonNote>
