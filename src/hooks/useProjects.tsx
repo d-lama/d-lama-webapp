@@ -1,29 +1,36 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import mockProjects from "./testProjects.json"
+import { API_URL } from "../App";
+import { useAuthStore } from "../store/authStore";
+import mockProjects from "./testProjects.json";
 
 export interface IProjectData {
-    id: number,
-    title: string,
-    progress: number
+  id: number;
+  title: string;
+  progress: number;
 }
 
 export const useProjects = () => {
-    const [projects, setProjects] = useState<IProjectData[]>([]);
+  const [projects, setProjects] = useState<IProjectData[]>([]);
+  const { token } = useAuthStore();
 
-    // TODO: fetch from real api and remove mocks
-    const fetchProjects = async () => {
-        // const response = await axios.get(
-        //   "https://fakestoreapi.com/products"
-        // );
+  const fetchProjects = async () => {
+    const response = await axios.get(API_URL + "/project/my", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
 
-        // if (response && response.data) setProjects(response.data);
-        setProjects(mockProjects)
-    };
+    if (response && response.data) {
+      //   setProjects(response.data);
+      console.log(response.data);
+    }
+    setProjects(mockProjects);
+  };
 
-    useEffect(() => {
-        fetchProjects();
-    }, []);
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
-    return { projects }
-}
+  return { projects };
+};
