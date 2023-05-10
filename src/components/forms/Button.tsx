@@ -20,7 +20,7 @@ export function Button(props: ButtonProps) {
         <IonButton routerLink={props.link} type={props.buttonType} size="large" className="ion-text-center"
                    expand="block"
                    shape="round"
-                   style={{marginBottom: '30px'}} color={props.color}
+                   style={{marginBottom: '30px', minWidth:'260px'}} color={props.color}
         >{props.buttonText}
         </IonButton>
     )
