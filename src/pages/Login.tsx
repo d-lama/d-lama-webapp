@@ -9,11 +9,11 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { API_URL } from "../App";
+import {API_URL} from "../App";
+import {setToken} from "../token"
 import { Button, ButtonType } from "../components/forms/Button";
 import { Input, InputType } from "../components/forms/Input";
 import { isEmailValid } from "../helper/formHelper";
-import "./Login.css";
 
 export default function Login() {
   const [errorText, setErrorText] = useState("");
@@ -35,7 +35,7 @@ export default function Login() {
       return;
     }
 
-    if (mask.password.length <= 10) {
+    if (mask.password.length < 10) {
       setErrorText("Min length of password is 10 characters long");
       return;
     }
@@ -45,7 +45,8 @@ export default function Login() {
         email: mask.email,
         password: mask.password,
       })
-      .then(() => {
+      .then((response) => {
+        setToken(response.data);
         window.location.href = "/home";
       })
       .catch((error) => {

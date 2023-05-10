@@ -1,5 +1,5 @@
 import {Redirect, Route} from 'react-router-dom';
-import {IonApp, IonRouterOutlet, setupIonicReact} from '@ionic/react';
+import {IonApp, IonRouterOutlet, setupIonicReact, IonSpinner} from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 import Home from './pages/Home';
 import LabelScreen from "./pages/labelscreen/LabelScreen";
@@ -22,7 +22,7 @@ import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
 import './theme/variables.css';
-import Login from "./pages/login/Login";
+import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
 import React, {useEffect, useState} from "react";
@@ -32,6 +32,8 @@ import "./theme/variables.css";
 setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
+
+/* Token stuff -> TODO: export to token.js*/
 
 
 setupIonicReact();
@@ -65,7 +67,7 @@ const App: React.FC = () => {
                         <RegistrationSucceed/>
                     </Route>
                     <Route exact path="/label">
-                        <LabelScreen maxNumberOfLabels={150} progress={50} containerNumber={4} labels={getLabels()}/>
+                        <LabelScreen projectId={1}/>
                     </Route>
                     <Route exact path="/">
                         <Redirect to="/home"/>
@@ -75,14 +77,5 @@ const App: React.FC = () => {
         </IonApp>
     );
 };
-
-function getLabels() {
-  return [
-      {name:"Cat", color:"ECD407"},
-      {name:"Dog", color:"0956BF"},
-      {name:"Fish", color:"379711"},
-      {name:"Bird", color:"D72600"},
-  ]
-}
 
 export default App;

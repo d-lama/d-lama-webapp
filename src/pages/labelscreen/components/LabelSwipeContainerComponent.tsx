@@ -5,7 +5,7 @@ import './LabelSwipeContainerComponent.css';
 import CardLabelComponent from "./CardLabelComponent";
 import LabelDropContainerComponent from "./LabelDropContainerComponent";
 
-const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:{name:string, color:string}[]}> = ({numberOfContainers, labels}) => {
+const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:{id:number, name:string, description:string}[]}> = ({numberOfContainers, labels}) => {
     const [swipeDirection, setSwipeDirection] = useState<string>('');
 
     let labelItems = getLabelItems()
@@ -20,9 +20,14 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
 
     function handleSwipe(direction: string) {
         setSwipeDirection(direction);
+        let index = getDirectionIndex(direction)
 
         // TODO: add label to taggedInfo and notify LabelDropContainerComponent for fancy animation
-        labelItems[currIndex].label = labels[getDirectionIndex(direction)].name
+        if (index >= labels.length) {
+            return;
+        }
+
+        labelItems[currIndex].label = labels[index].id
         taggedInfo[currIndex] = labelItems[currIndex];
 
         // new current index
@@ -38,23 +43,23 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
         <IonGrid className={"screenHeight"}>
             <IonRow>
                 <IonCol className={"horizontalWidth labelingGrid"}>
-                    <LabelDropContainerComponent labelName={labels[3].name} labelColor={labels[3].color} isVertical={false} />
+                    {dropContainerChecker(false, labels, 3)}
                 </IonCol>
             </IonRow>
             <IonRow className={"growScreen"}>
                 <IonCol size={"1"} className={"labelingGrid"}>
-                    <LabelDropContainerComponent labelName={labels[0].name} labelColor={labels[0].color} isVertical={true} />
+                    {dropContainerChecker(true, labels, 0)}
                 </IonCol>
                 <IonCol size={"10"} className={"centerCard"}>
                     <CardLabelComponent cardSubtitle={""} cardTitle={labelItems[currIndex].title} content={labelItems[currIndex].description} onSwipe={handleSwipe}/>
                 </IonCol>
                 <IonCol size={"1"} className={"labelingGrid"}>
-                    <LabelDropContainerComponent labelName={labels[1].name} labelColor={labels[1].color} isVertical={true} />
+                    {dropContainerChecker(true, labels, 1)}
                 </IonCol>
             </IonRow>
             <IonRow>
                 <IonCol className={"horizontalWidth labelingGrid"}>
-                    <LabelDropContainerComponent labelName={labels[2].name} labelColor={labels[2].color} isVertical={false} />
+                    {dropContainerChecker(false, labels, 2)}
                 </IonCol>
             </IonRow>
         </IonGrid>
@@ -64,7 +69,19 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
 interface LabelCard {
     title: string;
     description: string;
-    label: string|null;
+    label: number|null;
+}
+
+function dropContainerChecker(isVertical:boolean, labels:any[], index:number) {
+    let component = null;
+
+    console.log(labels)
+
+    if (labels.length > index) {
+        component = <LabelDropContainerComponent labelName={labels[index].name} labelColor={labels[index].color} isVertical={isVertical} />
+    }
+
+    return component;
 }
 
 function getLabelItems(): LabelCard[]
