@@ -4,6 +4,8 @@ import {
   IonItem,
   IonLabel,
   IonPage,
+  IonSegment,
+  IonSegmentButton,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -12,6 +14,7 @@ import React, { useState } from "react";
 import { API_URL } from "../App";
 import { Button, ButtonType } from "../components/forms/Button";
 import { Input, InputType } from "../components/forms/Input";
+import { isEmailValid } from "../helper/formHelper";
 
 function Registration() {
   const [labelText, setLabelText] = useState("");
@@ -22,19 +25,25 @@ function Registration() {
     password: "",
     confirmPassword: "",
     birthDate: "",
+    isAdmin: false,
   });
-
-  function isValidEmail(email: string) {
-    return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-  }
 
   function handleChange(e: { target: { name: any; value: any } }) {
     setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
+  function handleIsAdminChange(e: any) {
+    if (e.detail.value === undefined) return;
+    let isAdminValue = e.detail.value === "admin";
+    setMask((prev) => ({ ...prev, isAdmin: isAdminValue }));
+  }
+
   const handleSubmit = function (e: React.SyntheticEvent) {
     e.preventDefault();
-    if (!isValidEmail(mask.email)) {
+
+    console.log(mask);
+
+    if (!isEmailValid(mask.email)) {
       setLabelText("Invalid email!");
       return;
     }
@@ -50,7 +59,7 @@ function Registration() {
         password: mask.password,
         confirmPassword: mask.confirmPassword,
         birthDate: mask.birthDate,
-        isAdmin: false,
+        isAdmin: mask.isAdmin,
       })
       .then(() => {
         window.location.href = "/registrationSucceed";
@@ -100,6 +109,15 @@ function Registration() {
               onSubmit={handleSubmit}
             >
               <Input
+                name={"lastName"}
+                change={handleChange}
+                inputName={"Enter Last Name"}
+                placeholder={"Muster"}
+                helperText={"Enter a valid name"}
+                errorText={"Invalid email"}
+                inputType={InputType.text}
+              />
+              <Input
                 name={"firstName"}
                 change={handleChange}
                 inputName={"Enter First Name"}
@@ -109,13 +127,13 @@ function Registration() {
                 inputType={InputType.text}
               />
               <Input
-                name={"lastName"}
+                name={"birthDate"}
                 change={handleChange}
-                inputName={"Enter Last Name"}
-                placeholder={"Muster"}
-                helperText={"Enter a valid name"}
-                errorText={"Invalid email"}
-                inputType={InputType.text}
+                inputName={"Birthdate"}
+                placeholder={""}
+                helperText={"Enter a valid birth date"}
+                errorText={"Invalid date"}
+                inputType={InputType.date}
               />
               <Input
                 name={"email"}
@@ -144,15 +162,14 @@ function Registration() {
                 errorText={"Invalid password"}
                 inputType={InputType.password}
               />
-              <Input
-                name={"birthDate"}
-                change={handleChange}
-                inputName={"Birthdate"}
-                placeholder={""}
-                helperText={"Enter a valid birth date"}
-                errorText={"Invalid date"}
-                inputType={InputType.date}
-              />
+              <IonSegment onIonChange={handleIsAdminChange}>
+                <IonSegmentButton value="labeler">
+                  <IonLabel>Labeler</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value="admin">
+                  <IonLabel>Administrator</IonLabel>
+                </IonSegmentButton>
+              </IonSegment>
               <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
                 {labelText && (
                   <IonLabel className="ion-text-center" color="danger">
