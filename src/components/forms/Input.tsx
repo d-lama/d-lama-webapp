@@ -24,27 +24,22 @@ export interface InputProps {
 
 export function Input(props: InputProps) {
   return (
-    <IonItem
+    <IonInput
+      className="ion-text-center"
+      name={props.name}
+      type={props.inputType}
+      placeholder={props.placeholder}
+      onIonChange={props.change}
+      minlength={props.minLength}
+      maxlength={props.maxLength}
+      required={props.required}
+      helperText={props.helperText}
+      errorText={props.errorText}
+      labelPlacement="stacked"
+      label={props.inputName}
       fill="outline"
-      style={{ marginTop: "15px" }}
       shape="round"
-      mode={"md"}
-    >
-      <IonLabel className="ion-text-center" position="floating">
-        {props.inputName}
-      </IonLabel>
-      <IonInput
-        className="ion-text-center"
-        name={props.name}
-        type={props.inputType}
-        placeholder={props.placeholder}
-        onIonChange={props.change}
-        minlength={props.minLength}
-        maxlength={props.maxLength}
-        required={props.required}
-      ></IonInput>
-      <IonNote slot="helper">{props.helperText}</IonNote>
-      <IonNote slot="error">{props.errorText}</IonNote>
-    </IonItem>
+      style={{ marginTop: "15px" }}
+    />
   );
 }
