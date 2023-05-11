@@ -40,9 +40,6 @@ function Registration() {
 
   const handleSubmit = function (e: React.SyntheticEvent) {
     e.preventDefault();
-
-    console.log(mask);
-
     if (!isEmailValid(mask.email)) {
       setLabelText("Invalid email!");
       return;
