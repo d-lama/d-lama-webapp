@@ -64,6 +64,14 @@ export default function RegistrationMobile(props: any) {
                                 helperText={"Confirm the password"}
                                 errorText={"Invalid password"}
                                 inputType={InputType.password}/>
+                            <IonSegment onIonChange={handleIsAdminChange}>
+                                <IonSegmentButton value="labeler">
+                                    <IonLabel>Labeler</IonLabel>
+                                </IonSegmentButton>
+                                <IonSegmentButton value="admin">
+                                    <IonLabel>Administrator</IonLabel>
+                                </IonSegmentButton>
+                            </IonSegment>
                             <IonItem id="{{error}}" style={{marginBottom: '15px'}}>
                                 {props.labelText &&
                                     <IonLabel className="ion-text-center" color="danger">{props.labelText}</IonLabel>}
