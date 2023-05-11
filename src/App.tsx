@@ -33,17 +33,8 @@ setupIonicReact();
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
 
 const App: React.FC = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const { user } = useUserStore();
   let isAuthenticated = useUserStore().user !== null;
   const [, setWindowWidth] = useState(window.innerWidth);
-
-  // useEffect(() => {
-  //   if (user !== null) setIsAuthenticated(true);
-  //   console.log(user);
-  //   console.log(isAuthenticated);
-  // }, []);
-
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
