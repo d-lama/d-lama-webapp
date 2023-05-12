@@ -26,7 +26,18 @@ export const useAuthStore = create(
   persist<IAuthStoreState>(
     (set) => ({
       token: "",
-      decodedData: null,
+      decodedData: {
+        UserId: 0,
+        name: "",
+        email: "",
+        jti: "",
+        IsAdmin: false,
+        nbf: 0,
+        exp: 0,
+        iat: 0,
+        iss: "",
+        aud: "",
+      },
       setToken: (newToken: string) => {
         set({
           token: newToken,
