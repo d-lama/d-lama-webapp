@@ -1,43 +1,40 @@
-import React, {useState} from 'react';
-import {InputChangeEventDetail, IonInput, IonItem, IonList} from '@ionic/react';
+import React from 'react';
+import {IonButton, IonInput, IonItem, IonList} from '@ionic/react';
 import {Button, ButtonType} from "./Button";
 
-interface DynamicFieldProps {}
 
-interface ElementData {
-    label: string;
-    placeholder: string;
+interface DynamicFieldProps {
+    elements: ElementData[];
+    onLabelChange: (index: number, value: string) => void;
+    addElement: () => void;
+    removeElement: (index: number) => void;
 }
 
-const DynamicField: React.FC<DynamicFieldProps> = () => {
-    const [elements, setElements] = useState<ElementData[]>([]);
+export interface ElementData {
+    label: string;
+}
+export function DynamicField(props: DynamicFieldProps) {
 
-    const addElement = () => {
-        setElements([...elements, { label: '', placeholder: 'Enter a value' }]);
-    };
-
-    const handleLabelChange = (index: number, value: string) => {
-        const updatedElements = [...elements];
-        updatedElements[index].label = value;
-        setElements(updatedElements);
-    };
+    const { elements, onLabelChange, addElement, removeElement} = props;
 
 
     return (
         <IonList>
-            {elements.map((element, index) => (
-                <IonItem key={index}>
-                    <IonInput
-                        value={element.label}
-                        placeholder={element.placeholder}
-                        onIonChange={(e: CustomEvent<InputChangeEventDetail>) => handleLabelChange(index, e.detail.value!)}
-                    />
-                </IonItem>
-            ))}
-            <Button buttonText={"Add Label"} buttonType={ButtonType.button}
-                    color={"secondary"} action={addElement}></Button>
+                {elements.map((element, index) => (
+                    <IonItem key={index}>
+                        <IonInput
+                            value={element.label}
+                            placeholder="Enter new label"
+                            onIonChange={(e) => onLabelChange(index, e.detail.value!)}
+                        />
+                        <IonButton className={'delete-button'} color={'warning'} onClick={() => removeElement(index)}>Delete</IonButton>
+                    </IonItem>
+                ))}
+            <Button
+                buttonText={"Add Label"}
+                buttonType={ButtonType.button}
+                color={"secondary"}
+                action={addElement}></Button>
         </IonList>
     );
-};
-
-export default DynamicField;
+}

@@ -12,15 +12,16 @@ import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
 import axios from "axios";
 import './ProjectCreationDesktop.css';
-import DynamicField from "../components/forms/DynamicField";
+import {DynamicField} from "../components/forms/DynamicField";
+import {ElementData} from "../components/forms/DynamicField"
+import {API_URL} from "../App";
 
 
 export default function ProjectCreationDesktop() {
     const [labelText, setLabelText] = useState('');
     const [mask, setMask] = useState({
         projectName: "",
-        projectType: "",
-        uploadData: ""
+        projectDescription: ""
     })
 
 
@@ -30,16 +31,46 @@ export default function ProjectCreationDesktop() {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+    const [elements, setElements] = useState<ElementData[]>([]);
 
-    function handleFileUpload(e: React.SyntheticEvent) {
-        const formData = new FormData();
+    const addElement = () => {
+        setElements([...elements, { label: '' }]);
+    };
+
+    const removeElement = (index: number) => {
+        const updatedElements = [...elements];
+        updatedElements.splice(index, 1);
+        setElements(updatedElements);
+    };
+
+    const handleLabelChange = (index: number, value: string) => {
+        const updatedElements = [...elements];
+        updatedElements[index].label = value;
+        setElements(updatedElements);
+    };
+
+    function handleProjectSubmit(e: React.SyntheticEvent) {
         e.preventDefault()
-        axios.post('/api/register', {
-            formData: formData,
-            projectName: mask.projectName,
-            projectType: mask.projectType,
-            uploadData: mask.uploadData
+        if (selectedFile) {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
 
+            axios.post(API_URL + "/Datapoint{projectId}/UploadTextDataPoints", formData)
+                .then(function () {
+                    window.location.href = '/home';
+                })
+                .catch(function () {
+                    setLabelText('Error in fileUpload!');
+                    setTimeout(() => {
+                        setLabelText('');
+                    }, 3000);
+                })
+        }
+
+        axios.post(API_URL + "/Project", {
+            projectName: mask.projectName,
+            projectDescription: mask.projectDescription,
+            elements
         })
             .then(function () {
                 window.location.href = '/home';
@@ -84,7 +115,7 @@ export default function ProjectCreationDesktop() {
                         height: '80vh'
                     }}>
                         <form className={'custom-border'} style={{width: '80%', maxWidth: '600px'}}
-                              onSubmit={handleFileUpload}>
+                              onSubmit={handleProjectSubmit}>
                             <Input
                                 name={"projectName"}
                                 change={handleChange}
@@ -94,11 +125,11 @@ export default function ProjectCreationDesktop() {
                                 errorText={"Invalid text"}
                                 inputType={InputType.text}/>
                             <Input
-                                name={"projectType"}
+                                name={"projectDescription"}
                                 change={handleChange}
-                                inputName={"Enter Project Type"}
+                                inputName={"Enter Project Description"}
                                 placeholder={"Text"}
-                                helperText={"Enter a valid type"}
+                                helperText={"Enter a valid description"}
                                 errorText={"Invalid type"}
                                 inputType={InputType.text}/>
                             <div>
@@ -117,7 +148,7 @@ export default function ProjectCreationDesktop() {
                                     onChange={handleFileChange}
                                 />
                             </div>
-                            <DynamicField/>
+                            <DynamicField elements={elements} onLabelChange={handleLabelChange} addElement={addElement} removeElement={removeElement} />
                             {labelText &&
                                 <IonItem id="{{error}}" style={{marginBottom: '15px'}}>
                                     <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>

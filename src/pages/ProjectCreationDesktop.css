@@ -28,3 +28,7 @@
     border: 1px solid black;
 
 }
+
+.delete-button {
+    border-radius: 10px;
+}
