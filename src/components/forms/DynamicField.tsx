@@ -15,26 +15,23 @@ export interface ElementData {
 }
 export function DynamicField(props: DynamicFieldProps) {
 
-    const { elements, onLabelChange, addElement, removeElement} = props;
-
-
     return (
         <IonList>
-                {elements.map((element, index) => (
+                {props.elements.map((element, index) => (
                     <IonItem key={index}>
                         <IonInput
                             value={element.label}
                             placeholder="Enter new label"
-                            onIonChange={(e) => onLabelChange(index, e.detail.value!)}
+                            onIonChange={(e) => props.onLabelChange(index, e.detail.value!)}
                         />
-                        <IonButton className={'delete-button'} color={'warning'} onClick={() => removeElement(index)}>Delete</IonButton>
+                        <IonButton className={'delete-button'} color={'warning'} onClick={() => props.removeElement(index)}>Delete</IonButton>
                     </IonItem>
                 ))}
             <Button
                 buttonText={"Add Label"}
                 buttonType={ButtonType.button}
                 color={"secondary"}
-                action={addElement}></Button>
+                action={props.addElement}></Button>
         </IonList>
     );
 }

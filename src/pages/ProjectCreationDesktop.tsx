@@ -49,7 +49,7 @@ export default function ProjectCreationDesktop() {
         setElements(updatedElements);
     };
 
-    function handleProjectSubmit(e: React.SyntheticEvent) {
+    const handleProjectSubmit = function(e: React.SyntheticEvent) {
         e.preventDefault()
         if (selectedFile) {
             const formData = new FormData();
