@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
         <IonButtons slot="primary">
           <LogOut />
         </IonButtons>
-        <IonTitle className="header-title ion-text-center">D-LAMA</IonTitle>
+        <IonTitle className="header-title">D-LAMA</IonTitle>
       </IonToolbar>
     </IonHeader>
   );
