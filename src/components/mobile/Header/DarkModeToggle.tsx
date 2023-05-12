@@ -18,13 +18,11 @@ export const DarkModeToggle: React.FC = () => {
   };
 
   return (
-    <>
-      <IonIcon
-        icon={darkMode ? moon : sunny}
-        onClick={handleToggle}
-        className="header-icon ion-float-right"
-        aria-label="Switch between dark and light mode"
-      />
-    </>
+    <IonIcon
+      icon={darkMode ? moon : sunny}
+      onClick={handleToggle}
+      className="header-icon ion-float-right"
+      aria-label="Switch between dark and light mode"
+    />
   );
 };

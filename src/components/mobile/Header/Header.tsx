@@ -1,10 +1,4 @@
-import {
-  IonButton,
-  IonButtons,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonButtons, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
 import { DarkModeToggle } from "./DarkModeToggle";
 import "./Header.css";
 import { LogOut } from "./LogOut";
