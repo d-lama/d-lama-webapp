@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
     IonContent,
     IonHeader,
     IonItem,
     IonLabel,
-    IonList,
-    IonPage, IonSelect,
-    IonSelectOption,
+    IonPage,
     IonTitle,
     IonToolbar
 } from '@ionic/react';
@@ -14,43 +12,32 @@ import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
 import axios from "axios";
 import './ProjectCreationDesktop.css';
+import DynamicField from "../components/forms/DynamicField";
 
 
 export default function ProjectCreationDesktop() {
     const [labelText, setLabelText] = useState('');
-    const [selection, setSelection] = useState(null);
     const [mask, setMask] = useState({
         projectName: "",
         projectType: "",
-        addLabel: "",
         uploadData: ""
     })
 
-    function clearSelection() {
-        setSelection(null);
-    }
 
     function handleChange(e: { target: { name: any; value: any; }; }) {
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
-    const [, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    function handleFileInputChange(event: any) {
-        setSelectedFile(event.target.files[0]);
-    }
 
     function handleFileUpload(e: React.SyntheticEvent) {
         const formData = new FormData();
-
-        // Hier können Sie die FormData an Ihren API-Endpunkt senden
-        // z.B. mit fetch oder axios
         e.preventDefault()
         axios.post('/api/register', {
             formData: formData,
             projectName: mask.projectName,
             projectType: mask.projectType,
-            addLabel: mask.addLabel,
             uploadData: mask.uploadData
 
         })
@@ -64,6 +51,19 @@ export default function ProjectCreationDesktop() {
                 }, 3000);
             });
     }
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        setSelectedFile(file|| null);
+    };
 
     return (
         <>
@@ -101,32 +101,28 @@ export default function ProjectCreationDesktop() {
                                 helperText={"Enter a valid type"}
                                 errorText={"Invalid type"}
                                 inputType={InputType.text}/>
-                            <IonList>
-                                <IonItem fill="outline" style={{marginTop: '15px', position: 'center'}} shape='round'
-                                         mode={"md"}>
-                                    <IonSelect
-                                        value={selection}
-                                        onIonChange={(e) => setSelection(e.detail.value)}
-                                        placeholder="add needed label"
-                                        multiple={true}
-                                        onIonCancel={clearSelection}
-                                    >
-                                        <IonSelectOption value="positive">positive</IonSelectOption>
-                                        <IonSelectOption value="negative">negative</IonSelectOption>
-                                        <IonSelectOption value="neutral">neutral</IonSelectOption>
-                                    </IonSelect>
-                                </IonItem>
-                            </IonList>
-                            <IonItem fill="outline" style={{marginTop: '15px', marginBottom: '15px'}} shape='round'
-                                     mode={"md"}>
-                                <input className="file-upload" type="file" onChange={handleFileInputChange}
-                                       placeholder={"Choose file"}/>
-                            </IonItem>
+                            <div>
+                                <div className="file-input" onClick={handleClick}>
+                                    {selectedFile ? (
+                                        <p>{selectedFile.name}</p>
+                                    ) : (
+                                        <p>Select file</p>
+                                    )}
+                                </div>
+                                <input
+                                    type="file"
+                                    accept=".csv"
+                                    style={{ display: 'none'}}
+                                    ref={fileInputRef}
+                                    onChange={handleFileChange}
+                                />
+                            </div>
+                            <DynamicField/>
                             {labelText &&
                                 <IonItem id="{{error}}" style={{marginBottom: '15px'}}>
                                     <IonLabel className="ion-text-center" color="danger">{labelText}</IonLabel>
                                 </IonItem>}
-                            <Button data-testid="register-button" buttonText={"Create"} buttonType={ButtonType.submit}
+                            <Button data-testid="create-button" buttonText={"Create"} buttonType={ButtonType.submit}
                                     color={"secondary"}></Button>
                         </form>
                     </div>

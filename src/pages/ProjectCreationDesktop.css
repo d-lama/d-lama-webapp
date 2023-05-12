@@ -8,10 +8,23 @@
 .custom-item {
     max-width: 200px;
 }
-/*
-.file-upload {
-    opacity: 0;
-    position: absolute;
+
+.file-input {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 17px;
+    cursor: pointer;
+    border-radius: 28px;
+    text-align: center;
+    margin-top: 20px;
 }
 
- */
+.file-input p {
+    margin: 0;
+}
+
+.file-input:hover {
+    background-color: #f2f2f2;
+    border: 1px solid black;
+
+}

@@ -27,6 +27,7 @@ import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
 
 setupIonicReact();
 
@@ -69,6 +70,10 @@ const App: React.FC = () => {
             ) : (
               <RegistrationSucceed />
             )}
+          </Route>
+          <Route exact path="/projectcreation">
+            //TODO: insert redirect
+            <ProjectCreationDesktop/>
           </Route>
 
           {/* redirect routes */}
