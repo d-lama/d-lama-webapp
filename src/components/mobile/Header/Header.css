@@ -1,13 +1,17 @@
 .header-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-top: .25rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 0.25rem;
 }
 
 ion-header {
-    border-bottom: 1px solid var(--ion-color-primary-contrast);
+  border-bottom: 1px solid var(--ion-color-primary-contrast);
 }
 
 ion-toolbar {
-    padding: 1rem !important;
+  padding: 1rem !important;
+}
+
+.header-icon {
+  font-size: 1.5rem;
 }

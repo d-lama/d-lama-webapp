@@ -1,21 +1,26 @@
 import {
-    IonHeader,
-    IonTitle,
-    IonToolbar
-} from '@ionic/react'
-import './Header.css'
-import { DarkModeToggle } from './DarkModeToggle';
+  IonButton,
+  IonButtons,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import { DarkModeToggle } from "./DarkModeToggle";
+import "./Header.css";
+import { LogOut } from "./LogOut";
 
 export const Header: React.FC = () => {
-    return (
-        // TODO: find out when to use md and when ios
-        // or why it buges sometimes
-        // mode={"md"}
-        <IonHeader class="ion-no-border">
-            <IonToolbar>
-                <IonTitle className="header-title ion-text-center">D-LAMA</IonTitle>
-                <DarkModeToggle />
-            </IonToolbar>
-        </IonHeader>
-    );
+  return (
+    <IonHeader class="ion-no-border">
+      <IonToolbar>
+        <IonButtons slot="secondary">
+          <DarkModeToggle />
+        </IonButtons>
+        <IonButtons slot="primary">
+          <LogOut />
+        </IonButtons>
+        <IonTitle className="header-title ion-text-center">D-LAMA</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+  );
 };
