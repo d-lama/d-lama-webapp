@@ -2,54 +2,66 @@ import React, {useState} from 'react';
 import axios from "axios";
 import RegistrationMobile from "./RegistrationMobile";
 import RegistrationDesktop from "./RegistrationDesktop";
+import {API_URL} from "../../App";
+import {isEmailValid} from "../../helper/formHelper";
 
 
 export default function Registration() {
-    const [labelText, setLabelText] = useState('');
+    const [labelText, setLabelText] = useState("");
     const [mask, setMask] = useState({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
-        confirmPassword: ""
-    })
+        confirmPassword: "",
+        birthDate: "",
+        isAdmin: false,
+    });
 
-    function isValidEmail(email: string) {
-        return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+    function handleChange(e: { target: { name: any; value: any } }) {
+        setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
 
-    function handleChange(e: { target: { name: any; value: any; }; }) {
-        setMask(prev => ({...prev, [e.target.name]: e.target.value}))
+    function handleIsAdminChange(e: any) {
+        if (e.detail.value === undefined) return;
+        let isAdminValue = e.detail.value === "admin";
+        setMask((prev) => ({ ...prev, isAdmin: isAdminValue }));
     }
 
     const handleSubmit = function (e: React.SyntheticEvent) {
-        e.preventDefault()
-        if (!isValidEmail(mask.email)) {
-            setLabelText('Invalid email!');
+        e.preventDefault();
+        if (!isEmailValid(mask.email)) {
+            setLabelText("Invalid email!");
             return;
         }
         if (mask.password !== mask.confirmPassword) {
-            setLabelText('Confirm password is not the same!');
+            setLabelText("Confirm password is not the same!");
             return;
         }
-        axios.post('/api/register', {
-            fistname: mask.firstName,
-            lastname: mask.lastName,
-            email: mask.email,
-            password: mask.password,
-            confirmPassword: mask.confirmPassword
-
-        })
-            .then(function () {
-                window.location.href = '/registrationSucceed';
+        axios
+            .post(API_URL + "/user", {
+                firstName: mask.firstName,
+                lastName: mask.lastName,
+                email: mask.email,
+                password: mask.password,
+                confirmPassword: mask.confirmPassword,
+                birthDate: mask.birthDate,
+                isAdmin: mask.isAdmin,
             })
-            .catch(function () {
-                setLabelText('Connection failed!');
-                setTimeout(() => {
-                    setLabelText('');
-                }, 3000);
+            .then(() => {
+                window.location.href = "/registrationSucceed";
+            })
+            .catch((error) => {
+                if (axios.isAxiosError(error)) {
+                    setLabelText(error.message);
+                } else {
+                    setLabelText("Connection failed!");
+                    setTimeout(() => {
+                        setLabelText("");
+                    }, 3000);
+                }
             });
-    }
+    };
 
     const isDesktop = window.innerWidth >= 768;
 
@@ -62,6 +74,7 @@ export default function Registration() {
                         mask={mask}
                         handleChange={handleChange}
                         handleLogin={handleSubmit}
+                        handleIsAdminChange={handleIsAdminChange}
                         labelText={labelText}
                     />
                 ) : (
@@ -69,6 +82,7 @@ export default function Registration() {
                         mask={mask}
                         handleChange={handleChange}
                         handleLogin={handleSubmit}
+                        handleIsAdminChange={handleIsAdminChange}
                         labelText={labelText}
                     />
                 )}

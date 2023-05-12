@@ -1,5 +1,15 @@
 import React from 'react';
-import {IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToolbar} from "@ionic/react";
+import {
+    IonContent,
+    IonHeader,
+    IonItem,
+    IonLabel,
+    IonPage,
+    IonSegment,
+    IonSegmentButton,
+    IonTitle,
+    IonToolbar
+} from "@ionic/react";
 import {Input, InputType} from "../../components/forms/Input";
 import {Button, ButtonType} from "../../components/forms/Button";
 
@@ -25,21 +35,32 @@ export default function RegistrationMobile(props: any) {
                         <form style={{width: '80%', maxWidth: '400px'}} data-testid="registration-form"
                               onSubmit={props.handleLogin}>
                             <Input
-                                name={"firstName"}
-                                change={props.handleChange}
-                                inputName={"Enter First Name"}
-                                placeholder={"Max"}
-                                helperText={"Enter a valid name"}
-                                errorText={"Invalid email"}
-                                inputType={InputType.text}/>
-                            <Input
                                 name={"lastName"}
                                 change={props.handleChange}
                                 inputName={"Enter Last Name"}
                                 placeholder={"Muster"}
                                 helperText={"Enter a valid name"}
                                 errorText={"Invalid email"}
-                                inputType={InputType.text}/>
+                                inputType={InputType.text}
+                            />
+                            <Input
+                                name={"firstName"}
+                                change={props.handleChange}
+                                inputName={"Enter First Name"}
+                                placeholder={"Max"}
+                                helperText={"Enter a valid name"}
+                                errorText={"Invalid email"}
+                                inputType={InputType.text}
+                            />
+                            <Input
+                                name={"birthDate"}
+                                change={props.handleChange}
+                                inputName={"Birthdate"}
+                                placeholder={""}
+                                helperText={"Enter a valid birth date"}
+                                errorText={"Invalid date"}
+                                inputType={InputType.date}
+                            />
                             <Input
                                 name={"email"}
                                 change={props.handleChange}
@@ -47,7 +68,8 @@ export default function RegistrationMobile(props: any) {
                                 placeholder={"max.muster@gmail.com"}
                                 helperText={"Enter a valid email"}
                                 errorText={"Invalid password"}
-                                inputType={InputType.email}/>
+                                inputType={InputType.email}
+                            />
                             <Input
                                 name={"password"}
                                 change={props.handleChange}
@@ -55,7 +77,8 @@ export default function RegistrationMobile(props: any) {
                                 placeholder={"**************"}
                                 helperText={"Enter a valid password"}
                                 errorText={"Invalid password"}
-                                inputType={InputType.password}/>
+                                inputType={InputType.password}
+                            />
                             <Input
                                 name={"confirmPassword"}
                                 change={props.handleChange}
@@ -63,8 +86,9 @@ export default function RegistrationMobile(props: any) {
                                 placeholder={"**************"}
                                 helperText={"Confirm the password"}
                                 errorText={"Invalid password"}
-                                inputType={InputType.password}/>
-                            <IonSegment onIonChange={handleIsAdminChange}>
+                                inputType={InputType.password}
+                            />
+                            <IonSegment onIonChange={props.handleIsAdminChange}>
                                 <IonSegmentButton value="labeler">
                                     <IonLabel>Labeler</IonLabel>
                                 </IonSegmentButton>
@@ -72,12 +96,18 @@ export default function RegistrationMobile(props: any) {
                                     <IonLabel>Administrator</IonLabel>
                                 </IonSegmentButton>
                             </IonSegment>
-                            <IonItem id="{{error}}" style={{marginBottom: '15px'}}>
-                                {props.labelText &&
-                                    <IonLabel className="ion-text-center" color="danger">{props.labelText}</IonLabel>}
-                            </IonItem>
-                            <Button data-testid="register-button" buttonText={"Register"} buttonType={ButtonType.submit}
-                                    color={"primary"}></Button>
+                            {props.labelText && (
+                            <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
+                                    <IonLabel className="ion-text-center" color="danger">
+                                        {props.labelText}
+                                    </IonLabel>
+                            </IonItem> )}
+                            <Button
+                                data-testid="register-button"
+                                buttonText={"Register"}
+                                buttonType={ButtonType.submit}
+                                color={"primary"}
+                            ></Button>
                         </form>
                     </div>
                 </IonContent>
