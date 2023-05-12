@@ -12,8 +12,8 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { API_URL } from "../App";
-import { Button, ButtonType } from "../components/forms/Button";
-import { Input, InputType } from "../components/forms/Input";
+import { Button, ButtonType } from "../components/Forms/Button";
+import { Input, InputType } from "../components/Forms/Input";
 import { isEmailValid } from "../helper/formHelper";
 
 function Registration() {

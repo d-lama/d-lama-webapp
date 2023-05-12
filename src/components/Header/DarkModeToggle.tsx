@@ -21,7 +21,7 @@ export const DarkModeToggle: React.FC = () => {
     <IonIcon
       icon={darkMode ? moon : sunny}
       onClick={handleToggle}
-      className="header-icon ion-float-right"
+      className="header-icon"
       aria-label="Switch between dark and light mode"
     />
   );

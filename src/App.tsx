@@ -3,10 +3,10 @@ import { IonReactRouter } from "@ionic/react-router";
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
-import Login from "./pages/login";
-import Home from "./pages/mobile/Home";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
@@ -31,10 +31,12 @@ import "./theme/variables.css";
 setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
+export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
   let isAuthenticated = useUserStore().user !== null;
   const [, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);

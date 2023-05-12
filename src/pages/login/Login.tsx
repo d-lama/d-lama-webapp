@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { API_URL } from "../../App";
+import { API_URL, MIN_DESKTOP_WIDTH } from "../../App";
 import { isEmailValid } from "../../helper/formHelper";
 import { useAuthStore } from "../../store/authStore";
 import { useUserStore } from "../../store/userStore";
@@ -9,6 +9,7 @@ import LoginDesktop from "./LoginDesktop";
 import LoginMobile from "./LoginMobile";
 
 export default function Login() {
+  const isDesktop = window.innerWidth >= MIN_DESKTOP_WIDTH;
   const { decodedData, setToken } = useAuthStore();
   const { setUser } = useUserStore();
   const [errorText, setErrorText] = useState("");
@@ -19,6 +20,7 @@ export default function Login() {
   });
 
   function handleChange(e: { target: { name: any; value: any } }) {
+    if (e.target.name === null) return;
     setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
@@ -53,31 +55,26 @@ export default function Login() {
         setResponseText(error.response.data);
       });
   };
-  const isDesktop = window.innerWidth >= 768;
 
   return (
     <>
-      (
-      <div>
-        {isDesktop ? (
-          <LoginDesktop
-            mask={mask}
-            handleChange={handleChange}
-            handleLogin={handleLogin}
-            responseText={responseText}
-            errorText={errorText}
-          />
-        ) : (
-          <LoginMobile
-            mask={mask}
-            handleChange={handleChange}
-            handleLogin={handleLogin}
-            responseText={responseText}
-            errorText={errorText}
-          />
-        )}
-      </div>
-      );
+      {isDesktop ? (
+        <LoginDesktop
+          mask={mask}
+          handleChange={handleChange}
+          handleLogin={handleLogin}
+          responseText={responseText}
+          errorText={errorText}
+        />
+      ) : (
+        <LoginMobile
+          mask={mask}
+          handleChange={handleChange}
+          handleLogin={handleLogin}
+          responseText={responseText}
+          errorText={errorText}
+        />
+      )}
     </>
   );
 }

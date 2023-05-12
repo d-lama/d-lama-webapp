@@ -3,7 +3,7 @@ import { DarkModeToggle } from "./DarkModeToggle";
 import "./Header.css";
 import { LogOut } from "./LogOut";
 
-export const Header: React.FC = () => {
+export const HeaderMobile: React.FC = () => {
   return (
     <IonHeader class="ion-no-border">
       <IonToolbar>
@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
         <IonButtons slot="primary">
           <LogOut />
         </IonButtons>
-        <IonTitle className="header-title">D-LAMA</IonTitle>
+        <IonTitle className="header-title-mobile">D-LAMA</IonTitle>
       </IonToolbar>
     </IonHeader>
   );

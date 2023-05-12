@@ -22,22 +22,24 @@ interface IAuthStoreState {
   clearToken: () => void;
 }
 
+const clearData = {
+  UserId: 0,
+  name: "",
+  email: "",
+  jti: "",
+  IsAdmin: false,
+  nbf: 0,
+  exp: 0,
+  iat: 0,
+  iss: "",
+  aud: "",
+};
+
 export const useAuthStore = create(
   persist<IAuthStoreState>(
     (set) => ({
       token: "",
-      decodedData: {
-        UserId: 0,
-        name: "",
-        email: "",
-        jti: "",
-        IsAdmin: false,
-        nbf: 0,
-        exp: 0,
-        iat: 0,
-        iss: "",
-        aud: "",
-      },
+      decodedData: clearData,
       setToken: (newToken: string) => {
         set({
           token: newToken,
@@ -45,7 +47,7 @@ export const useAuthStore = create(
         });
       },
       clearToken: () => {
-        set({ token: "", decodedData: null });
+        set({ token: "", decodedData: clearData });
       },
     }),
     {
