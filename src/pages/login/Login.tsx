@@ -1,62 +1,83 @@
-import React, {useState} from 'react';
-import './Login.css';
 import axios from "axios";
+import React, { useState } from "react";
+import { API_URL } from "../../App";
+import { isEmailValid } from "../../helper/formHelper";
+import { useAuthStore } from "../../store/authStore";
+import { useUserStore } from "../../store/userStore";
+import "./Login.css";
 import LoginDesktop from "./LoginDesktop";
 import LoginMobile from "./LoginMobile";
 
 export default function Login() {
-    const [labelText, setLabelText] = useState('');
-    const [mask, setMask] = useState({
-        email: "",
-        password: "",
-    })
+  const { decodedData, setToken } = useAuthStore();
+  const { setUser } = useUserStore();
+  const [errorText, setErrorText] = useState("");
+  const [responseText, setResponseText] = useState("");
+  const [mask, setMask] = useState({
+    email: "",
+    password: "",
+  });
 
-    function handleChange(e: { target: { name: any; value: any; }; }) {
-        setMask(prev => ({...prev, [e.target.name]: e.target.value}))
+  function handleChange(e: { target: { name: any; value: any } }) {
+    setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  const handleLogin = function (e: React.SyntheticEvent) {
+    e.preventDefault();
+
+    if (!isEmailValid(mask.email)) {
+      setErrorText("Format of email is not valid");
+      return;
     }
 
-    const handleLogin = function (e: React.SyntheticEvent) {
-        e.preventDefault()
-        //TODO: insert correct URL
-        axios.post('/api/login', {
-            email: mask.email,
-            password: mask.password,
-        })
-            .then(function () {
-                window.location.href = '/home';
-            })
-            .catch(function () {
-                setLabelText('Invalid email or password!');
-                setTimeout(() => {
-                    setLabelText('');
-                }, 3000);
-            });
-    }
-    const isDesktop = window.innerWidth >= 768;
+    axios
+      .post(API_URL + "/user/authToken", {
+        email: mask.email,
+        password: mask.password,
+      })
+      .then((res) => {
+        setToken(res.data);
+        if (decodedData == null || decodedData == undefined) {
+          setResponseText("An error occurred processing the request");
+          return;
+        }
+        setUser({
+          UserId: decodedData.UserId,
+          email: decodedData.email,
+          name: decodedData.name,
+          IsAdmin: decodedData.IsAdmin,
+        });
+        window.location.href = "/home";
+      })
+      .catch((error) => {
+        setResponseText(error.response.data);
+      });
+  };
+  const isDesktop = window.innerWidth >= 768;
 
-    return (
-        <>
-            (
-            <div>
-                {isDesktop ? (
-                    <LoginDesktop
-                        mask={mask}
-                        handleChange={handleChange}
-                        handleLogin={handleLogin}
-                        labelText={labelText}
-                    />
-                ) : (
-                    <LoginMobile
-                        mask={mask}
-                        handleChange={handleChange}
-                        handleLogin={handleLogin}
-                        labelText={labelText}
-                    />
-                )}
-            </div>
-            );
-        </>
-
-    );
+  return (
+    <>
+      (
+      <div>
+        {isDesktop ? (
+          <LoginDesktop
+            mask={mask}
+            handleChange={handleChange}
+            handleLogin={handleLogin}
+            responseText={responseText}
+            errorText={errorText}
+          />
+        ) : (
+          <LoginMobile
+            mask={mask}
+            handleChange={handleChange}
+            handleLogin={handleLogin}
+            responseText={responseText}
+            errorText={errorText}
+          />
+        )}
+      </div>
+      );
+    </>
+  );
 }
-
