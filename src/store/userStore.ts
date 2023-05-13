@@ -6,6 +6,7 @@ interface IUser {
   name: string;
   email: string;
   IsAdmin: boolean;
+  isAuthenticated: boolean;
 }
 
 interface IUserStoreState {
@@ -14,15 +15,25 @@ interface IUserStoreState {
   clearUser: () => void;
 }
 
+const clearData = {
+  UserId: 0,
+  name: "",
+  email: "",
+  IsAdmin: false,
+  isAuthenticated: false,
+};
+
 export const useUserStore = create(
   persist<IUserStoreState>(
     (set) => ({
-      user: null,
+      user: clearData,
       setUser: (newUser: IUser) => {
-        set({ user: newUser });
+        set({
+          user: newUser,
+        });
       },
       clearUser: () => {
-        set({ user: null });
+        set({ user: clearData });
       },
     }),
     {

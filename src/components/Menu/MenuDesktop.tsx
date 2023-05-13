@@ -17,7 +17,7 @@ import { DarkModeToggle } from "../Header/DarkModeToggle";
 import { LogOut } from "../Header/LogOut";
 
 export const MenuDesktop: React.FC = () => {
-  let isAuthenticated = useUserStore().user !== null;
+  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
 
   return (
     <>

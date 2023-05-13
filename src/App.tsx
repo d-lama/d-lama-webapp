@@ -34,7 +34,7 @@ export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
 export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
-  let isAuthenticated = useUserStore().user !== null;
+  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
   const [, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {

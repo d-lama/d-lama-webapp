@@ -11,13 +11,7 @@ import { DarkModeToggle } from "./DarkModeToggle";
 import "./Header.css";
 
 export const HeaderDesktop: React.FC = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const user = useUserStore((state) => state.user);
-
-  // useEffect(() => {
-  //   setIsAuthenticated(user !== null);
-  // }, []);
-  let isAuthenticated = useUserStore().user !== null;
+  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
 
   return (
     <>

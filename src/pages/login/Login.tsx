@@ -48,6 +48,7 @@ export default function Login() {
           email: decodedData.email,
           name: decodedData.name,
           IsAdmin: decodedData.IsAdmin,
+          isAuthenticated: true,
         });
         window.location.href = "/home";
       })
