@@ -50,24 +50,7 @@ export default function ProjectCreationDesktop() {
     };
 
     const handleProjectSubmit = function(e: React.SyntheticEvent) {
-        e.preventDefault()
-        if (selectedFile) {
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-
-            axios.post(API_URL + "/Datapoint{projectId}/UploadTextDataPoints", formData)
-                .then(function () {
-                    window.location.href = '/home';
-                })
-                .catch(function () {
-                    setLabelText('Error in fileUpload!');
-                    setTimeout(() => {
-                        setLabelText('');
-                    }, 3000);
-                })
-        }
-
-        axios.post(API_URL + "/Project", {
+        axios.post(API_URL + `/Project`, {
             projectName: mask.projectName,
             projectDescription: mask.projectDescription,
             elements
@@ -81,6 +64,24 @@ export default function ProjectCreationDesktop() {
                     setLabelText('');
                 }, 3000);
             });
+
+        e.preventDefault()
+        if (selectedFile) {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            axios.post(API_URL + `/Datapoint{projectId}/UploadTextDataPoints`, formData)
+                .then(function () {
+                    window.location.href = '/home';
+                })
+                .catch(function () {
+                    setLabelText('Error in fileUpload!');
+                    setTimeout(() => {
+                        setLabelText('');
+                    }, 3000);
+                })
+        }
+
     }
 
     const fileInputRef = useRef<HTMLInputElement>(null);
