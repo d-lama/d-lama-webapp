@@ -35,8 +35,10 @@ export const HomeLabeler: React.FC = () => {
                 />
               </IonCol>
             </IonRow>
+            <IonRow>
+              <ProjectGrid />
+            </IonRow>
           </IonGrid>
-          <ProjectGrid />
         </IonContent>
       </IonPage>
     </>

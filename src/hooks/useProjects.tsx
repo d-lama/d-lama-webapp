@@ -11,21 +11,21 @@ export interface IProjectData {
 }
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<IProjectData[]>([]);
+  // const [projects, setProjects] = useState<IProjectData[]>([]);
 
-  useEffect(() => {
-    setProjects(mockProjects);
-  }, []);
+  // useEffect(() => {
+  //   setProjects(mockProjects);
+  // }, []);
 
-  return { projects };
+  // return { projects };
 
-  // const { token } = useAuthStore();
+  const { token } = useAuthStore();
 
-  // return axios
-  //   .get(API_URL + "/project/my", {
-  //     headers: {
-  //       Authorization: "Bearer " + token,
-  //     },
-  //   })
-  //   .then((res) => res.data as IProjectData);
+  return axios
+    .get(API_URL + "/project", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => res.data);
 };
