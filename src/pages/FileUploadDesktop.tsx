@@ -8,71 +8,33 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import {Input, InputType} from "../components/forms/Input";
+//import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
 import axios from "axios";
 import './ProjectCreationDesktop.css';
-import {DynamicField} from "../components/forms/DynamicField";
-import {ElementData} from "../components/forms/DynamicField"
+//import {DynamicField} from "../components/forms/DynamicField";
+//import {ElementData} from "../components/forms/DynamicField"
 import {API_URL} from "../App";
-import {useHistory} from "react-router";
 
 
-export default function ProjectCreationDesktop() {
+export default function FileUploadDesktop() {
     const [labelText, setLabelText] = useState('');
+/*
     const [mask, setMask] = useState({
         projectName: "",
         projectDescription: ""
     })
 
-    const history = useHistory();
-
 
     function handleChange(e: { target: { name: any; value: any; }; }) {
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
+*/
 
-    //const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const [elements, setElements] = useState<ElementData[]>([]);
 
-    const handleForwardingFileUpload = () => {
-        history.push('/fileUpload');
-    };
-
-    const addElement = () => {
-        setElements([...elements, { label: '' }]);
-    };
-
-    const removeElement = (index: number) => {
-        const updatedElements = [...elements];
-        updatedElements.splice(index, 1);
-        setElements(updatedElements);
-    };
-
-    const handleLabelChange = (index: number, value: string) => {
-        const updatedElements = [...elements];
-        updatedElements[index].label = value;
-        setElements(updatedElements);
-    };
-
-    const handleProjectSubmit = function(e: React.SyntheticEvent) {
-        axios.post(API_URL + `/Project`, {
-            projectName: mask.projectName,
-            projectDescription: mask.projectDescription,
-            elements
-        })
-            .then(function () {
-                window.location.href = '/home';
-            })
-            .catch(function () {
-                setLabelText('Connection failed!');
-                setTimeout(() => {
-                    setLabelText('');
-                }, 3000);
-            });
-        handleForwardingFileUpload();
-/*
+    const handleFileSubmit = function(e: React.SyntheticEvent) {
         e.preventDefault()
         if (selectedFile) {
             const formData = new FormData();
@@ -90,11 +52,9 @@ export default function ProjectCreationDesktop() {
                 })
         }
 
- */
-
     }
 
-/*    const fileInputRef = useRef<HTMLInputElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleClick = () => {
         if (fileInputRef.current) {
@@ -105,7 +65,7 @@ export default function ProjectCreationDesktop() {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         setSelectedFile(file|| null);
-    };*/
+    };
 
     return (
         <>
@@ -114,7 +74,8 @@ export default function ProjectCreationDesktop() {
                     <IonToolbar>
                         <IonTitle
                             style={{fontSize: '4rem', fontWeight: 'bold', marginTop: '20px', marginBottom: '20px'}}
-                            className="ion-text-center">D-LAMA</IonTitle>
+                            className="ion-text-center">D-LAMA
+                        </IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent class={"ion-padding"}>
@@ -125,25 +86,9 @@ export default function ProjectCreationDesktop() {
                         justifyContent: 'center',
                         height: '80vh'
                     }}>
-                        <form className={'custom-border'} style={{width: '80%', maxWidth: '600px'}}
-                              onSubmit={handleProjectSubmit}>
-                            <Input
-                                name={"projectName"}
-                                change={handleChange}
-                                inputName={"Enter Project Name"}
-                                placeholder={"D-LAMA Test Project"}
-                                helperText={"Enter a valid name"}
-                                errorText={"Invalid text"}
-                                inputType={InputType.text}/>
-                            <Input
-                                name={"projectDescription"}
-                                change={handleChange}
-                                inputName={"Enter Project Description"}
-                                placeholder={"Text"}
-                                helperText={"Enter a valid description"}
-                                errorText={"Invalid type"}
-                                inputType={InputType.text}/>
-{/*                            <div>
+                        <form className={'custom-border'} style={{width: '80%', maxWidth: '500px'}}
+                              onSubmit={handleFileSubmit}>
+                            <div>
                                 <div className="file-input" onClick={handleClick}>
                                     {selectedFile ? (
                                         <p>{selectedFile.name}</p>
@@ -158,12 +103,7 @@ export default function ProjectCreationDesktop() {
                                     ref={fileInputRef}
                                     onChange={handleFileChange}
                                 />
-                            </div>*/}
-                            <DynamicField
-                                elements={elements}
-                                onLabelChange={handleLabelChange}
-                                addElement={addElement}
-                                removeElement={removeElement} />
+                            </div>
                             {labelText &&
                                 <IonItem
                                     id="{{error}}"
@@ -174,9 +114,9 @@ export default function ProjectCreationDesktop() {
                                     </IonLabel>
                                 </IonItem>}
                             <Button
-                                toolTipText={"new screen for uploading file"}
+                                toolTipText={'When pressed file will be uploaded to the corresponding project'}
                                 data-testid="create-button"
-                                buttonText={"Continue with fileupload"}
+                                buttonText={"Create Project"}
                                 buttonType={ButtonType.submit}
                                 color={"secondary"}/>
                         </form>

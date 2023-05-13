@@ -24,10 +24,15 @@ export function DynamicField(props: DynamicFieldProps) {
                             placeholder="Enter new label"
                             onIonChange={(e) => props.onLabelChange(index, e.detail.value!)}
                         />
-                        <IonButton className={'delete-button'} color={'warning'} onClick={() => props.removeElement(index)}>Delete</IonButton>
+                        <IonButton
+                            className={'delete-button'}
+                            color={'warning'}
+                            onClick={() => props.removeElement(index)}>Delete
+                        </IonButton>
                     </IonItem>
                 ))}
             <Button
+                toolTipText={"When pressed please fill out the input field with needed label name"}
                 buttonText={"Add Label"}
                 buttonType={ButtonType.button}
                 color={"secondary"}

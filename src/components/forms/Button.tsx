@@ -8,6 +8,7 @@ export enum ButtonType {
 }
 
 export interface ButtonProps {
+    toolTipText?:string,
     buttonText: string,
     buttonType?: ButtonType | ButtonType.button,
     color?: string | "primary",
@@ -18,6 +19,7 @@ export interface ButtonProps {
 export function Button(props: ButtonProps) {
     return (
         <IonButton
+            title={props.toolTipText}
             routerLink={props.link}
             type={props.buttonType}
             size="large"

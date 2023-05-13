@@ -28,6 +28,7 @@ import "@ionic/react/css/text-transformation.css";
 /* Theme variables */
 import "./theme/variables.css";
 import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
+import FileUploadDesktop from "./pages/FileUploadDesktop";
 
 setupIonicReact();
 
@@ -74,6 +75,10 @@ const App: React.FC = () => {
           <Route exact path="/projectcreation">
             //TODO: insert redirect
             <ProjectCreationDesktop/>
+          </Route>
+          <Route exact path="/fileUpload">
+            //TODO: insert redirect
+            <FileUploadDesktop/>
           </Route>
 
           {/* redirect routes */}
