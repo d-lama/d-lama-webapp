@@ -24,7 +24,7 @@ export function DynamicField(props: DynamicFieldProps) {
                         <IonInput
                             value={element.name}
                             placeholder="Enter new label"
-                            onIonChange={(e) => props.onLabelChange(index, e.detail.value!)}
+                            onIonChange={(e) => props.onLabelChange(index, e.detail.value!.toString())}
                         />
                         <IonButton
                             className={'delete-button'}

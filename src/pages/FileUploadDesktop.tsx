@@ -8,39 +8,33 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-//import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
 import axios from "axios";
 import './ProjectCreationDesktop.css';
-//import {DynamicField} from "../components/forms/DynamicField";
-//import {ElementData} from "../components/forms/DynamicField"
 import {API_URL} from "../App";
+import {useAuthStore} from "../store/authStore";
+import {useParams} from "react-router";
 
 
 export default function FileUploadDesktop() {
+    const {token} = useAuthStore();
     const [labelText, setLabelText] = useState('');
-/*
-    const [mask, setMask] = useState({
-        projectName: "",
-        projectDescription: ""
-    })
-
-
-    function handleChange(e: { target: { name: any; value: any; }; }) {
-        setMask(prev => ({...prev, [e.target.name]: e.target.value}))
-    }
-*/
-
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    interface RouteParams {
+        projectId: string;
+    }
+    const { projectId} = useParams<RouteParams>();
 
-
-    const handleFileSubmit = function(e: React.SyntheticEvent) {
+    function handleFileSubmit(e: React.SyntheticEvent) {
         e.preventDefault()
         if (selectedFile) {
             const formData = new FormData();
             formData.append('file', selectedFile);
 
-            axios.post(API_URL + `/Datapoint{projectId}/UploadTextDataPoints`, formData)
+            axios.post(API_URL + `/Datapoint${projectId}/UploadTextDataPoints`,
+                formData,
+                {headers: {Authorization: `Bearer ${token}`}})
                 .then(function () {
                     window.location.href = '/home';
                 })
@@ -51,21 +45,18 @@ export default function FileUploadDesktop() {
                     }, 3000);
                 })
         }
-
     }
 
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const handleFileUpload = () => {
+    function handleFileUpload() {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
-    };
+    }
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        setSelectedFile(file|| null);
-    };
+        setSelectedFile(file || null);
+    }
 
     return (
         <>
@@ -89,7 +80,8 @@ export default function FileUploadDesktop() {
                         <form className={'custom-border'} style={{width: '80%', maxWidth: '500px'}}
                               onSubmit={handleFileSubmit}>
                             <div>
-                                <div className="file-input" onClick={handleFileUpload}>
+                                <div className="file-input"
+                                     onClick={handleFileUpload}>
                                     {selectedFile ? (
                                         <p>{selectedFile.name}</p>
                                     ) : (
@@ -99,7 +91,7 @@ export default function FileUploadDesktop() {
                                 <input
                                     type="file"
                                     accept=".csv"
-                                    style={{ display: 'none'}}
+                                    style={{display: 'none'}}
                                     ref={fileInputRef}
                                     onChange={handleFileChange}
                                 />
@@ -124,6 +116,5 @@ export default function FileUploadDesktop() {
                 </IonContent>
             </IonPage>
         </>
-
     );
 }

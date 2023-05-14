@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
     IonContent,
     IonHeader,
@@ -15,7 +15,6 @@ import './ProjectCreationDesktop.css';
 import {DynamicField} from "../components/forms/DynamicField";
 import {ElementData} from "../components/forms/DynamicField"
 import {API_URL} from "../App";
-import {useHistory} from "react-router";
 import {useAuthStore} from "../store/authStore";
 
 
@@ -27,44 +26,40 @@ export default function ProjectCreationDesktop() {
         projectName: "",
         description: ""
     })
-    const history = useHistory();
+    const [labels, setLabels] = useState<ElementData[]>([]);
+
     function handleChange(e: { target: { name: any; value: any; }; }) {
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
-    //const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-    const [labels, setLabels] = useState<ElementData[]>([]);
-
-    const handleForwardingFileUpload = () => {
-        history.push('/fileUpload');
-    };
-
-    const addElement = () => {
-        setLabels([...labels, {id: labelIndex, name: '', description:'' }]);
+    function addElement() {
+        setLabels([...labels, {id: labelIndex, name: '', description: ''}]);
         setLabelIndex(prevState => prevState + 1)
-    };
+    }
 
-    const removeElement = (index: number) => {
+    function removeElement(index: number) {
         const updatedElements = [...labels];
         updatedElements.splice(index, 1);
         setLabels(updatedElements);
-    };
+    }
 
-    const handleLabelChange = (index: number, value: string) => {
+    function handleLabelChange(index: number, value: string) {
         const updatedElements = [...labels];
         updatedElements[index].name = value;
         setLabels(updatedElements);
-    };
+    }
 
-    const handleProjectSubmit = function(e: React.SyntheticEvent) {
-        axios.post(API_URL + '/Project', {
+    function handleProjectSubmit (e: React.SyntheticEvent) {
+        e.preventDefault();
+        axios
+            .post(API_URL + '/Project', {
             projectName: mask.projectName,
             description: mask.description,
             labels: labels
-        },{headers:{Authorization:`Bearer ${token}`}})
-            .then(function () {
-                handleForwardingFileUpload();
+        }, {headers: {Authorization: `Bearer ${token}`}})
+            .then(function (response) {
+                const projectId = response.data.id;
+                window.location.href = `/fileUpload/${projectId}`;
             })
             .catch(function () {
                 setLabelText('Connection failed!');
@@ -72,40 +67,7 @@ export default function ProjectCreationDesktop() {
                     setLabelText('');
                 }, 3000);
             });
-
-/*
-        e.preventDefault()
-        if (selectedFile) {
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-
-            axios.post(API_URL + `/Datapoint{projectId}/UploadTextDataPoints`, formData)
-                .then(function () {
-                    window.location.href = '/home';
-                })
-                .catch(function () {
-                    setLabelText('Error in fileUpload!');
-                    setTimeout(() => {
-                        setLabelText('');
-                    }, 3000);
-                })
-        }
-
- */
     }
-
-/*    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const handleClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click();
-        }
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        setSelectedFile(file|| null);
-    };*/
 
     return (
         <>
@@ -143,27 +105,11 @@ export default function ProjectCreationDesktop() {
                                 helperText={"Enter a valid description"}
                                 errorText={"Invalid type"}
                                 inputType={InputType.text}/>
-{/*                            <div>
-                                <div className="file-input" onClick={handleClick}>
-                                    {selectedFile ? (
-                                        <p>{selectedFile.name}</p>
-                                    ) : (
-                                        <p>Select file</p>
-                                    )}
-                                </div>
-                                <input
-                                    type="file"
-                                    accept=".csv"
-                                    style={{ display: 'none'}}
-                                    ref={fileInputRef}
-                                    onChange={handleFileChange}
-                                />
-                            </div>*/}
                             <DynamicField
                                 elements={labels}
                                 onLabelChange={handleLabelChange}
                                 addElement={addElement}
-                                removeElement={removeElement} />
+                                removeElement={removeElement}/>
                             {labelText &&
                                 <IonItem
                                     id="{{error}}"
@@ -184,6 +130,5 @@ export default function ProjectCreationDesktop() {
                 </IonContent>
             </IonPage>
         </>
-
     );
 }

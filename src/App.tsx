@@ -73,11 +73,11 @@ const App: React.FC = () => {
             )}
           </Route>
           <Route exact path="/projectcreation">
-            //TODO: insert redirect
+            {/*TODO: insert redirect*/}
             <ProjectCreationDesktop/>
           </Route>
-          <Route exact path="/fileUpload">
-            //TODO: insert redirect
+          <Route exact path="/fileUpload/:projectId">
+            {/*TODO: insert redirect*/}
             <FileUploadDesktop/>
           </Route>
 
