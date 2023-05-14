@@ -1,26 +1,18 @@
-import { IonCol, IonGrid, IonRow, IonToast, useIonToast } from "@ionic/react";
-import { flameOutline, timeOutline } from "ionicons/icons";
+import { IonCol, IonProgressBar, useIonToast } from "@ionic/react";
+import { flameOutline } from "ionicons/icons";
 import React from "react";
-import { useQuery } from "react-query";
-import { useProjects } from "../../hooks/useProjects";
+import { IProjectsData, useProjects } from "../../hooks/useProjects";
 import { ProjectButton } from "./ProjectButton";
 
 export const ProjectGrid: React.FC = () => {
-  // const { projects } = useProjects();
   const [present] = useIonToast();
-  const { isLoading, isError, data } = useQuery("useProjects", useProjects);
-  // const data = useProjects();
-  // console.log(data);
+  const projectsQuery = useProjects();
 
-  if (isLoading) {
-    return (
-      <IonCol>
-        <h3>Loading...</h3>
-      </IonCol>
-    );
+  if (projectsQuery.isLoading || projectsQuery.isRefetching) {
+    return <IonProgressBar type="indeterminate" color="primary" />;
   }
 
-  if (isError || data === undefined) {
+  if (projectsQuery.isError || projectsQuery.data === undefined) {
     present({
       message: "An error occurred while fetching the projects.",
       duration: 5000,
@@ -33,9 +25,15 @@ export const ProjectGrid: React.FC = () => {
 
   return (
     <>
-      {data.map((project: any) => (
-        <IonCol size="6" key={project.id}>
-          <ProjectButton key={project.id} title={project.title} progress={0} />
+      {projectsQuery.data.map((project: IProjectsData, i: number) => (
+        <IonCol size="12" key={i}>
+          {/* TODO: fix progress -> add calculation */}
+          <ProjectButton
+            key={project.id}
+            projectId={project.id}
+            title={project.name}
+            progress={Math.random() * 100}
+          />
         </IonCol>
       ))}
     </>

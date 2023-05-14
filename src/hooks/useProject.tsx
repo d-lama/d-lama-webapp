@@ -4,27 +4,24 @@ import { useQuery } from "react-query";
 import { API_URL } from "../App";
 import { useAuthStore } from "../store/authStore";
 
-export interface IProjectsData {
+export interface IProjectData {
   id: number;
-  ownerId: number;
-  name: string;
+  projectName: string;
   description: string;
-  creationDate: Date;
-  updateDate: Date;
-  isReady: boolean;
-  dataPoints: [];
+  dataPointsCount: number;
+  labeledDataPointsCount: number;
   labels: [];
 }
 
-export const useProjects = () => {
+export const useProject = (projectId: number) => {
   const { token } = useAuthStore();
   const [, setLoading] = useState(false);
 
-  const fetchProjects = async (): Promise<IProjectsData[]> => {
+  const fetchProject = async (): Promise<IProjectData> => {
     setLoading(true);
     try {
       return await axios
-        .get<IProjectsData[]>(`${API_URL}/project`, {
+        .get<IProjectData>(`${API_URL}/project/${projectId}`, {
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -37,7 +34,7 @@ export const useProjects = () => {
     }
   };
 
-  return useQuery<IProjectsData[], Error>("userProjects", fetchProjects, {
+  return useQuery<IProjectData, Error>("userProject", fetchProject, {
     enabled: true,
     retry: 3,
     refetchOnWindowFocus: false,

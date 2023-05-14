@@ -4,11 +4,13 @@ import React from "react";
 import "./ProjectButton.css";
 
 interface IProjectButtonProps {
+  projectId: number;
   title: string;
   progress: number;
 }
 
 export const ProjectButton: React.FC<IProjectButtonProps> = ({
+  projectId,
   title,
   progress,
 }) => {
@@ -16,8 +18,15 @@ export const ProjectButton: React.FC<IProjectButtonProps> = ({
     width: `${progress}%`,
   };
 
+  // TODO: add onClick with link to specific labeling project
   return (
-    <IonButton className="projectBtn-btn" fill="outline">
+    <IonButton
+      className="projectBtn-btn"
+      fill="outline"
+      onClick={() => {
+        window.location.href = `/label/${projectId}`;
+      }}
+    >
       <div
         className="projectBtn-progressBar"
         style={progressBarStyle}
