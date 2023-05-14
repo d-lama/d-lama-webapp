@@ -11,7 +11,9 @@ interface DynamicFieldProps {
 }
 
 export interface ElementData {
-    label: string;
+    id: number;
+    name: string;
+    description: string;
 }
 export function DynamicField(props: DynamicFieldProps) {
 
@@ -20,7 +22,7 @@ export function DynamicField(props: DynamicFieldProps) {
                 {props.elements.map((element, index) => (
                     <IonItem key={index}>
                         <IonInput
-                            value={element.label}
+                            value={element.name}
                             placeholder="Enter new label"
                             onIonChange={(e) => props.onLabelChange(index, e.detail.value!)}
                         />

@@ -56,7 +56,7 @@ export default function FileUploadDesktop() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleClick = () => {
+    const handleFileUpload = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
@@ -89,7 +89,7 @@ export default function FileUploadDesktop() {
                         <form className={'custom-border'} style={{width: '80%', maxWidth: '500px'}}
                               onSubmit={handleFileSubmit}>
                             <div>
-                                <div className="file-input" onClick={handleClick}>
+                                <div className="file-input" onClick={handleFileUpload}>
                                     {selectedFile ? (
                                         <p>{selectedFile.name}</p>
                                     ) : (

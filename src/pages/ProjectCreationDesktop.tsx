@@ -16,54 +16,55 @@ import {DynamicField} from "../components/forms/DynamicField";
 import {ElementData} from "../components/forms/DynamicField"
 import {API_URL} from "../App";
 import {useHistory} from "react-router";
+import {useAuthStore} from "../store/authStore";
 
 
 export default function ProjectCreationDesktop() {
+    const {token} = useAuthStore();
+    const [labelIndex, setLabelIndex] = useState(0);
     const [labelText, setLabelText] = useState('');
     const [mask, setMask] = useState({
         projectName: "",
-        projectDescription: ""
+        description: ""
     })
-
     const history = useHistory();
-
-
     function handleChange(e: { target: { name: any; value: any; }; }) {
         setMask(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
     //const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const [elements, setElements] = useState<ElementData[]>([]);
+    const [labels, setLabels] = useState<ElementData[]>([]);
 
     const handleForwardingFileUpload = () => {
         history.push('/fileUpload');
     };
 
     const addElement = () => {
-        setElements([...elements, { label: '' }]);
+        setLabels([...labels, {id: labelIndex, name: '', description:'' }]);
+        setLabelIndex(prevState => prevState + 1)
     };
 
     const removeElement = (index: number) => {
-        const updatedElements = [...elements];
+        const updatedElements = [...labels];
         updatedElements.splice(index, 1);
-        setElements(updatedElements);
+        setLabels(updatedElements);
     };
 
     const handleLabelChange = (index: number, value: string) => {
-        const updatedElements = [...elements];
-        updatedElements[index].label = value;
-        setElements(updatedElements);
+        const updatedElements = [...labels];
+        updatedElements[index].name = value;
+        setLabels(updatedElements);
     };
 
     const handleProjectSubmit = function(e: React.SyntheticEvent) {
-        axios.post(API_URL + `/Project`, {
+        axios.post(API_URL + '/Project', {
             projectName: mask.projectName,
-            projectDescription: mask.projectDescription,
-            elements
-        })
+            description: mask.description,
+            labels: labels
+        },{headers:{Authorization:`Bearer ${token}`}})
             .then(function () {
-                window.location.href = '/home';
+                handleForwardingFileUpload();
             })
             .catch(function () {
                 setLabelText('Connection failed!');
@@ -71,7 +72,7 @@ export default function ProjectCreationDesktop() {
                     setLabelText('');
                 }, 3000);
             });
-        handleForwardingFileUpload();
+
 /*
         e.preventDefault()
         if (selectedFile) {
@@ -91,7 +92,6 @@ export default function ProjectCreationDesktop() {
         }
 
  */
-
     }
 
 /*    const fileInputRef = useRef<HTMLInputElement>(null);
@@ -136,7 +136,7 @@ export default function ProjectCreationDesktop() {
                                 errorText={"Invalid text"}
                                 inputType={InputType.text}/>
                             <Input
-                                name={"projectDescription"}
+                                name={"description"}
                                 change={handleChange}
                                 inputName={"Enter Project Description"}
                                 placeholder={"Text"}
@@ -160,7 +160,7 @@ export default function ProjectCreationDesktop() {
                                 />
                             </div>*/}
                             <DynamicField
-                                elements={elements}
+                                elements={labels}
                                 onLabelChange={handleLabelChange}
                                 addElement={addElement}
                                 removeElement={removeElement} />
