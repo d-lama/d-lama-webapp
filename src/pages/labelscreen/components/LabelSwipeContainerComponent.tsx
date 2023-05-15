@@ -18,10 +18,9 @@ interface LabelCard {
 
 const MAX_LABEL_LOAD_AMOUNT = 5;
 let currIndex = 0;
-let taggedInfo = [];
 let progressCount = 0;
 
-const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:Project, setProgress:(progress:number) =>void} > = ({numberOfContainers, projectData, setProgress}) => {
+const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:Project, setProgress:(progress:number) =>void, setUndoAction:(isUndo:boolean) => void, undoAction:boolean} > = ({numberOfContainers, projectData, setProgress, setUndoAction, undoAction}) => {
     const [swipeDirection, setSwipeDirection] = useState<string>('');
     const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
 
@@ -56,6 +55,22 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         }
     }
 
+    const undoLastLabel = async function undoLastLabel(projectId:number, targetIndex:number) {
+        try {
+            const response = await axios.delete(API_URL + `/DataPoint/${projectId}/LabelDataPoint/${targetIndex}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    }
+                })
+
+            getLabelItems(projectData.id, targetIndex);
+            setProgress(targetIndex);
+        } catch (error) {
+            // TODO: catch error -> return to previous site
+        }
+    }
+
     let labels = projectData.labels;
 
     if (numberOfContainers > 4) {
@@ -68,7 +83,6 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         setSwipeDirection(direction);
         let index = getDirectionIndex(direction);
 
-        // TODO: add label to taggedInfo and notify LabelDropContainerComponent for fancy animation
         if (index >= labels.length) {
             return;
         }
@@ -79,7 +93,6 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         // Update the label in the copy
         updatedLabelItems[currIndex] = {...labelItems[currIndex]};
         updatedLabelItems[currIndex].labeledDataPoints[0] = labels[index].id;
-        taggedInfo[labelItems[currIndex].dataPointIndex] = labelItems[currIndex];
 
         // Set the state with the updated copy
         sendLabeledData(projectData.id, updatedLabelItems[currIndex]);
@@ -110,6 +123,19 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         progressCount = projectData.labeledDataPointsCount;
         getLabelItems(projectData.id, progressCount);
     }, []);
+
+    useEffect(() => {
+        // Handle the undo action
+        if (undoAction) {
+            if (progressCount > 0) {
+                // do undo
+                undoLastLabel(projectData.id, progressCount - 1);
+            }
+
+            // Reset the undo action state to false
+            setUndoAction(false);
+        }
+    }, [undoAction]);
 
     return (
         <IonGrid className={"screenHeight"}>
@@ -149,7 +175,7 @@ function dropContainerChecker(isVertical:boolean, labels:any[], index:number) {
     return component;
 }
 
-function getFixedColors(index:number): string {
+export function getFixedColors(index:number): string {
     let color = ""
 
     switch(index) {

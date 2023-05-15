@@ -2,43 +2,30 @@ import React from 'react';
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 
 import './LabelMapComponent.css';
+import {getFixedColors} from "./LabelSwipeContainerComponent";
 
-const LabelMapComponent: React.FC<{ labels: {color: string, text: string}[]} > = ({labels}) => {
+const LabelMapComponent: React.FC<{ labels: {
+        id: number;
+        name: string;
+        description: string;
+    }[]} > = ({labels}) => {
 
-    if (labels.some(label => label.text.length > 10)) {
-        return <LabelList labels={labels} />
-    }
-
-    return <LabelMap labels={labels} />
+    return <LabelList labels={labels} />
 }
 
-const LabelList: React.FC<{labels: {color: string, text: string}[]} > = ({labels}) => {
+const LabelList: React.FC<{labels: {
+        id: number;
+        name: string;
+        description: string;
+    }[]} > = ({labels}) => {
     return (
         <>
             <ul className={"labelMap"}>
                 {labels.map((label, index) => (
-                    <li color={label.color} key={index}>{label.text}</li>
+                    <li color={getFixedColors(index)} key={index}>{label.name}</li>
                 ))}
             </ul>
         </>
-    );
-}
-
-const LabelMap: React.FC<{labels: {color: string, text: string}[]} > = ({labels}) => {
-    return (
-        <IonGrid>
-            <IonRow>
-                <IonCol size="4">1</IonCol>
-                <IonCol size="4">2</IonCol>
-                <IonCol size="4">3</IonCol>
-                <IonCol size="4">4</IonCol>
-                <IonCol size="4">5</IonCol>
-                <IonCol size="4">6</IonCol>
-                <IonCol size="4">7</IonCol>
-                <IonCol size="4">8</IonCol>
-                <IonCol size="4">9</IonCol>
-            </IonRow>
-        </IonGrid>
     );
 }
 

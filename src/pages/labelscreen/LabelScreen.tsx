@@ -7,10 +7,11 @@ import { API_URL } from '../../App';
 import { getToken } from '../../token';
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
+import HelpComponent from "./components/HelpComponent";
 
 export interface Project {
     id: number;
-    name: string;
+    projectName: string;
     description: string;
     labeledDataPointsCount: number;
     labels: {
@@ -25,6 +26,8 @@ const LabelScreen: React.FC = () => {
     const [dataPointAmount, setDataPointAmount] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const [progress, setProgress] = useState<number>(0);
+    const [showHelp, setShowHelp] = useState(false);
+    const [undoAction, setUndoAction] = useState<boolean>(false);
 
     const projectParams:{id:string|undefined} = useParams();
     const projectId = projectParams.id;
@@ -79,9 +82,11 @@ const LabelScreen: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen scrollY={false}>
-                <LabelNavigationComponent progress={progress} maxNumberOfLabels={dataPointAmount} />
-                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} setProgress={setProgress} />
+                <LabelNavigationComponent progress={progress} maxNumberOfLabels={dataPointAmount} setShowHelp={setShowHelp} undoAction={setUndoAction} />
+                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} setProgress={setProgress} setUndoAction={setUndoAction} undoAction={undoAction} />
             </IonContent>
+
+            {showHelp && <HelpComponent projectInfo={projectInfo} setShowHelp={setShowHelp} />}
         </IonPage>
     );
 };
