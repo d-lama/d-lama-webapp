@@ -18,13 +18,14 @@ interface LabelCard {
 }
 
 const MAX_LABEL_LOAD_AMOUNT = 5;
-var currId = 0;
-var updatedLabelItems:LabelCard[] = [];
+let currId = 0;
+let currIndex = 0;
+let updatedLabelItems:LabelCard[] = [];
 
 const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:{id:number,name:string,description:string, labels:{id:number, name:string, description:string}[]} }> = ({numberOfContainers, projectData}) => {
     const [swipeDirection, setSwipeDirection] = useState<string>('');
-    const [currIndex, setCurrIndex] = useState(0);
     const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
+
     const getLabelItems = async function getLabelItems(projectId:number, startIndex:number)
     {
         try {
@@ -77,19 +78,18 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         setLabelItems(updatedLabelItems);
 
         // new current index
-        let newIndex = currIndex + 1;
-        setCurrIndex(newIndex);
+        currIndex++;
 
         if (currIndex === labelItems.length) {
             console.log(currIndex);
             console.log(labelItems.length);
-            getLabelItems(projectData.id, labelItems[currIndex].dataPointIndex);
+            getLabelItems(projectData.id, labelItems[currIndex-1].dataPointIndex + 1);
 
             if (labelItems.length < MAX_LABEL_LOAD_AMOUNT) {
                 // There are no longer any items to label
                 // TODO: show result ranking screen or return to project Overview
             }
-            setCurrIndex(0);
+            currIndex = 0;
         }
     }
 
