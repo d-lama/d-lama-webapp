@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
 import Login from "./pages/login";
+import LabelScreen from "./pages/labelscreen/LabelScreen";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
@@ -72,9 +73,9 @@ const App: React.FC = () => {
           </Route>
           <Route exact path="/label/:id">
             {isAuthenticated ? (
-              <Redirect to="/home" />
+                <LabelScreen />
             ) : (
-              <LabelScreen />
+                <Redirect to="/home" />
             )}
             
           </Route>
