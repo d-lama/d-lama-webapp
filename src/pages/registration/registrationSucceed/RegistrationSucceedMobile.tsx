@@ -8,7 +8,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { Button, ButtonType } from "../../../components/Forms/Button";
+import { Button, ButtonType } from "../../../components/forms/Button";
 
 export default function RegistrationSucceedMobile() {
   return (
