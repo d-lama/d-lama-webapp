@@ -61,6 +61,10 @@ const CardLabelComponent: React.FC<Props> = ({
                 } else {
                     style.transform = '';
                 }
+
+                setTimeout(() => {
+                    style.transform = 'none';
+                }, 10);
             },
         };
         const yOptions: GestureConfig = {
@@ -86,6 +90,10 @@ const CardLabelComponent: React.FC<Props> = ({
                 } else {
                     style.transform = '';
                 }
+
+                setTimeout(() => {
+                    style.transform = 'none';
+                }, 10);
             },
         };
 

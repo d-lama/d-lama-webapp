@@ -8,3 +8,13 @@ ion-card-header.ios {
     min-width: 300px;
     max-width: 300px;
 }
+
+.reset-animation {
+    animation: reset 0.01s;
+}
+
+@keyframes reset {
+    0% {
+        transform: none;
+    }
+}

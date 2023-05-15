@@ -1,16 +1,50 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IonGrid, IonRow, IonCol} from '@ionic/react';
 
 import './LabelSwipeContainerComponent.css';
 import CardLabelComponent from "./CardLabelComponent";
 import LabelDropContainerComponent from "./LabelDropContainerComponent";
+import axios from "axios";
+import {API_URL} from "../../../App";
+import {getToken} from "../../../token";
+import LabelScreen from "../LabelScreen";
 
-const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:{id:number, name:string, description:string}[]}> = ({numberOfContainers, labels}) => {
+
+interface LabelCard {
+    dataPointIndex: number;
+    content: string;
+    projectId: number;
+    labeledDataPoints: any[];
+}
+
+const MAX_LABEL_LOAD_AMOUNT = 5;
+var currId = 0;
+var updatedLabelItems:LabelCard[] = [];
+
+const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:{id:number,name:string,description:string, labels:{id:number, name:string, description:string}[]} }> = ({numberOfContainers, projectData}) => {
     const [swipeDirection, setSwipeDirection] = useState<string>('');
+    const [currIndex, setCurrIndex] = useState(0);
+    const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
+    const getLabelItems = async function getLabelItems(projectId:number, startIndex:number)
+    {
+        try {
+            let endIndex = startIndex + MAX_LABEL_LOAD_AMOUNT - 1;
+            const response = await axios.get(API_URL + `/DataPoint/${projectId}/${startIndex}/${endIndex}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`,
+                    }
+                });
 
-    let labelItems = getLabelItems()
-    let currIndex = 0;
+            console.log(response.data);
+            setLabelItems(response.data)
+        } catch (error) {
+            // TODO: return to project view or sth
+        }
+    }
+
     let taggedInfo = [];
+    let labels = projectData.labels;
 
     if (numberOfContainers > 4) {
         numberOfContainers = 4;
@@ -20,24 +54,49 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
 
     function handleSwipe(direction: string) {
         setSwipeDirection(direction);
-        let index = getDirectionIndex(direction)
+        let index = getDirectionIndex(direction);
 
         // TODO: add label to taggedInfo and notify LabelDropContainerComponent for fancy animation
         if (index >= labels.length) {
             return;
         }
 
-        labelItems[currIndex].label = labels[index].id
+        // Create a copy of labelItems array
+        let updatedLabelItems = [...labelItems];
+
+        console.log(labelItems);
+
+        // Update the label in the copy
+        updatedLabelItems[currIndex] = {...labelItems[currIndex]};
+        updatedLabelItems[currIndex].labeledDataPoints[0] = labels[index].id;
         taggedInfo[currIndex] = labelItems[currIndex];
 
+        console.log(updatedLabelItems);
+
+        // Set the state with the updated copy
+        setLabelItems(updatedLabelItems);
+
         // new current index
-        currIndex++;
+        let newIndex = currIndex + 1;
+        setCurrIndex(newIndex);
 
         if (currIndex === labelItems.length) {
-            labelItems = getLabelItems();
-            currIndex = 0;
+            console.log(currIndex);
+            console.log(labelItems.length);
+            getLabelItems(projectData.id, labelItems[currIndex].dataPointIndex);
+
+            if (labelItems.length < MAX_LABEL_LOAD_AMOUNT) {
+                // There are no longer any items to label
+                // TODO: show result ranking screen or return to project Overview
+            }
+            setCurrIndex(0);
         }
     }
+
+
+    useEffect(() => {
+        getLabelItems(projectData.id, currId);
+    }, []);
 
     return (
         <IonGrid className={"screenHeight"}>
@@ -51,7 +110,7 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
                     {dropContainerChecker(true, labels, 0)}
                 </IonCol>
                 <IonCol size={"10"} className={"centerCard"}>
-                    <CardLabelComponent cardSubtitle={""} cardTitle={labelItems[currIndex].title} content={labelItems[currIndex].description} onSwipe={handleSwipe}/>
+                    {labelItems.length && getCard(labelItems[currIndex], handleSwipe, currIndex)}
                 </IonCol>
                 <IonCol size={"1"} className={"labelingGrid"}>
                     {dropContainerChecker(true, labels, 1)}
@@ -66,28 +125,48 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, labels:
     );
 }
 
-interface LabelCard {
-    title: string;
-    description: string;
-    label: number|null;
-}
-
 function dropContainerChecker(isVertical:boolean, labels:any[], index:number) {
     let component = null;
 
-    console.log(labels)
-
     if (labels.length > index) {
-        component = <LabelDropContainerComponent labelName={labels[index].name} labelColor={labels[index].color} isVertical={isVertical} />
+        let color = getFixedColors(index);
+        component = <LabelDropContainerComponent labelName={labels[index].name} labelColor={color} isVertical={isVertical} />
     }
 
     return component;
 }
 
-function getLabelItems(): LabelCard[]
-{
-    // TODO: get items from backend => first 50 or so
-    return [{title: "Test Title", description: "test description", label: null}]
+function getFixedColors(index:number): string {
+    let color = ""
+
+    switch(index) {
+        case 0:
+            color = "ECD407";
+            break;
+        case 1:
+            color = "0956BF";
+            break;
+        case 2:
+            color = "379711";
+            break;
+        case 3:
+            color = "D72600";
+            break;
+    }
+
+    return color;
+}
+
+function getCard(labelItem:any, handleSwipe:(direction:string) =>void, currIndex:number) {
+
+    if (!labelItem) {
+        return null;
+    }
+    console.log("new card")
+    console.log(labelItem.content);
+    console.log(currIndex);
+
+    return <CardLabelComponent cardSubtitle={""} cardTitle={""} content={labelItem.content} onSwipe={handleSwipe}/>
 }
 
 function getDirectionIndex(direction:string): number

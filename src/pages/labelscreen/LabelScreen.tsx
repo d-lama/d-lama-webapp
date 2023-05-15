@@ -7,8 +7,20 @@ import { API_URL } from '../../App';
 import { getToken } from '../../token';
 import axios from 'axios';
 
+interface Project {
+    id: number;
+    name: string;
+    description: string;
+    labels: {
+        id: number;
+        name: string;
+        description: string;
+    }[];
+}
+
 const LabelScreen: React.FC<{ projectId: number }> = ({ projectId }) => {
-    const [projectInfo, setProjectInfo] = useState<{ id: number; name: string; description: string }[]>([]);
+    const [projectInfo, setProjectInfo] = useState<Project | undefined>();
+    const [dataPointAmount, setDataPointAmount] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -19,7 +31,7 @@ const LabelScreen: React.FC<{ projectId: number }> = ({ projectId }) => {
                         Authorization: `Bearer ${getToken()}`,
                     },
                 });
-                setProjectInfo(response.data.labels);
+                setProjectInfo(response.data);
             } catch (error) {
                 // TODO: return to project view or sth
             } finally {
@@ -30,19 +42,39 @@ const LabelScreen: React.FC<{ projectId: number }> = ({ projectId }) => {
         getProjectInfo();
     }, [projectId]);
 
+    useEffect(() => {
+            async function getDataPointsAmount() {
+                try {
+                    const response = await axios.get(`${API_URL}/DataPoint/${projectId}/GetNumberOfTextDataPoints`, {
+                        headers: {
+                            Authorization: `Bearer ${getToken()}`,
+                        },
+                    });
+                    setDataPointAmount(response.data);
+                } catch (error) {
+                    // TODO: return to project view or sth
+                }
+            }
+
+            getDataPointsAmount();
+        }, [dataPointAmount]);
+
     if (loading) {
         return <p>Loading...</p>;
     }
 
-    let progress = 50;
-    let maxNumberOfLabels = 150;
-    let containerNumber = 4;
+    if (!projectInfo) {
+        return <p>Project not found.</p>;
+    }
+
+    let progress = 0;
+    let containerNumber = projectInfo.labels.length;
 
     return (
         <IonPage>
             <IonContent fullscreen scrollY={false}>
-                <LabelNavigationComponent progress={progress} maxNumberOfLabels={maxNumberOfLabels} />
-                <LabelSwipeContainerComponent numberOfContainers={containerNumber} labels={projectInfo} />
+                <LabelNavigationComponent progress={progress} maxNumberOfLabels={dataPointAmount} />
+                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} />
             </IonContent>
         </IonPage>
     );
