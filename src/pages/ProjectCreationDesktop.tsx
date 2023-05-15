@@ -12,8 +12,7 @@ import {Input, InputType} from "../components/forms/Input";
 import {Button, ButtonType} from "../components/forms/Button";
 import axios from "axios";
 import './ProjectCreationDesktop.css';
-import {DynamicField} from "../components/forms/DynamicField";
-import {ElementData} from "../components/forms/DynamicField"
+import {DynamicField, ElementData} from "../components/forms/DynamicField";
 import {API_URL} from "../App";
 import {useAuthStore} from "../store/authStore";
 
