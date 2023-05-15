@@ -7,20 +7,27 @@ export enum ButtonType {
     submit = "submit",
 }
 
-
 export interface ButtonProps {
+    toolTipText?:string,
     buttonText: string,
     buttonType?: ButtonType | ButtonType.button,
     color?: string | "primary",
-    link?: string
+    link?: string,
+    action?: any,
 }
 
 export function Button(props: ButtonProps) {
     return (
-        <IonButton routerLink={props.link} type={props.buttonType} size="large" className="ion-text-center"
-                   expand="block"
-                   shape="round"
-                   style={{marginBottom: '30px', minWidth:'260px'}} color={props.color}
+        <IonButton
+            title={props.toolTipText}
+            routerLink={props.link}
+            type={props.buttonType}
+            size="large"
+            className="ion-text-center"
+            expand="block"
+            shape="round"
+            style={{marginBottom: '10px', minWidth:'260px'}} color={props.color}
+            onClick={props.action}
         >{props.buttonText}
         </IonButton>
     )

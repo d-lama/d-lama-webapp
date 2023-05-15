@@ -2,10 +2,8 @@ import { IonInput } from "@ionic/react";
 
 export enum InputType {
   email = "email",
-  //number = "number",
   password = "password",
   text = "text",
-  //url = "url",
   date = "date",
 }
 
