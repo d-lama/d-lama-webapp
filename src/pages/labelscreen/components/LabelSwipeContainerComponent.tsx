@@ -7,8 +7,7 @@ import LabelDropContainerComponent from "./LabelDropContainerComponent";
 import axios from "axios";
 import {API_URL} from "../../../App";
 import {getToken} from "../../../token";
-import LabelScreen from "../LabelScreen";
-
+import { Project } from "../LabelScreen";
 
 interface LabelCard {
     dataPointIndex: number;
@@ -18,11 +17,11 @@ interface LabelCard {
 }
 
 const MAX_LABEL_LOAD_AMOUNT = 5;
-let currId = 0;
 let currIndex = 0;
-let updatedLabelItems:LabelCard[] = [];
+let taggedInfo = [];
+let progressCount = 0;
 
-const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:{id:number,name:string,description:string, labels:{id:number, name:string, description:string}[]} }> = ({numberOfContainers, projectData}) => {
+const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:Project, setProgress:(progress:number) =>void} > = ({numberOfContainers, projectData, setProgress}) => {
     const [swipeDirection, setSwipeDirection] = useState<string>('');
     const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
 
@@ -36,15 +35,27 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
                         Authorization: `Bearer ${getToken()}`,
                     }
                 });
-
-            console.log(response.data);
             setLabelItems(response.data)
         } catch (error) {
             // TODO: return to project view or sth
         }
     }
 
-    let taggedInfo = [];
+    const sendLabeledData = async function sendLabeledData(projectId:number, labelItem:LabelCard) {
+        try {
+            const response = await axios.post(API_URL + `/DataPoint/${projectId}/LabelDataPoint/${labelItem.dataPointIndex}`,
+                labelItem.labeledDataPoints[0],
+                {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`,
+                        'Content-Type': 'application/json',
+                    }
+                })
+        } catch (error) {
+            // TODO: catch error -> return to previous site
+        }
+    }
+
     let labels = projectData.labels;
 
     if (numberOfContainers > 4) {
@@ -65,24 +76,25 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         // Create a copy of labelItems array
         let updatedLabelItems = [...labelItems];
 
-        console.log(labelItems);
-
         // Update the label in the copy
         updatedLabelItems[currIndex] = {...labelItems[currIndex]};
         updatedLabelItems[currIndex].labeledDataPoints[0] = labels[index].id;
-        taggedInfo[currIndex] = labelItems[currIndex];
-
-        console.log(updatedLabelItems);
+        taggedInfo[labelItems[currIndex].dataPointIndex] = labelItems[currIndex];
 
         // Set the state with the updated copy
+        sendLabeledData(projectData.id, updatedLabelItems[currIndex]);
         setLabelItems(updatedLabelItems);
+
+        // set progress bar
+        progressCount++;
+        setProgress(progressCount);
 
         // new current index
         currIndex++;
 
         if (currIndex === labelItems.length) {
-            console.log(currIndex);
-            console.log(labelItems.length);
+
+            // send labeled data and get new labelitems
             getLabelItems(projectData.id, labelItems[currIndex-1].dataPointIndex + 1);
 
             if (labelItems.length < MAX_LABEL_LOAD_AMOUNT) {
@@ -95,7 +107,8 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
 
 
     useEffect(() => {
-        getLabelItems(projectData.id, currId);
+        progressCount = projectData.labeledDataPointsCount;
+        getLabelItems(projectData.id, progressCount);
     }, []);
 
     return (
@@ -162,9 +175,6 @@ function getCard(labelItem:any, handleSwipe:(direction:string) =>void, currIndex
     if (!labelItem) {
         return null;
     }
-    console.log("new card")
-    console.log(labelItem.content);
-    console.log(currIndex);
 
     return <CardLabelComponent cardSubtitle={""} cardTitle={""} content={labelItem.content} onSwipe={handleSwipe}/>
 }

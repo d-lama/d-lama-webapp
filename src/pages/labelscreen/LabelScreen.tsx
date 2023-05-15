@@ -8,10 +8,11 @@ import { getToken } from '../../token';
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
-interface Project {
+export interface Project {
     id: number;
     name: string;
     description: string;
+    labeledDataPointsCount: number;
     labels: {
         id: number;
         name: string;
@@ -23,6 +24,7 @@ const LabelScreen: React.FC = () => {
     const [projectInfo, setProjectInfo] = useState<Project | undefined>();
     const [dataPointAmount, setDataPointAmount] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
+    const [progress, setProgress] = useState<number>(0);
 
     const projectParams:{id:string|undefined} = useParams();
     const projectId = projectParams.id;
@@ -35,6 +37,7 @@ const LabelScreen: React.FC = () => {
                         Authorization: `Bearer ${getToken()}`,
                     },
                 });
+                setProgress(response.data.labeledDataPointsCount);
                 setProjectInfo(response.data);
             } catch (error) {
                 // TODO: return to project view or sth
@@ -71,14 +74,13 @@ const LabelScreen: React.FC = () => {
         return <p>Project not found.</p>;
     }
 
-    let progress = 0;
     let containerNumber = projectInfo.labels.length;
 
     return (
         <IonPage>
             <IonContent fullscreen scrollY={false}>
                 <LabelNavigationComponent progress={progress} maxNumberOfLabels={dataPointAmount} />
-                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} />
+                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} setProgress={setProgress} />
             </IonContent>
         </IonPage>
     );
