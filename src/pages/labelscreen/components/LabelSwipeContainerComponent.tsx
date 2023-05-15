@@ -129,7 +129,7 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
 
 
     useEffect(() => {
-        progressCount = projectData.labeledDataPointsCount -1;
+        progressCount = projectData.labeledDataPointsCount;
         getLabelItems(projectData.id, progressCount);
     }, []);
 

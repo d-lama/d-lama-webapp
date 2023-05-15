@@ -46,12 +46,11 @@ const LabelScreen: React.FC = () => {
 
                 console.log(response);
 
-                if (response.data.labeledDataPointsCount != response.data.dataPointsCount) {
-                    setProgress(response.data.labeledDataPointsCount-1);
-                    setProjectInfo(response.data);
-                } else {
-                    setProgress(response.data.labeledDataPointsCount);
-                    setProjectInfo(response.data);
+
+                setProgress(response.data.labeledDataPointsCount);
+                setProjectInfo(response.data);
+
+                if (response.data.labeledDataPointsCount == response.data.dataPointsCount) {
                     setShowWin(true);
                 }
 
