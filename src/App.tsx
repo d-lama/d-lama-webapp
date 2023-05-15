@@ -73,12 +73,6 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
-          {/* <Route exact path="/projectcreation">
-            <ProjectCreationDesktop />
-          </Route>
-          <Route exact path="/fileUpload/:projectId">
-            <FileUploadDesktop />
-          </Route> */}
 
           {/* open routes */}
           <Route exact path="/login">

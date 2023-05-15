@@ -12,6 +12,8 @@ import React, { useRef, useState } from "react";
 import { useParams } from "react-router";
 import { API_URL } from "../App";
 import { Button, ButtonType } from "../components/forms/Button";
+import { HeaderDesktop } from "../components/header/HeaderDesktop";
+import { MenuDesktop } from "../components/menu/MenuDesktop";
 import { useAuthStore } from "../store/authStore";
 import "./ProjectCreationDesktop.css";
 
@@ -67,22 +69,9 @@ export default function FileUploadDesktop() {
 
   return (
     <>
-      <IonPage>
-        <IonHeader mode={"md"}>
-          <IonToolbar>
-            <IonTitle
-              style={{
-                fontSize: "4rem",
-                fontWeight: "bold",
-                marginTop: "20px",
-                marginBottom: "20px",
-              }}
-              className="ion-text-center"
-            >
-              D-LAMA
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
+      <MenuDesktop />
+      <IonPage id="main-content">
+        <HeaderDesktop />
         <IonContent class={"ion-padding"}>
           <div
             style={{
