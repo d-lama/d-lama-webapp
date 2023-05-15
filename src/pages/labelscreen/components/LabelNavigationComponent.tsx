@@ -3,14 +3,22 @@ import {IonGrid, IonRow, IonCol, IonButton, IonIcon, IonContent} from '@ionic/re
 import { returnDownBackOutline, helpOutline, arrowUndoOutline } from 'ionicons/icons';
 
 import './LabelNavigationComponent.css';
+import {useHistory} from "react-router-dom";
 
 const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:number, setShowHelp:(isShow:boolean)=>void, undoAction:(isUndo:boolean)=>void}> = ({progress, maxNumberOfLabels, setShowHelp, undoAction}) => {
+
+    const history = useHistory();
+
     const handleHelpButtonClick =  function handleHelpButtonClick() {
         setShowHelp(true);
     }
 
     const handleUndoAction = function handleUndoAction() {
         undoAction(true);
+    }
+
+    const returnActionHandler = function returnActionHandler() {
+        history.push('/home');
     }
 
     return (
@@ -34,10 +42,6 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
             </IonRow>
         </IonGrid>
     );
-}
-
-function returnActionHandler() {
-
 }
 
 function ProgressLabelingBar(progress:number, maxNumberOfLabels:number) {

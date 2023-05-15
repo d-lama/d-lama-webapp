@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import HelpComponent from "./components/HelpComponent";
 import WinComponent from "./components/WinComponent";
+import { useHistory } from 'react-router-dom'
 
 export interface Project {
     id: number;
@@ -34,6 +35,7 @@ const LabelScreen: React.FC = () => {
 
     const projectParams:{id:string|undefined} = useParams();
     const projectId = projectParams.id;
+    const history = useHistory();
 
     useEffect(() => {
         async function getProjectInfo() {
@@ -44,9 +46,6 @@ const LabelScreen: React.FC = () => {
                     },
                 });
 
-                console.log(response);
-
-
                 setProgress(response.data.labeledDataPointsCount);
                 setProjectInfo(response.data);
 
@@ -55,7 +54,8 @@ const LabelScreen: React.FC = () => {
                 }
 
             } catch (error) {
-                // TODO: return to project view or sth
+                // return to project view
+                history.push('/home');
             } finally {
                 setLoading(false);
             }
@@ -74,7 +74,8 @@ const LabelScreen: React.FC = () => {
                     });
                     setDataPointAmount(response.data);
                 } catch (error) {
-                    // TODO: return to project view or sth
+                    // return to project view
+                    history.push('/home');
                 }
             }
 

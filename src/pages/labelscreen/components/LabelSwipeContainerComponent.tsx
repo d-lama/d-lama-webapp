@@ -8,6 +8,7 @@ import axios from "axios";
 import {API_URL} from "../../../App";
 import {getToken} from "../../../token";
 import { Project } from "../LabelScreen";
+import { useHistory } from 'react-router-dom'
 
 interface LabelCard {
     dataPointIndex: number;
@@ -24,6 +25,8 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
     const [swipeDirection, setSwipeDirection] = useState<string>('');
     const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
 
+    const history = useHistory();
+
     const getLabelItems = async function getLabelItems(projectId:number, startIndex:number)
     {
         try {
@@ -36,7 +39,7 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
                 });
             setLabelItems(response.data)
         } catch (error) {
-            // TODO: return to project view or sth
+            // do nothing
         }
     }
 
@@ -51,7 +54,8 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
                     }
                 })
         } catch (error) {
-            // TODO: catch error -> return to previous site
+            // return to project view
+            history.push('/home');
         }
     }
 
@@ -69,7 +73,8 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
             setProgress(targetIndex);
             getLabelItems(projectData.id, targetIndex);
         } catch (error) {
-            // TODO: catch error -> return to previous site
+            // return to project view
+            history.push('/home');
         } finally {
 
             // Reset the undo action state to false
@@ -114,15 +119,12 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         if (currIndex === labelItems.length) {
             if (projectData.dataPointsCount === progressCount) {
                 setShowWin(true);
+                return;
             }
 
             // send labeled data and get new labelitems
             getLabelItems(projectData.id, labelItems[currIndex-1].dataPointIndex + 1);
 
-            if (labelItems.length < MAX_LABEL_LOAD_AMOUNT) {
-                // There are no longer any items to label
-                // TODO: show result ranking screen or return to project Overview
-            }
             currIndex = 0;
         }
     }

@@ -3,8 +3,15 @@ import {IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon
 // since its the same css
 import './HelpComponent.css';
 import {returnDownBackOutline} from "ionicons/icons";
+import {useHistory} from "react-router-dom";
 
 const WinComponent: React.FC = () => {
+
+    const history = useHistory();
+
+    const returnActionHandler = function returnActionHandler() {
+        history.push('/home');
+    }
 
     return (
         <div className="help-overlay">
@@ -23,9 +30,5 @@ const WinComponent: React.FC = () => {
         </div>
     );
 };
-
-function returnActionHandler() {
-
-}
 
 export default WinComponent;
