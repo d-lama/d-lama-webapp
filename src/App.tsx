@@ -3,10 +3,9 @@ import { IonReactRouter } from "@ionic/react-router";
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import Home from "./pages/Home";
+import Login from "./pages/login";
 import Registration from "./pages/registration/Registration";
 import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
-import Login from "./pages/login";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,17 +25,20 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
-import "./theme/variables.css";
-import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
 import FileUploadDesktop from "./pages/FileUploadDesktop";
+import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
+import Home from "./pages/home";
+import "./theme/variables.css";
 
 setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
+export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
-  let isAuthenticated = useUserStore().user !== null;
+  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
   const [, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -57,6 +59,20 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
+          <ProtectedRoute
+            exact
+            path="/projectcreation"
+            component={ProjectCreationDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
+          <ProtectedRoute
+            exact
+            path="/fileUpload/:projectId"
+            component={FileUploadDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
 
           {/* open routes */}
           <Route exact path="/login">
@@ -71,14 +87,6 @@ const App: React.FC = () => {
             ) : (
               <RegistrationSucceed />
             )}
-          </Route>
-          <Route exact path="/projectcreation">
-            {/*TODO: insert redirect*/}
-            <ProjectCreationDesktop/>
-          </Route>
-          <Route exact path="/fileUpload/:projectId">
-            {/*TODO: insert redirect*/}
-            <FileUploadDesktop/>
           </Route>
 
           {/* redirect routes */}
