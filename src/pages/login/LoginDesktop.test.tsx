@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import LoginDesktop from "./LoginDesktop";
 
 test("renders without crashing", () => {
