@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Home from "./pages/Home";
-import Registration from "./pages/Registration";
-import RegistrationSucceed from "./pages/RegistrationSucceed";
+import Registration from "./pages/registration/Registration";
+import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
 import Login from "./pages/login";
 import { useUserStore } from "./store/userStore";
 
