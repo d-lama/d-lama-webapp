@@ -3,7 +3,7 @@ import { play } from "ionicons/icons";
 import React from "react";
 import "./ProjectButton.css";
 
-interface IProjectButtonProps {
+export interface IProjectButtonProps {
   projectId: number;
   title: string;
   progress: number;
@@ -18,7 +18,6 @@ export const ProjectButton: React.FC<IProjectButtonProps> = ({
     width: `${progress}%`,
   };
 
-  // TODO: add onClick with link to specific labeling project
   return (
     <IonButton
       className="projectBtn-btn"

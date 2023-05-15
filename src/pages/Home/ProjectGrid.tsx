@@ -1,7 +1,8 @@
 import { IonCol, IonProgressBar, useIonToast } from "@ionic/react";
 import { flameOutline } from "ionicons/icons";
 import React from "react";
-import { IProjectsData, useProjects } from "../../hooks/useProjects";
+import { IProjectData } from "../../hooks/useProject";
+import { useProjects } from "../../hooks/useProjects";
 import { ProjectButton } from "./ProjectButton";
 
 export const ProjectGrid: React.FC = () => {
@@ -25,14 +26,15 @@ export const ProjectGrid: React.FC = () => {
 
   return (
     <>
-      {projectsQuery.data.map((project: IProjectsData, i: number) => (
+      {projectsQuery.data.map((project: IProjectData, i: number) => (
         <IonCol size="12" key={i}>
-          {/* TODO: fix progress -> add calculation */}
           <ProjectButton
             key={project.id}
             projectId={project.id}
-            title={project.name}
-            progress={Math.random() * 100}
+            title={project.projectName}
+            progress={
+              (project.labeledDataPointsCount / project.dataPointsCount) * 100
+            }
           />
         </IonCol>
       ))}
