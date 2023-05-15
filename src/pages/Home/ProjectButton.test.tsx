@@ -1,8 +1,9 @@
 import { RenderResult, render, screen } from "@testing-library/react";
-import { ProjectButton } from "./ProjectButton";
+import { IProjectButtonProps, ProjectButton } from "./ProjectButton";
 
 describe("ProjectButton", () => {
-  const defaultProps = {
+  const defaultProps: IProjectButtonProps = {
+    projectId: 1,
     title: "Project Title",
     progress: 50,
   };

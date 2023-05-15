@@ -1,7 +1,7 @@
 import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import { Button, ButtonType } from "../../components/Forms/Button";
 import { Input, InputType } from "../../components/Forms/Input";
-import { HeaderMobile } from "../../components/Header/HeaderMobile";
+import { HeaderMobile } from "../../components/header/HeaderMobile";
 import "./Login.css";
 
 export default function LoginMobile(props: any) {

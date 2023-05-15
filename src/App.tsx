@@ -3,10 +3,10 @@ import { IonReactRouter } from "@ionic/react-router";
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import RegistrationSucceed from "./pages/RegistrationSucceed";
+import Home from "./pages/home";
+import Login from "./pages/login";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */

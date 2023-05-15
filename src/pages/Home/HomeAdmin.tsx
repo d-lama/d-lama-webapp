@@ -1,6 +1,6 @@
 import { IonContent, IonPage } from "@ionic/react";
-import { HeaderDesktop } from "../../components/Header/HeaderDesktop";
-import { MenuDesktop } from "../../components/Menu/MenuDesktop";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
+import { MenuDesktop } from "../../components/menu/MenuDesktop";
 
 export const HomeAdmin: React.FC = () => {
   return (

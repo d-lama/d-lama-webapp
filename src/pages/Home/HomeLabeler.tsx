@@ -7,7 +7,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import { add } from "ionicons/icons";
-import { HeaderMobile } from "../../components/Header/HeaderMobile";
+import { HeaderMobile } from "../../components/header/HeaderMobile";
 import { ProjectGrid } from "./ProjectGrid";
 
 export const HomeLabeler: React.FC = () => {

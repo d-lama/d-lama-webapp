@@ -13,8 +13,8 @@ import {
 } from "@ionic/react";
 import { closeOutline } from "ionicons/icons";
 import { useUserStore } from "../../store/userStore";
-import { DarkModeToggle } from "../Header/DarkModeToggle";
-import { LogOut } from "../Header/LogOut";
+import { DarkModeToggle } from "../header/DarkModeToggle";
+import { LogOut } from "../header/LogOut";
 
 export const MenuDesktop: React.FC = () => {
   let isAuthenticated = useUserStore().user?.isAuthenticated || false;

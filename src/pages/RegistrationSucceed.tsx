@@ -5,8 +5,8 @@ import {
   IonLabel,
   IonPage,
 } from "@ionic/react";
-import { Button, ButtonType } from "../components/Forms/Button";
-import { HeaderMobile } from "../components/Header/HeaderMobile";
+import { Button, ButtonType } from "../components/forms/Button";
+import { HeaderMobile } from "../components/header/HeaderMobile";
 import "./RegistrationSucceed.css";
 
 export default function RegistrationSucceed() {

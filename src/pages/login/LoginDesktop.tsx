@@ -1,7 +1,7 @@
 import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import { Button, ButtonType } from "../../components/Forms/Button";
 import { Input, InputType } from "../../components/Forms/Input";
-import { HeaderDesktop } from "../../components/Header/HeaderDesktop";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import "./LoginDesktop.css";
 
 export default function LoginDesktop(props: any) {
