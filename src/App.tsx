@@ -3,10 +3,9 @@ import { IonReactRouter } from "@ionic/react-router";
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import Registration from "./pages/Registration";
-import RegistrationSucceed from "./pages/RegistrationSucceed";
-import Home from "./pages/home";
 import Login from "./pages/login";
+import Registration from "./pages/registration/Registration";
+import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,6 +25,9 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
+import FileUploadDesktop from "./pages/FileUploadDesktop";
+import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
+import Home from "./pages/home";
 import "./theme/variables.css";
 
 setupIonicReact();
@@ -57,6 +59,26 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
+          <ProtectedRoute
+            exact
+            path="/projectcreation"
+            component={ProjectCreationDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
+          <ProtectedRoute
+            exact
+            path="/fileUpload/:projectId"
+            component={FileUploadDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
+          {/* <Route exact path="/projectcreation">
+            <ProjectCreationDesktop />
+          </Route>
+          <Route exact path="/fileUpload/:projectId">
+            <FileUploadDesktop />
+          </Route> */}
 
           {/* open routes */}
           <Route exact path="/login">

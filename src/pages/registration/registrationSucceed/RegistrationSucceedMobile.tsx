@@ -1,19 +1,33 @@
 import {
   IonAvatar,
   IonContent,
+  IonHeader,
   IonItem,
   IonLabel,
   IonPage,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
-import { Button, ButtonType } from "../components/forms/Button";
-import { HeaderMobile } from "../components/header/HeaderMobile";
-import "./RegistrationSucceed.css";
+import { Button, ButtonType } from "../../../components/Forms/Button";
 
-export default function RegistrationSucceed() {
+export default function RegistrationSucceedMobile() {
   return (
     <>
       <IonPage>
-        <HeaderMobile />
+        <IonHeader class="ion-no-border" mode={"md"}>
+          <IonToolbar>
+            <IonTitle
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                marginTop: "60px",
+              }}
+              className="ion-text-center"
+            >
+              D-LAMA
+            </IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonContent>
           <div
             style={{
@@ -28,9 +42,9 @@ export default function RegistrationSucceed() {
               <>
                 <IonAvatar className="item-avatar">
                   <svg
-                    width="230"
-                    height="217"
-                    viewBox="0 0 250 215"
+                    width="245"
+                    height="225"
+                    viewBox="-23 0 255 215"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
