@@ -33,7 +33,6 @@ setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
 
-/* Token stuff -> TODO: export to token.js*/
 
 
 setupIonicReact();
@@ -66,8 +65,8 @@ const App: React.FC = () => {
                     <Route exact path="/registrationsucceed">
                         <RegistrationSucceed/>
                     </Route>
-                    <Route exact path="/label">
-                        <LabelScreen projectId={1}/>
+                    <Route exact path="/label/:id">
+                        <LabelScreen />
                     </Route>
                     <Route exact path="/">
                         <Redirect to="/home"/>

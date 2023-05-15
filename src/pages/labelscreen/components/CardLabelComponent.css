@@ -11,6 +11,7 @@ ion-card-header.ios {
 
 .reset-animation {
     animation: reset 0.01s;
+    transition: ease-in 0.3s
 }
 
 @keyframes reset {

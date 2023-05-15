@@ -5,6 +5,7 @@ import LabelNavigationComponent from './components/LabelNavigationComponent';
 import LabelSwipeContainerComponent from './components/LabelSwipeContainerComponent';
 import { API_URL } from '../../App';
 import { getToken } from '../../token';
+import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
 interface Project {
@@ -18,10 +19,13 @@ interface Project {
     }[];
 }
 
-const LabelScreen: React.FC<{ projectId: number }> = ({ projectId }) => {
+const LabelScreen: React.FC = () => {
     const [projectInfo, setProjectInfo] = useState<Project | undefined>();
     const [dataPointAmount, setDataPointAmount] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const projectParams:{id:string|undefined} = useParams();
+    const projectId = projectParams.id;
 
     useEffect(() => {
         async function getProjectInfo() {
