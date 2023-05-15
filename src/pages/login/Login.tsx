@@ -47,7 +47,7 @@ export default function Login() {
     }
 
     axios
-      .post(API_URL + "/user/authToken", {
+      .post(`${API_URL}/user/authToken`, {
         email: mask.email,
         password: mask.password,
       })
