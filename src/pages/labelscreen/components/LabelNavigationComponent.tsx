@@ -32,14 +32,12 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
                     <IonButton onClick={handleUndoAction} size="small"><IonIcon slot="icon-only" icon={arrowUndoOutline}></IonIcon></IonButton>
                 </IonCol>
             </IonRow>
-
-
         </IonGrid>
     );
 }
 
 function returnActionHandler() {
-    
+
 }
 
 function ProgressLabelingBar(progress:number, maxNumberOfLabels:number) {

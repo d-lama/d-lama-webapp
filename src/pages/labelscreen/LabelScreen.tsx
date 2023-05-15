@@ -40,7 +40,7 @@ const LabelScreen: React.FC = () => {
                         Authorization: `Bearer ${getToken()}`,
                     },
                 });
-                setProgress(response.data.labeledDataPointsCount);
+                setProgress(response.data.labeledDataPointsCount - 1);
                 setProjectInfo(response.data);
             } catch (error) {
                 // TODO: return to project view or sth

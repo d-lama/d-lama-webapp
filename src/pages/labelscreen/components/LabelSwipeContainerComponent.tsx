@@ -64,10 +64,16 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
                     }
                 })
 
-            getLabelItems(projectData.id, targetIndex);
+            currIndex = 0;
+            progressCount--;
             setProgress(targetIndex);
+            getLabelItems(projectData.id, targetIndex);
         } catch (error) {
             // TODO: catch error -> return to previous site
+        } finally {
+
+            // Reset the undo action state to false
+            setUndoAction(false);
         }
     }
 
@@ -120,7 +126,7 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
 
 
     useEffect(() => {
-        progressCount = projectData.labeledDataPointsCount;
+        progressCount = projectData.labeledDataPointsCount -1;
         getLabelItems(projectData.id, progressCount);
     }, []);
 
@@ -129,11 +135,10 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         if (undoAction) {
             if (progressCount > 0) {
                 // do undo
-                undoLastLabel(projectData.id, progressCount - 1);
+                undoLastLabel(projectData.id, progressCount-1);
+            } else {
+                setUndoAction(false);
             }
-
-            // Reset the undo action state to false
-            setUndoAction(false);
         }
     }, [undoAction]);
 
