@@ -8,12 +8,14 @@ import { getToken } from '../../token';
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import HelpComponent from "./components/HelpComponent";
+import WinComponent from "./components/WinComponent";
 
 export interface Project {
     id: number;
     projectName: string;
     description: string;
     labeledDataPointsCount: number;
+    dataPointsCount: number;
     labels: {
         id: number;
         name: string;
@@ -28,6 +30,7 @@ const LabelScreen: React.FC = () => {
     const [progress, setProgress] = useState<number>(0);
     const [showHelp, setShowHelp] = useState(false);
     const [undoAction, setUndoAction] = useState<boolean>(false);
+    const [showWin, setShowWin] = useState(false);
 
     const projectParams:{id:string|undefined} = useParams();
     const projectId = projectParams.id;
@@ -40,8 +43,18 @@ const LabelScreen: React.FC = () => {
                         Authorization: `Bearer ${getToken()}`,
                     },
                 });
-                setProgress(response.data.labeledDataPointsCount - 1);
-                setProjectInfo(response.data);
+
+                console.log(response);
+
+                if (response.data.labeledDataPointsCount != response.data.dataPointsCount) {
+                    setProgress(response.data.labeledDataPointsCount-1);
+                    setProjectInfo(response.data);
+                } else {
+                    setProgress(response.data.labeledDataPointsCount);
+                    setProjectInfo(response.data);
+                    setShowWin(true);
+                }
+
             } catch (error) {
                 // TODO: return to project view or sth
             } finally {
@@ -83,10 +96,11 @@ const LabelScreen: React.FC = () => {
         <IonPage>
             <IonContent fullscreen scrollY={false}>
                 <LabelNavigationComponent progress={progress} maxNumberOfLabels={dataPointAmount} setShowHelp={setShowHelp} undoAction={setUndoAction} />
-                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} setProgress={setProgress} setUndoAction={setUndoAction} undoAction={undoAction} />
+                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} setProgress={setProgress} setUndoAction={setUndoAction} undoAction={undoAction} setShowWin={setShowWin} />
             </IonContent>
 
             {showHelp && <HelpComponent projectInfo={projectInfo} setShowHelp={setShowHelp} />}
+            { showWin && <WinComponent />}
         </IonPage>
     );
 };

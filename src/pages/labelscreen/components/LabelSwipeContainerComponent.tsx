@@ -20,7 +20,7 @@ const MAX_LABEL_LOAD_AMOUNT = 5;
 let currIndex = 0;
 let progressCount = 0;
 
-const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:Project, setProgress:(progress:number) =>void, setUndoAction:(isUndo:boolean) => void, undoAction:boolean} > = ({numberOfContainers, projectData, setProgress, setUndoAction, undoAction}) => {
+const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, projectData:Project, setProgress:(progress:number) =>void, setUndoAction:(isUndo:boolean) => void, undoAction:boolean, setShowWin:(isShowWin:boolean)=>void} > = ({numberOfContainers, projectData, setProgress, setUndoAction, undoAction, setShowWin}) => {
     const [swipeDirection, setSwipeDirection] = useState<string>('');
     const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
 
@@ -112,6 +112,9 @@ const LabelSwipeContainerComponent: React.FC<{numberOfContainers:number, project
         currIndex++;
 
         if (currIndex === labelItems.length) {
+            if (projectData.dataPointsCount === progressCount) {
+                setShowWin(true);
+            }
 
             // send labeled data and get new labelitems
             getLabelItems(projectData.id, labelItems[currIndex-1].dataPointIndex + 1);
