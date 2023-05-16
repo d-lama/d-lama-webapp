@@ -1,108 +1,126 @@
-import { IonContent, IonPage } from '@ionic/react';
-import './LabelScreen.css';
-import React, { useState, useEffect } from 'react';
-import LabelNavigationComponent from './components/LabelNavigationComponent';
-import LabelSwipeContainerComponent from './components/LabelSwipeContainerComponent';
-import { API_URL } from '../../App';
-import { getToken } from '../../token';
-import { useParams } from 'react-router-dom'
-import axios from 'axios';
+import { IonContent, IonPage } from "@ionic/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { API_URL } from "../../App";
+import { useAuthStore } from "../../store/authStore";
+import "./LabelScreen.css";
 import HelpComponent from "./components/HelpComponent";
+import LabelNavigationComponent from "./components/LabelNavigationComponent";
+import LabelSwipeContainerComponent from "./components/LabelSwipeContainerComponent";
 import WinComponent from "./components/WinComponent";
-import { useHistory } from 'react-router-dom'
 
 export interface Project {
+  id: number;
+  projectName: string;
+  description: string;
+  labeledDataPointsCount: number;
+  dataPointsCount: number;
+  labels: {
     id: number;
-    projectName: string;
+    name: string;
     description: string;
-    labeledDataPointsCount: number;
-    dataPointsCount: number;
-    labels: {
-        id: number;
-        name: string;
-        description: string;
-    }[];
+  }[];
 }
 
 const LabelScreen: React.FC = () => {
-    const [projectInfo, setProjectInfo] = useState<Project | undefined>();
-    const [dataPointAmount, setDataPointAmount] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [progress, setProgress] = useState<number>(0);
-    const [showHelp, setShowHelp] = useState(false);
-    const [undoAction, setUndoAction] = useState<boolean>(false);
-    const [showWin, setShowWin] = useState(false);
+  const [projectInfo, setProjectInfo] = useState<Project | undefined>();
+  const [dataPointAmount, setDataPointAmount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [progress, setProgress] = useState<number>(0);
+  const [showHelp, setShowHelp] = useState(false);
+  const [undoAction, setUndoAction] = useState<boolean>(false);
+  const [showWin, setShowWin] = useState(false);
+  const { token } = useAuthStore();
 
-    const projectParams:{id:string|undefined} = useParams();
-    const projectId = projectParams.id;
-    const history = useHistory();
+  const projectParams: { id: string | undefined } = useParams();
+  const projectId = projectParams.id;
+  const history = useHistory();
 
-    useEffect(() => {
-        async function getProjectInfo() {
-            try {
-                const response = await axios.get(`${API_URL}/Project/${projectId}`, {
-                    headers: {
-                        Authorization: `Bearer ${getToken()}`,
-                    },
-                });
+  useEffect(() => {
+    async function getProjectInfo() {
+      try {
+        const response = await axios.get(`${API_URL}/Project/${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-                setProgress(response.data.labeledDataPointsCount);
-                setProjectInfo(response.data);
+        setProgress(response.data.labeledDataPointsCount);
+        setProjectInfo(response.data);
 
-                if (response.data.labeledDataPointsCount == response.data.dataPointsCount) {
-                    setShowWin(true);
-                }
-
-            } catch (error) {
-                // return to project view
-                history.push('/home');
-            } finally {
-                setLoading(false);
-            }
+        if (
+          response.data.labeledDataPointsCount == response.data.dataPointsCount
+        ) {
+          setShowWin(true);
         }
-
-        getProjectInfo();
-    }, [projectId]);
-
-    useEffect(() => {
-            async function getDataPointsAmount() {
-                try {
-                    const response = await axios.get(`${API_URL}/DataPoint/${projectId}/GetNumberOfTextDataPoints`, {
-                        headers: {
-                            Authorization: `Bearer ${getToken()}`,
-                        },
-                    });
-                    setDataPointAmount(response.data);
-                } catch (error) {
-                    // return to project view
-                    history.push('/home');
-                }
-            }
-
-            getDataPointsAmount();
-        }, [dataPointAmount]);
-
-    if (loading) {
-        return <p>Loading...</p>;
+      } catch (error) {
+        // return to project view
+        history.push("/home");
+      } finally {
+        setLoading(false);
+      }
     }
 
-    if (!projectInfo) {
-        return <p>Project not found.</p>;
+    getProjectInfo();
+  }, [projectId]);
+
+  useEffect(() => {
+    async function getDataPointsAmount() {
+      try {
+        const response = await axios.get(
+          `${API_URL}/DataPoint/${projectId}/GetNumberOfTextDataPoints`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setDataPointAmount(response.data);
+      } catch (error) {
+        // return to project view
+        history.push("/home");
+      }
     }
 
-    let containerNumber = projectInfo.labels.length;
+    getDataPointsAmount();
+  }, [dataPointAmount]);
 
-    return (
-        <IonPage>
-            <IonContent fullscreen scrollY={false}>
-                <LabelNavigationComponent progress={progress} maxNumberOfLabels={dataPointAmount} setShowHelp={setShowHelp} undoAction={setUndoAction} />
-                <LabelSwipeContainerComponent numberOfContainers={containerNumber} projectData={projectInfo} setProgress={setProgress} setUndoAction={setUndoAction} undoAction={undoAction} setShowWin={setShowWin} />
-            </IonContent>
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-            {showHelp && <HelpComponent projectInfo={projectInfo} setShowHelp={setShowHelp} />}
-            { showWin && <WinComponent />}
-        </IonPage>
-    );
+  if (!projectInfo) {
+    return <p>Project not found.</p>;
+  }
+
+  let containerNumber = projectInfo.labels.length;
+
+  return (
+    <IonPage>
+      <IonContent fullscreen scrollY={false}>
+        <LabelNavigationComponent
+          progress={progress}
+          maxNumberOfLabels={dataPointAmount}
+          setShowHelp={setShowHelp}
+          undoAction={setUndoAction}
+        />
+        <LabelSwipeContainerComponent
+          numberOfContainers={containerNumber}
+          projectData={projectInfo}
+          setProgress={setProgress}
+          setUndoAction={setUndoAction}
+          undoAction={undoAction}
+          setShowWin={setShowWin}
+        />
+      </IonContent>
+
+      {showHelp && (
+        <HelpComponent projectInfo={projectInfo} setShowHelp={setShowHelp} />
+      )}
+      {showWin && <WinComponent />}
+    </IonPage>
+  );
 };
 
 export default LabelScreen;
