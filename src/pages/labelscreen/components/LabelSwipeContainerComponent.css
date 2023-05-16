@@ -1,0 +1,22 @@
+.screenHeight {
+    height: 84%;
+    --ion-grid-padding: 0px;
+}
+
+.growScreen {
+    height: 97%
+}
+
+.centerCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.horizontalWidth {
+    height: 30px;
+}
+
+.labelingGrid {
+    padding: 0px;
+}

@@ -1,0 +1,21 @@
+/* iOS places the subtitle above the title */
+ion-card-header.ios {
+    display: flex;
+    flex-flow: column-reverse;
+}
+
+.labelingCard {
+    min-width: 300px;
+    max-width: 300px;
+}
+
+.reset-animation {
+    animation: reset 0.01s;
+    transition: ease-in 0.3s
+}
+
+@keyframes reset {
+    0% {
+        transform: none;
+    }
+}
