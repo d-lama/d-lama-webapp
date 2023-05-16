@@ -1,34 +1,13 @@
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import { Button, ButtonType } from "../../components/forms/Button";
 import { Input, InputType } from "../../components/forms/Input";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import "./LoginDesktop.css";
 
 export default function LoginDesktop(props: any) {
   return (
     <IonPage>
-      <IonHeader mode={"md"}>
-        <IonToolbar>
-          <IonTitle
-            style={{
-              fontSize: "4rem",
-              fontWeight: "bold",
-              marginTop: "20px",
-              marginBottom: "20px",
-            }}
-            className="ion-text-center"
-          >
-            D-LAMA
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <HeaderDesktop />
       <IonContent>
         <div
           style={{

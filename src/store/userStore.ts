@@ -2,10 +2,11 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface IUser {
-  UserId: number;
+  userId: number;
   name: string;
   email: string;
-  IsAdmin: boolean;
+  isAdmin: boolean;
+  isAuthenticated: boolean;
 }
 
 interface IUserStoreState {

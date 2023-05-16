@@ -3,11 +3,13 @@ import { IonReactRouter } from "@ionic/react-router";
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import Home from "./pages/Home";
-import Registration from "./pages/Registration";
-import RegistrationSucceed from "./pages/RegistrationSucceed";
-import Login from "./pages/login";
+import FileUploadDesktop from "./pages/FileUploadDesktop";
+import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
+import Home from "./pages/home";
 import LabelScreen from "./pages/labelscreen/LabelScreen";
+import Login from "./pages/login";
+import Registration from "./pages/registration/Registration";
+import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
@@ -32,10 +34,12 @@ import "./theme/variables.css";
 setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
+export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
-  let isAuthenticated = useUserStore().user !== null;
+  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
   const [, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -56,6 +60,20 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
+          <ProtectedRoute
+            exact
+            path="/projectcreation"
+            component={ProjectCreationDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
+          <ProtectedRoute
+            exact
+            path="/fileUpload/:projectId"
+            component={FileUploadDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
 
           {/* open routes */}
           <Route exact path="/login">
@@ -72,12 +90,7 @@ const App: React.FC = () => {
             )}
           </Route>
           <Route exact path="/label/:id">
-            {isAuthenticated ? (
-                <LabelScreen />
-            ) : (
-                <Redirect to="/home" />
-            )}
-            
+            {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
           </Route>
 
           {/* redirect routes */}

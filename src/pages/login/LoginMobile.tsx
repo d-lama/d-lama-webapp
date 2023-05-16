@@ -1,29 +1,13 @@
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import { Button, ButtonType } from "../../components/forms/Button";
 import { Input, InputType } from "../../components/forms/Input";
+import { HeaderMobile } from "../../components/header/HeaderMobile";
 import "./Login.css";
 
 export default function LoginMobile(props: any) {
   return (
     <IonPage>
-      <IonHeader class="ion-no-border" mode={"md"}>
-        <IonToolbar>
-          <IonTitle
-            style={{ fontSize: "3rem", fontWeight: "bold", marginTop: "60px" }}
-            className="ion-text-center"
-          >
-            D-LAMA
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <HeaderMobile />
       <IonContent>
         <div
           style={{

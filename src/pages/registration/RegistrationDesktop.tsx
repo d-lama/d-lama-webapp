@@ -9,87 +9,17 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import axios from "axios";
-import React, { useState } from "react";
-import { API_URL } from "../App";
-import { Button, ButtonType } from "../components/forms/Button";
-import { Input, InputType } from "../components/forms/Input";
-import { isEmailValid } from "../helper/formHelper";
+import React from "react";
+import { Button, ButtonType } from "../../components/forms/Button";
+import { Input, InputType } from "../../components/forms/Input";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
+import "./RegistrationDesktop.css";
 
-function Registration() {
-  const [labelText, setLabelText] = useState("");
-  const [mask, setMask] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    birthDate: "",
-    isAdmin: false,
-  });
-
-  function handleChange(e: { target: { name: any; value: any } }) {
-    setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  function handleIsAdminChange(e: any) {
-    if (e.detail.value === undefined) return;
-    let isAdminValue = e.detail.value === "admin";
-    setMask((prev) => ({ ...prev, isAdmin: isAdminValue }));
-  }
-
-  const handleSubmit = function (e: React.SyntheticEvent) {
-    e.preventDefault();
-    if (!isEmailValid(mask.email)) {
-      setLabelText("Invalid email!");
-      return;
-    }
-    if (mask.password !== mask.confirmPassword) {
-      setLabelText("Confirm password is not the same!");
-      return;
-    }
-    axios
-      .post(API_URL + "/user", {
-        firstName: mask.firstName,
-        lastName: mask.lastName,
-        email: mask.email,
-        password: mask.password,
-        confirmPassword: mask.confirmPassword,
-        birthDate: mask.birthDate,
-        isAdmin: mask.isAdmin,
-      })
-      .then(() => {
-        window.location.href = "/registrationSucceed";
-      })
-      .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          setLabelText(error.message);
-        } else {
-          setLabelText("Connection failed!");
-          setTimeout(() => {
-            setLabelText("");
-          }, 3000);
-        }
-      });
-  };
-
+export default function RegistrationDesktop(props: any) {
   return (
     <>
       <IonPage>
-        <IonHeader class="ion-no-border" mode={"md"}>
-          <IonToolbar>
-            <IonTitle
-              style={{
-                fontSize: "3rem",
-                fontWeight: "bold",
-                marginTop: "60px",
-              }}
-              className="ion-text-center"
-            >
-              D-LAMA
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        <HeaderDesktop />
         <IonContent class={"ion-padding"}>
           <div
             style={{
@@ -101,13 +31,14 @@ function Registration() {
             }}
           >
             <form
-              style={{ width: "80%", maxWidth: "400px" }}
+              className={"custom-border"}
+              style={{ width: "80%", maxWidth: "600px" }}
               data-testid="registration-form"
-              onSubmit={handleSubmit}
+              onSubmit={props.handleLogin}
             >
               <Input
                 name={"lastName"}
-                change={handleChange}
+                change={props.handleChange}
                 inputName={"Enter Last Name"}
                 placeholder={"Muster"}
                 helperText={"Enter a valid name"}
@@ -116,7 +47,7 @@ function Registration() {
               />
               <Input
                 name={"firstName"}
-                change={handleChange}
+                change={props.handleChange}
                 inputName={"Enter First Name"}
                 placeholder={"Max"}
                 helperText={"Enter a valid name"}
@@ -125,7 +56,7 @@ function Registration() {
               />
               <Input
                 name={"birthDate"}
-                change={handleChange}
+                change={props.handleChange}
                 inputName={"Birthdate"}
                 placeholder={""}
                 helperText={"Enter a valid birth date"}
@@ -134,7 +65,7 @@ function Registration() {
               />
               <Input
                 name={"email"}
-                change={handleChange}
+                change={props.handleChange}
                 inputName={"Enter Email"}
                 placeholder={"max.muster@gmail.com"}
                 helperText={"Enter a valid email"}
@@ -143,7 +74,7 @@ function Registration() {
               />
               <Input
                 name={"password"}
-                change={handleChange}
+                change={props.handleChange}
                 inputName={"Enter Password"}
                 placeholder={"**************"}
                 helperText={"Enter a valid password"}
@@ -152,14 +83,14 @@ function Registration() {
               />
               <Input
                 name={"confirmPassword"}
-                change={handleChange}
+                change={props.handleChange}
                 inputName={"Confirm Password"}
                 placeholder={"**************"}
                 helperText={"Confirm the password"}
                 errorText={"Invalid password"}
                 inputType={InputType.password}
               />
-              <IonSegment onIonChange={handleIsAdminChange}>
+              <IonSegment onIonChange={props.handleIsAdminChange}>
                 <IonSegmentButton value="labeler">
                   <IonLabel>Labeler</IonLabel>
                 </IonSegmentButton>
@@ -167,13 +98,13 @@ function Registration() {
                   <IonLabel>Administrator</IonLabel>
                 </IonSegmentButton>
               </IonSegment>
-              <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
-                {labelText && (
+              {props.labelText && (
+                <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
                   <IonLabel className="ion-text-center" color="danger">
-                    {labelText}
+                    {props.labelText}
                   </IonLabel>
-                )}
-              </IonItem>
+                </IonItem>
+              )}
               <Button
                 data-testid="register-button"
                 buttonText={"Register"}
@@ -187,5 +118,3 @@ function Registration() {
     </>
   );
 }
-
-export default Registration;
