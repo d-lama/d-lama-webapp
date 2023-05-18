@@ -8,6 +8,7 @@ import {
 } from "@ionic/react";
 import { add } from "ionicons/icons";
 import { HeaderMobile } from "../../components/header/HeaderMobile";
+import BottomNavigationBar from "../../components/menu/BottomNavigationBar";
 import { ProjectGrid } from "./ProjectGrid";
 
 export const HomeLabeler: React.FC = () => {
@@ -40,6 +41,7 @@ export const HomeLabeler: React.FC = () => {
             </IonRow>
           </IonGrid>
         </IonContent>
+        <BottomNavigationBar />
       </IonPage>
     </>
   );
