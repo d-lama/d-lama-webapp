@@ -22,7 +22,7 @@ const LabelList: React.FC<{labels: {
         <>
             <ul className={"labelMap"}>
                 {labels.map((label, index) => (
-                    <li color={getFixedColors(index)} key={index}>{label.name}</li>
+                    <li className={"label-point"} style={{backgroundColor: "#" + getFixedColors(index)}} key={index}>{label.name}</li>
                 ))}
             </ul>
         </>

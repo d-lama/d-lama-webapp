@@ -31,11 +31,20 @@ const LabelScreen: React.FC = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [undoAction, setUndoAction] = useState<boolean>(false);
   const [showWin, setShowWin] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const { token } = useAuthStore();
 
   const projectParams: { id: string | undefined } = useParams();
   const projectId = projectParams.id;
   const history = useHistory();
+
+  useEffect(() => {
+    console.log(window.matchMedia("(prefers-color-scheme: dark)").matches)
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setDarkMode(true);
+      document.body.classList.add("dark");
+    }
+  }, []);
 
   useEffect(() => {
     async function getProjectInfo() {
