@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import {IonIcon, IonItem, IonLabel, IonList, IonThumbnail} from "@ionic/react";
 import {HeaderMobile} from "../../components/header/HeaderMobile";
 import './RankingPage.css'
@@ -17,7 +16,7 @@ interface Labeler {
 }
 
 const RankingScreen: React.FC = () => {
-    const [, setLabelers] = useState<Labeler[]>([]);
+    //const [labelers, setLabelers] = useState<Labeler[]>([]);
     //const [bestLabeler, setBestLabeler] = useState<Labeler | null>(null); //uncomment, when API- Connection works
     const [apiResponse, setAPIResponse] = useState<APIResponse | null>(null);
     const generateMockLabelers = () => {
