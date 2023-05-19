@@ -67,6 +67,7 @@ export default function RankingPageMobile() {
                             const isCurrentUser = index === apiResponse.myPositionIndex;
                             const labelerName = isCurrentUser ? 'You' : labeler.name;
                             const isBestLabeler = labeler === bestLabeler;
+                            const roundedPercentage = (labeler.percentage * 100).toFixed(2);
 
                             return (
                                 <IonItem
@@ -96,7 +97,7 @@ export default function RankingPageMobile() {
                                         <div>
                                             <h1
                                                 id={'names'}>{labelerName}</h1>
-                                            <p>{labeler.percentage}</p>
+                                            <p>{`${roundedPercentage} %`}</p>
                                         </div>
                                     </IonLabel>
                                 </IonItem>
