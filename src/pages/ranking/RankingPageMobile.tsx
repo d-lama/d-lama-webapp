@@ -20,45 +20,11 @@ interface Labeler {
 
 export default function RankingPageMobile() {
     const {token} = useAuthStore();
-    const [bestLabeler, setBestLabeler] = useState<Labeler | null>(null); //uncomment, when API- Connection works
+    const [bestLabeler, setBestLabeler] = useState<Labeler | null>(null);
     const [apiResponse, setAPIResponse] = useState<APIResponse | null>(null);
-    /*    const generateMockLabelers = () => {
-            return {
-                myPositionIndex: 2,
-                ranking: [
-                    {
-                        id: 7538,
-                        name: "Lama-1",
-                        percentage: 0.08
-                    },
-                    {
-                        id: 7539,
-                        name: "Lama-2",
-                        percentage: 0
-                    },
-                    {
-                        id: 7540,
-                        name: "Franz Schubert",
-                        percentage: 0.05
-                    },
-                    {
-                        id: 7541,
-                        name: "Lama-3",
-                        percentage: 0.1
-                    },
-                    {
-                        id: 7542,
-                        name: "Lama-4",
-                        percentage: 0.03
-                    }
-                ]
-            };
-        };*/
 
     useEffect(() => {
-        /* const mockData = generateMockLabelers();
-         setAPIResponse(mockData);*/
-        fetchLabelers(); ////uncomment, when API- Connection works
+        fetchLabelers();
     }, []);
 
 
@@ -77,24 +43,6 @@ export default function RankingPageMobile() {
             });
     };
 
-
-    /*    const getBestLabeler = () => {
-            let bestLabeler: Labeler | undefined;
-            let maxPercentage = 0;
-
-            if (apiResponse) {
-                apiResponse.ranking.forEach((labeler) => {
-                    if (labeler.percentage > maxPercentage) {
-                        bestLabeler = labeler;
-                        maxPercentage = labeler.percentage;
-                    }
-                });
-            }
-
-            return bestLabeler;
-        };*/
-
-    //uncomment, when API-Connection works
     const getBestLabeler = (labelers: Labeler[]) => {
         let best: Labeler | null = null;
         let maxPercentage = 0;
@@ -105,10 +53,8 @@ export default function RankingPageMobile() {
                 maxPercentage = labeler.percentage;
             }
         });
-
         return best;
     };
-
 
     return (
         <>

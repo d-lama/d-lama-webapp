@@ -1,8 +1,8 @@
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
-import React, { useEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
-import { ProtectedRoute } from "./ProtectedRoute";
+import {IonApp, IonRouterOutlet, setupIonicReact} from "@ionic/react";
+import {IonReactRouter} from "@ionic/react-router";
+import React, {useEffect, useState} from "react";
+import {Redirect, Route} from "react-router-dom";
+import {ProtectedRoute} from "./ProtectedRoute";
 import FileUploadDesktop from "./pages/FileUploadDesktop";
 import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
 import Home from "./pages/home";
@@ -10,7 +10,7 @@ import LabelScreen from "./pages/labelscreen/LabelScreen";
 import Login from "./pages/login";
 import Registration from "./pages/registration/Registration";
 import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
-import { useUserStore } from "./store/userStore";
+import {useUserStore} from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -39,71 +39,76 @@ export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
 export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
-  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
-  const [, setWindowWidth] = useState(window.innerWidth);
+    let isAuthenticated = useUserStore().user?.isAuthenticated || false;
+    const [, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
 
-  return (
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          {/* protected routes */}
-          <ProtectedRoute
-            exact
-            path="/home"
-            component={Home}
-            isAuthenticated={isAuthenticated}
-            authenticationPath="/login"
-          />
-         <ProtectedRoute
-            exact
-            path="/projectcreation"
-            component={ProjectCreationDesktop}
-            isAuthenticated={isAuthenticated}
-            authenticationPath="/login"
-          />
-          <ProtectedRoute
-            exact
-            path="/fileUpload/:projectId"
-            component={FileUploadDesktop}
-            isAuthenticated={isAuthenticated}
-            authenticationPath="/login"
-          />
-          {/* open routes */}
-          <Route exact path="/login">
-            {isAuthenticated ? <Redirect to="/home" /> : <Login />}
-          </Route>
-          <Route exact path="/registration">
-            {isAuthenticated ? <Redirect to="/home" /> : <Registration />}
-          </Route>
-          <Route exact path="/registrationsucceed">
-            {isAuthenticated ? (
-              <Redirect to="/home" />
-            ) : (
-              <RegistrationSucceed />
-            )}
-          </Route>
-          <Route exact path="/label/:id">
-            {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
-          </Route>
-          <Route exact path="/ranking">
-             <RankingPageMobile />
-          </Route>
-          {/* redirect routes */}
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
-  );
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return (
+        <IonApp>
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    {/* protected routes */}
+                    <ProtectedRoute
+                        exact
+                        path="/home"
+                        component={Home}
+                        isAuthenticated={isAuthenticated}
+                        authenticationPath="/login"
+                    />
+                    <ProtectedRoute
+                        exact
+                        path="/projectcreation"
+                        component={ProjectCreationDesktop}
+                        isAuthenticated={isAuthenticated}
+                        authenticationPath="/login"
+                    />
+                    <ProtectedRoute
+                        exact
+                        path="/fileUpload/:projectId"
+                        component={FileUploadDesktop}
+                        isAuthenticated={isAuthenticated}
+                        authenticationPath="/login"
+                    />
+                    <ProtectedRoute
+                        exact
+                        path="/ranking"
+                        component={RankingPageMobile}
+                        isAuthenticated={isAuthenticated}
+                        authenticationPath="/login"
+                    />
+                    {/* open routes */}
+                    <Route exact path="/login">
+                        {isAuthenticated ? <Redirect to="/home"/> : <Login/>}
+                    </Route>
+                    <Route exact path="/registration">
+                        {isAuthenticated ? <Redirect to="/home"/> : <Registration/>}
+                    </Route>
+                    <Route exact path="/registrationsucceed">
+                        {isAuthenticated ? (
+                            <Redirect to="/home"/>
+                        ) : (
+                            <RegistrationSucceed/>
+                        )}
+                    </Route>
+                    <Route exact path="/label/:id">
+                        {isAuthenticated ? <LabelScreen/> : <Redirect to="/home"/>}
+                    </Route>
+                    {/* redirect routes */}
+                    <Route exact path="/">
+                        <Redirect to="/home"/>
+                    </Route>
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </IonApp>
+    );
 };
 
 export default App;
