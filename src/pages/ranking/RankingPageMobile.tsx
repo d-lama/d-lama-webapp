@@ -18,7 +18,7 @@ interface Labeler {
     percentage: number;
 }
 
-export default function RankingScreen() {
+export default function RankingPageMobile() {
     const {token} = useAuthStore();
     const [bestLabeler, setBestLabeler] = useState<Labeler | null>(null); //uncomment, when API- Connection works
     const [apiResponse, setAPIResponse] = useState<APIResponse | null>(null);
