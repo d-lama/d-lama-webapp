@@ -1,0 +1,26 @@
+#names {
+    font-weight: bold;
+}
+
+.current-user {
+    background-color: #2dd36f;
+    display: flex;
+    height: 60px;
+}
+.label-content {
+    display: flex;
+    height: 60px;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+
+
+
+

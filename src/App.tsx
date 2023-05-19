@@ -30,6 +30,8 @@ import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import RankingPageMobile from "./pages/ranking/RankingPageMobile";
+
 
 setupIonicReact();
 
@@ -60,7 +62,7 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
-          <ProtectedRoute
+         <ProtectedRoute
             exact
             path="/projectcreation"
             component={ProjectCreationDesktop}
@@ -74,7 +76,6 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
-
           {/* open routes */}
           <Route exact path="/login">
             {isAuthenticated ? <Redirect to="/home" /> : <Login />}
@@ -92,7 +93,9 @@ const App: React.FC = () => {
           <Route exact path="/label/:id">
             {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
           </Route>
-
+          <Route exact path="/ranking">
+             <RankingPageMobile />
+          </Route>
           {/* redirect routes */}
           <Route exact path="/">
             <Redirect to="/home" />
