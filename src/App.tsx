@@ -30,6 +30,7 @@ import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import ProjectOverviewDesktop from "./pages/ProjectOverviewDesktop";
 
 setupIonicReact();
 
@@ -91,6 +92,10 @@ const App: React.FC = () => {
           </Route>
           <Route exact path="/label/:id">
             {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
+          </Route>
+
+          <Route exact path="/projectoverview">
+            <ProjectOverviewDesktop/>
           </Route>
 
           {/* redirect routes */}
