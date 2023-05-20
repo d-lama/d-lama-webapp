@@ -9,9 +9,13 @@ ion-card-header.ios {
     max-width: 300px;
 }
 
+.labelingCard.dark {
+    background-color: #333;
+}
+
 .reset-animation {
     animation: reset 0.01s;
-    transition: ease-in 0.3s
+    transition: ease-in 0.3s;
 }
 
 @keyframes reset {

@@ -192,7 +192,7 @@ const LabelSwipeContainerComponent: React.FC<{
         </IonCol>
         <IonCol size={"10"} className={"centerCard"}>
           {labelItems.length &&
-            getCard(labelItems[currIndex], handleSwipe, currIndex)}
+            getCard(labelItems[currIndex], handleSwipe, currIndex, darkMode)}
         </IonCol>
         <IonCol size={"1"} className={"labelingGrid"}>
           {dropContainerChecker(true, labels, 1)}
@@ -252,7 +252,8 @@ export function getFixedColors(index: number): string {
 function getCard(
   labelItem: any,
   handleSwipe: (direction: string) => void,
-  currIndex: number
+  currIndex: number,
+  darkMode: boolean
 ) {
   if (!labelItem) {
     return null;
@@ -264,6 +265,7 @@ function getCard(
       cardTitle={""}
       content={labelItem.content}
       onSwipe={handleSwipe}
+      darkMode={darkMode}
     />
   );
 }

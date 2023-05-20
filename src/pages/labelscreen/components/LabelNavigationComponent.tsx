@@ -34,7 +34,7 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
                 </IonCol>
                 <IonCol size={"2"}></IonCol>
                 <IonCol size={"8"}>
-                    {ProgressLabelingBar(progress, maxNumberOfLabels)}
+                    {ProgressLabelingBar(progress, maxNumberOfLabels, darkMode)}
                 </IonCol>
                 <IonCol size={"2"}>
                     <IonButton onClick={handleUndoAction} size="small"><IonIcon slot="icon-only" icon={arrowUndoOutline}></IonIcon></IonButton>
@@ -44,12 +44,12 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
     );
 }
 
-function ProgressLabelingBar(progress:number, maxNumberOfLabels:number) {
+function ProgressLabelingBar(progress:number, maxNumberOfLabels:number, darkMode:boolean) {
     let widthPercent = progress / maxNumberOfLabels * 100;
 
     return (
-        <div className={"maxLabelingProgress"}>
-            <div className={"labelingProgress"} style={{width: widthPercent + "%"}}></div>
+        <div className={`maxLabelingProgress ${darkMode ? "dark" : ""}`}>
+            <div className={`labelingProgress ${darkMode ? "dark" : ""}`} style={{width: widthPercent + "%"}}></div>
             <div className={"labelingProgressText"}>{progress} / {maxNumberOfLabels}</div>
         </div>
     );

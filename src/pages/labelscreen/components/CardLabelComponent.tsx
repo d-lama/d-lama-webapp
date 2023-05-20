@@ -15,6 +15,7 @@ interface Props {
     cardSubtitle: string;
     content: string;
     onSwipe: (direction: string) => void;
+    darkMode: boolean;
 }
 
 const CardLabelComponent: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const CardLabelComponent: React.FC<Props> = ({
     cardSubtitle,
     content,
     onSwipe,
+    darkMode
 }) => {
     useEffect(() => {
         const gestureY = initGesture("y");
@@ -103,7 +105,7 @@ const CardLabelComponent: React.FC<Props> = ({
     }
 
     return (
-        <IonCard className="labelingCard">
+        <IonCard className={`labelingCard ${darkMode ? "dark" : ""}`}>
             <IonCardHeader>
                 <IonCardTitle>{cardTitle}</IonCardTitle>
                 <IonCardSubtitle>{cardSubtitle}</IonCardSubtitle>
