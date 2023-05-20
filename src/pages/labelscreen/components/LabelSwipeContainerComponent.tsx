@@ -28,6 +28,7 @@ const LabelSwipeContainerComponent: React.FC<{
   setUndoAction: (isUndo: boolean) => void;
   undoAction: boolean;
   setShowWin: (isShowWin: boolean) => void;
+  darkMode: boolean;
 }> = ({
   numberOfContainers,
   projectData,
@@ -35,6 +36,7 @@ const LabelSwipeContainerComponent: React.FC<{
   setUndoAction,
   undoAction,
   setShowWin,
+  darkMode,
 }) => {
   const [, setSwipeDirection] = useState<string>("");
   const [labelItems, setLabelItems] = useState<LabelCard[]>([]);

@@ -32,3 +32,11 @@ ion-col {
     z-index: 2;
     position: relative;
 }
+
+.dark {
+    background-color: #000;
+}
+
+.light {
+    background-color: #fff;
+}

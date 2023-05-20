@@ -39,8 +39,7 @@ const LabelScreen: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(window.matchMedia("(prefers-color-scheme: dark)").matches)
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (localStorage.getItem("dark-theme") === "true") {
       setDarkMode(true);
       document.body.classList.add("dark");
     }
@@ -113,6 +112,7 @@ const LabelScreen: React.FC = () => {
           maxNumberOfLabels={dataPointAmount}
           setShowHelp={setShowHelp}
           undoAction={setUndoAction}
+          darkMode={darkMode}
         />
         <LabelSwipeContainerComponent
           numberOfContainers={containerNumber}
@@ -121,6 +121,7 @@ const LabelScreen: React.FC = () => {
           setUndoAction={setUndoAction}
           undoAction={undoAction}
           setShowWin={setShowWin}
+          darkMode={darkMode}
         />
       </IonContent>
 

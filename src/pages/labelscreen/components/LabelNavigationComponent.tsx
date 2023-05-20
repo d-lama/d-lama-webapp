@@ -5,7 +5,7 @@ import { returnDownBackOutline, helpOutline, arrowUndoOutline } from 'ionicons/i
 import './LabelNavigationComponent.css';
 import {useHistory} from "react-router-dom";
 
-const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:number, setShowHelp:(isShow:boolean)=>void, undoAction:(isUndo:boolean)=>void}> = ({progress, maxNumberOfLabels, setShowHelp, undoAction}) => {
+const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:number, setShowHelp:(isShow:boolean)=>void, undoAction:(isUndo:boolean)=>void, darkMode:boolean}> = ({progress, maxNumberOfLabels, setShowHelp, undoAction, darkMode}) => {
 
     const history = useHistory();
 
@@ -23,7 +23,7 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
 
     return (
 
-        <IonGrid className={"navigationLabelingTop"}>
+        <IonGrid className={`navigationLabelingTop ${darkMode ? "dark" : "light"}`}>
             <IonRow>
                 <IonCol size={"2"}>
                     <IonButton onClick={returnActionHandler} size="small"><IonIcon slot="icon-only" icon={returnDownBackOutline}></IonIcon></IonButton>
