@@ -1,15 +1,15 @@
 import {
     IonContent,
-    IonHeader,
+    IonHeader, IonIcon,
     IonItem,
-    IonLabel,
+    IonLabel, IonList,
     IonPage,
     IonSegment,
-    IonSegmentButton,
+    IonSegmentButton, IonThumbnail,
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import {HeaderDesktop} from "../components/header/HeaderDesktop";
 import {Input, InputType} from "../components/forms/Input";
@@ -20,9 +20,34 @@ import {useAuthStore} from "../store/authStore";
 import axios from "axios";
 import {API_URL} from "../App";
 import {useParams} from "react-router";
+import {star} from "ionicons/icons";
 
 interface RouteParams {
     projectId: string;
+}
+
+interface APIResponse {
+    myPositionIndex: number;
+    ranking: Labeler[];
+}
+
+interface Labeler {
+    id: number;
+    name: string;
+    percentage: number;
+}
+
+interface ProjectData {
+    id: number;
+    dataPointsCount: number;
+    labeledDataPointsCount: number;
+    projectName: string;
+    description: string;
+    labels: Array<{
+        id: number;
+        name: string;
+        description: string;
+    }>;
 }
 
 
@@ -97,17 +122,122 @@ export default function ProjectOverviewDesktop(props: any) {
                 }, 3000);
             });
     }
+
+    //const { token} = useAuthStore();
+    const [bestLabeler, setBestLabeler] = useState<Labeler | null>(null); //uncomment, when API- Connection works
+    const [apiResponse, setAPIResponse] = useState<APIResponse | null>(null);
+    //const { projectId} = useParams<RouteParams>();
+    const mockData = [
+        {
+            "id": 7538,
+            "name": "John Doe",
+            "percentage": 0
+        },
+        {
+            "id": 7542,
+            "name": "Jane Smith",
+            "percentage": 0.055555556
+        },
+        {
+            "id": 7539,
+            "name": "Robert Johnson",
+            "percentage": 0.11111111
+        },
+        {
+            "id": 7540,
+            "name": "Linda Williams",
+            "percentage": 0
+        },
+        {
+            "id": 7541,
+            "name": "Michael Brown",
+            "percentage": 0
+        }
+    ];
+
+    useEffect(() => {
+        // Initialer GET Request um die Projektdaten abzurufen
+        axios.get<ProjectData>(`${API_URL}/project/${projectId}`, { headers: { Authorization: `Bearer ${token}` } })
+            .then(response => {
+                // Speichern Sie die Projektdaten im State
+                setMask({
+                    projectName: response.data.projectName,
+                    description: response.data.description,
+                });
+
+                // Speichern Sie die Labeldaten im State
+                setLabels(response.data.labels);
+
+                // Finden Sie die höchste Label-ID und setzen Sie den Label-Index entsprechend
+                const highestId = response.data.labels.reduce((maxId, label) => Math.max(maxId, label.id), 0);
+                setLabelIndex(highestId + 1);
+            })
+            .catch(error => {
+                console.error('Error fetching project data:', error);
+            });
+        fetchLabelers();
+    }, []);
+
+
+    const fetchLabelers = () => {
+        const data = {
+            myPositionIndex: 0, // Sie können diesen Wert anpassen, basierend auf Ihrem Szenario
+            ranking: mockData
+        }
+        setAPIResponse(data);
+
+        const best = getBestLabeler(data.ranking);
+        setBestLabeler(best);
+        //uncomment when API ready
+        /*        axios.get(`${API_URL}/project/${projectId}/ranking`, {headers: {Authorization: `Bearer ${token}`}})
+                    .then(response => {
+                        const data = response.data;
+                        setAPIResponse(data);
+                        const best = getBestLabeler(data);
+                        setBestLabeler(best);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching labelers:', error);
+                    });*/
+    };
+
+
+    /*    const getBestLabeler = () => {
+            let bestLabeler: Labeler | undefined;
+            let maxPercentage = 0;
+
+            if (apiResponse) {
+                apiResponse.ranking.forEach((labeler) => {
+                    if (labeler.percentage > maxPercentage) {
+                        bestLabeler = labeler;
+                        maxPercentage = labeler.percentage;
+                    }
+                });
+            }
+
+            return bestLabeler;
+        };*/
+
+    //uncomment, when API-Connection works
+    const getBestLabeler = (labelers: Labeler[]) => {
+        let best: Labeler | null = null;
+        let maxPercentage = 0;
+
+        labelers.forEach((labeler) => {
+            if (labeler.percentage > maxPercentage) {
+                best = labeler;
+                maxPercentage = labeler.percentage;
+            }
+        });
+
+        return best;
+    };
     return (
-        <>
             <IonPage className="split-view">
                 <HeaderDesktop />
                 <IonContent>
                     <div className="box">
-                    <IonHeader>
-                        <IonToolbar>
-                            <IonTitle class="ion-text-center">Project Details</IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
+                        <div className="header">Project Details</div>
                     <div className="horizontal-flex-container">
                     <div className="panel left">
                         <div
@@ -121,9 +251,10 @@ export default function ProjectOverviewDesktop(props: any) {
                         >
                             <form
                                 className={"custom-border"}
-                                style={{ width: "80%", maxWidth: "600px" }}
+                                style={{ width: "80%", maxWidth: "600px"}}
                                 onSubmit={handleProjectSubmit}
                             >
+                                <div className="header">My Project</div>
                                 <Input
                                     name={"projectName"}
                                     change={handleChange}
@@ -171,115 +302,101 @@ export default function ProjectOverviewDesktop(props: any) {
                                         </IonLabel>
                                     </IonItem>
                                 )}
-                                <Button
-                                    toolTipText={"new screen for uploading file"}
-                                    data-testid="create-button"
-                                    buttonText={"Continue with fileupload"}
-                                    buttonType={ButtonType.submit}
-                                    color={"secondary"}
-                                />
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between", // oder "space-around"
+                                        flexWrap: "wrap",
+                                        maxWidth: "600px",
+                                    }}
+                                >
+                                    <div style={{flexBasis: "40%", flexGrow: 1, margin: "5px"}}>
+                                    <Button
+                                        toolTipText={"new screen for uploading file"}
+                                        data-testid="create-button-1"
+                                        buttonText={"Changes required"}
+                                        buttonType={ButtonType.submit}
+                                        color={"secondary"}
+                                    />
+                                    </div>
+                                    <div style={{flexBasis: "40%", flexGrow: 1, margin: "5px"}}>
+                                    <Button
+                                        toolTipText={"new screen for uploading file"}
+                                        data-testid="create-button-2"
+                                        buttonText={"Save Changes"}
+                                        buttonType={ButtonType.submit}
+                                        color={"secondary"}
+                                    />
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
                     <div className="panel right">
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: "80vh",
-                        }}
-                    >
-                        <form
-                            className={"custom-border"}
-                            style={{ width: "80%" }}
-                            data-testid="registration-form"
-                            onSubmit={props.handleLogin}
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                height: "80vh",
+                            }}
                         >
-                            <Input
-                                name={"lastName"}
-                                change={props.handleChange}
-                                inputName={"Enter Last Name"}
-                                placeholder={"Muster"}
-                                helperText={"Enter a valid name"}
-                                errorText={"Invalid email"}
-                                inputType={InputType.text}
-                            />
-                            <Input
-                                name={"firstName"}
-                                change={props.handleChange}
-                                inputName={"Enter First Name"}
-                                placeholder={"Max"}
-                                helperText={"Enter a valid name"}
-                                errorText={"Invalid email"}
-                                inputType={InputType.text}
-                            />
-                            <Input
-                                name={"birthDate"}
-                                change={props.handleChange}
-                                inputName={"Birthdate"}
-                                placeholder={""}
-                                helperText={"Enter a valid birth date"}
-                                errorText={"Invalid date"}
-                                inputType={InputType.date}
-                            />
-                            <Input
-                                name={"email"}
-                                change={props.handleChange}
-                                inputName={"Enter Email"}
-                                placeholder={"max.muster@gmail.com"}
-                                helperText={"Enter a valid email"}
-                                errorText={"Invalid password"}
-                                inputType={InputType.email}
-                            />
-                            <Input
-                                name={"password"}
-                                change={props.handleChange}
-                                inputName={"Enter Password"}
-                                placeholder={"**************"}
-                                helperText={"Enter a valid password"}
-                                errorText={"Invalid password"}
-                                inputType={InputType.password}
-                            />
-                            <Input
-                                name={"confirmPassword"}
-                                change={props.handleChange}
-                                inputName={"Confirm Password"}
-                                placeholder={"**************"}
-                                helperText={"Confirm the password"}
-                                errorText={"Invalid password"}
-                                inputType={InputType.password}
-                            />
-                            <IonSegment onIonChange={props.handleIsAdminChange}>
-                                <IonSegmentButton value="labeler">
-                                    <IonLabel>Labeler</IonLabel>
-                                </IonSegmentButton>
-                                <IonSegmentButton value="admin">
-                                    <IonLabel>Administrator</IonLabel>
-                                </IonSegmentButton>
-                            </IonSegment>
-                            {props.labelText && (
-                                <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
-                                    <IonLabel className="ion-text-center" color="danger">
-                                        {props.labelText}
-                                    </IonLabel>
-                                </IonItem>
-                            )}
+                            <form
+                                className={"custom-border"}
+                                style={{width: "80%", maxWidth: "600px"}}
+                            >
+                                <div className="header">My Datalabeler</div>
+                                {apiResponse && (
+                                    <IonList>
+                                        {apiResponse.ranking.map((labeler) => {
+                                            const labelerName = labeler.name;
+                                            const isBestLabeler = labeler === bestLabeler;
 
-                            <Button
-                                data-testid="register-button"
-                                buttonText={"Register"}
-                                buttonType={ButtonType.submit}
-                                color={"primary"}
-                            ></Button>
-                        </form>
+                                            return (
+                                                <IonItem
+                                                    key={labeler.id}>
+                                                    <IonThumbnail
+                                                        className={'avatar'}
+                                                        slot="start">
+                                                        {isBestLabeler ? (
+                                                            <IonIcon
+                                                                icon={star}
+                                                                size={'custom'}
+                                                                style={{fontSize: '45px'}}
+                                                                color={'warning'}/>
+                                                        ) : (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+                                                                 viewBox="0 0 100 100">
+                                                                <circle cx="50" cy="50" r="45" fill="darkviolet"/>
+                                                                <text x="50%" y="50%" textAnchor="middle"
+                                                                      alignmentBaseline="central"
+                                                                      fontSize="30" fill="#ffffff">L
+                                                                </text>
+                                                            </svg>
+                                                        )}
+                                                    </IonThumbnail>
+                                                    <IonLabel
+                                                        className={'label-content'}
+                                                        style={{display: "flex"}}>
+                                                        <div>
+                                                            <h1
+                                                                id={'names'}>{labelerName}</h1>
+                                                            <p>{labeler.percentage}</p>
+                                                        </div>
+                                                    </IonLabel>
+                                                </IonItem>
+                                            );
+                                        })}
+                                    </IonList>
+                                )}
+                            </form>
+                        </div>
                     </div>
                     </div>
                     </div>
-                    </div>
+
                 </IonContent>
             </IonPage>
-        </>
     );
 }

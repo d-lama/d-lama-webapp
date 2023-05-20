@@ -1,7 +1,8 @@
 .split-view {
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
+    margin: auto;
 }
 
 .box {
@@ -16,7 +17,9 @@
 .header {
     text-align: center;
     font-size: 1.5em;
-    padding: 10px;
+    font-weight: bold;
+    padding: 20px;
+    border-bottom: 1px solid #000; /* Fügt eine schwarze Linie unterhalb des Headers hinzu */
 }
 
 .horizontal-flex-container {
@@ -35,5 +38,4 @@
 }
 
 .right {
-
 }
