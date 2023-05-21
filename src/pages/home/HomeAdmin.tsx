@@ -73,18 +73,6 @@ export const HomeAdmin: React.FC = () => {
                         <IonCardContent>{/* Content */}</IonCardContent>
                       </IonCard>
                     </IonCol>
-                    <IonCol size="12">
-                      <IonCard>
-                        <IonCardHeader>
-                          <IonCardTitle>Labelers</IonCardTitle>
-                          <IonCardSubtitle>
-                            In this section you can see the labelers that are
-                            labeling your projects
-                          </IonCardSubtitle>
-                        </IonCardHeader>
-                        <IonCardContent>{/* Content */}</IonCardContent>
-                      </IonCard>
-                    </IonCol>
                   </IonRow>
                 </IonGrid>
               </IonCol>
