@@ -6,12 +6,9 @@
 }
 
 .box {
-    border: 1px solid #000;
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
-    background-color: #fff;
-
 }
 
 .header {
@@ -19,17 +16,17 @@
     font-size: 1.5em;
     font-weight: bold;
     padding: 20px;
-    border-bottom: 1px solid #000; /* Fügt eine schwarze Linie unterhalb des Headers hinzu */
+    border-bottom: 1px solid #000;
 }
 
 .horizontal-flex-container {
     display: flex;
-    flex-direction: row; /* Stellt sicher, dass die Elemente nebeneinander angezeigt werden */
-    height: 100%; /* Stellt sicher, dass der Container die gesamte Höhe des IonContent einnimmt */
+    flex-direction: row;
+    height: 100%;
 }
 
 .panel {
-    flex: 1; /* Stellt sicher, dass die beiden Ansichten gleich viel Platz einnehmen */
+    flex: 1;
     overflow: auto;
 }
 

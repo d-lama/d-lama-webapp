@@ -102,7 +102,7 @@ const App: React.FC = () => {
                     <Route exact path="/label/:id">
                         {isAuthenticated ? <LabelScreen/> : <Redirect to="/home"/>}
                     </Route>
-                  <Route exact path="/projectoverview">
+                  <Route exact path="/project/:id">
                     <ProjectOverviewDesktop/>
                   </Route>
                     {/* redirect routes */}
