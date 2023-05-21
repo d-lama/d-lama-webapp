@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { API_URL } from "../App";
 import { Button, ButtonType } from "../components/forms/Button";
 import { HeaderDesktop } from "../components/header/HeaderDesktop";
@@ -27,6 +27,7 @@ export default function FileUploadDesktop() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { projectId } = useParams<RouteParams>();
+  const history = useHistory();
 
   function handleFileSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -45,7 +46,7 @@ export default function FileUploadDesktop() {
           }
         )
         .then(function () {
-          window.location.href = "/home";
+          history.push("/home");
         })
         .catch(function () {
           setLabelText("Error in fileUpload!");
