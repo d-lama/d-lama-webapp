@@ -1,0 +1,21 @@
+.dropContainer{
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+
+.labelName {
+    overflow: visible;
+    padding: 10px;
+    z-index: 3;
+    color: #fff;
+}
+
+.notvisible {
+    visibility: hidden;
+}

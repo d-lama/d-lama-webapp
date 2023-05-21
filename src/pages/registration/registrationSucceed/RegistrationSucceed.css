@@ -1,0 +1,16 @@
+.item-avatar  {
+    width:50% !important;
+    height : auto !important;
+    max-width: 200px !important;
+    max-height: 200px !important;
+    display: table-cell;
+    margin-bottom: 300px;
+}
+
+
+.custom-border {
+    padding: 30px;
+    border: 1px solid gray;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
+    border-radius: 8px 8px 8px 8px;
+}

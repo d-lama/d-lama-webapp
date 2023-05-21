@@ -1,7 +1,7 @@
 ---
 name: Feature request template
 about: "[Short Description]"
-title: "[Feature request title] (Feature)"
+title: "[Feature request title]"
 labels: feature
 assignees: ''
 
