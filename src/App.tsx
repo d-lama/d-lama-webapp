@@ -1,16 +1,15 @@
-import {IonApp, IonRouterOutlet, setupIonicReact} from "@ionic/react";
-import {IonReactRouter} from "@ionic/react-router";
-import React, {useEffect, useState} from "react";
-import {Redirect, Route} from "react-router-dom";
-import {ProtectedRoute} from "./ProtectedRoute";
-import FileUploadDesktop from "./pages/FileUploadDesktop";
-import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
+import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import React, { useEffect, useState } from "react";
+import { Redirect, Route } from "react-router-dom";
+import { ProtectedRoute } from "./ProtectedRoute";
 import Home from "./pages/home";
 import LabelScreen from "./pages/labelscreen/LabelScreen";
 import Login from "./pages/login";
+import FileUploadDesktop from "./pages/projectCreation/FileUploadDesktop";
 import Registration from "./pages/registration/Registration";
 import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
-import {useUserStore} from "./store/userStore";
+import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -29,8 +28,9 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
-import "./theme/variables.css";
+import ProjectCreationDesktop from "./pages/projectCreation/ProjectCreationDesktop";
 import RankingPageMobile from "./pages/ranking/RankingPageMobile";
+import "./theme/variables.css";
 
 import ProjectOverviewDesktop from "./pages/ProjectOverviewDesktop";
 
@@ -40,17 +40,17 @@ export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
 export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
-    let isAuthenticated = useUserStore().user?.isAuthenticated || false;
-    const [, setWindowWidth] = useState(window.innerWidth);
+  let isAuthenticated = useUserStore().user?.isAuthenticated || false;
+  const [, setWindowWidth] = useState(window.innerWidth);
 
-    useEffect(() => {
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-        }
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
     return (
         <IonApp>

@@ -1,21 +1,14 @@
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { API_URL } from "../App";
-import { Button, ButtonType } from "../components/forms/Button";
-import { DynamicField, ElementData } from "../components/forms/DynamicField";
-import { Input, InputType } from "../components/forms/Input";
-import { HeaderDesktop } from "../components/header/HeaderDesktop";
-import { MenuDesktop } from "../components/menu/MenuDesktop";
-import { useAuthStore } from "../store/authStore";
+import { useHistory } from "react-router";
+import { API_URL } from "../../App";
+import { Button, ButtonType } from "../../components/forms/Button";
+import { DynamicField, ElementData } from "../../components/forms/DynamicField";
+import { Input, InputType } from "../../components/forms/Input";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
+import { MenuDesktop } from "../../components/menu/MenuDesktop";
+import { useAuthStore } from "../../store/authStore";
 import "./ProjectCreationDesktop.css";
 
 export default function ProjectCreationDesktop() {
@@ -27,6 +20,7 @@ export default function ProjectCreationDesktop() {
     description: "",
   });
   const [labels, setLabels] = useState<ElementData[]>([]);
+  const history = useHistory();
 
   function handleChange(e: { target: { name: any; value: any } }) {
     setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -62,8 +56,7 @@ export default function ProjectCreationDesktop() {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then(function (response) {
-        const projectId = response.data.id;
-        window.location.href = `/fileUpload/${projectId}`;
+        history.push(`/fileUpload/${response.data.id}`);
       })
       .catch(function () {
         setLabelText("Connection failed!");
