@@ -18,6 +18,12 @@ ion-card-header.ios {
     transition: ease-in 0.3s;
 }
 
+.image-fill {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 @keyframes reset {
     0% {
         transform: none;
