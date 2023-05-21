@@ -77,7 +77,7 @@ const LabelScreen: React.FC = () => {
     async function getDataPointsAmount() {
       try {
         const response = await axios.get(
-          `${API_URL}/DataPoint/${projectId}/GetNumberOfTextDataPoints`,
+          `${API_URL}/DataPoint/${projectId}/GetNumberOfDataPoints`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

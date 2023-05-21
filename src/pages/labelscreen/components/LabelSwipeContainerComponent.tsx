@@ -14,7 +14,7 @@ interface LabelCard {
   dataPointIndex: number;
   content: string;
   projectId: number;
-  labeledDataPoints: any[];
+  labeledDataPoints: number;
 }
 
 const MAX_LABEL_LOAD_AMOUNT = 5;
@@ -72,7 +72,7 @@ const LabelSwipeContainerComponent: React.FC<{
     try {
       const response = await axios.post(
         `${API_URL}/DataPoint/${projectId}/LabelDataPoint/${labelItem.dataPointIndex}`,
-        labelItem.labeledDataPoints[0],
+        labelItem.labeledDataPoints,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -135,7 +135,7 @@ const LabelSwipeContainerComponent: React.FC<{
     // Update the label in the copy
     updatedLabelItems[currIndex] = { ...labelItems[currIndex] };
     // @ts-ignore
-    updatedLabelItems[currIndex].labeledDataPoints[0] = labels[index].id;
+    updatedLabelItems[currIndex].labeledDataPoints = labels[index].id;
 
     // Set the state with the updated copy
     sendLabeledData(projectData.id, updatedLabelItems[currIndex]);
