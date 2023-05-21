@@ -2,13 +2,13 @@ import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { API_URL } from "../App";
-import { Button, ButtonType } from "../components/forms/Button";
-import { DynamicField, ElementData } from "../components/forms/DynamicField";
-import { Input, InputType } from "../components/forms/Input";
-import { HeaderDesktop } from "../components/header/HeaderDesktop";
-import { MenuDesktop } from "../components/menu/MenuDesktop";
-import { useAuthStore } from "../store/authStore";
+import { API_URL } from "../../App";
+import { Button, ButtonType } from "../../components/forms/Button";
+import { DynamicField, ElementData } from "../../components/forms/DynamicField";
+import { Input, InputType } from "../../components/forms/Input";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
+import { MenuDesktop } from "../../components/menu/MenuDesktop";
+import { useAuthStore } from "../../store/authStore";
 import "./ProjectCreationDesktop.css";
 
 export default function ProjectCreationDesktop() {

@@ -1,20 +1,12 @@
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { API_URL } from "../App";
-import { Button, ButtonType } from "../components/forms/Button";
-import { HeaderDesktop } from "../components/header/HeaderDesktop";
-import { MenuDesktop } from "../components/menu/MenuDesktop";
-import { useAuthStore } from "../store/authStore";
+import { API_URL } from "../../App";
+import { Button, ButtonType } from "../../components/forms/Button";
+import { HeaderDesktop } from "../../components/header/HeaderDesktop";
+import { MenuDesktop } from "../../components/menu/MenuDesktop";
+import { useAuthStore } from "../../store/authStore";
 import "./ProjectCreationDesktop.css";
 
 interface RouteParams {
