@@ -16,6 +16,7 @@ export interface Project {
   description: string;
   labeledDataPointsCount: number;
   dataPointsCount: number;
+  dataType: number,
   labels: {
     id: number;
     name: string;

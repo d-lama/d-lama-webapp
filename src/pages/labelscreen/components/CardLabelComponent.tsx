@@ -8,6 +8,7 @@ interface Props {
     cardTitle: string;
     cardSubtitle: string;
     content: string;
+    contentType: number;
     onSwipe: (direction: string) => void;
     darkMode: boolean;
 }
@@ -16,6 +17,7 @@ const CardLabelComponent: React.FC<Props> = ({
      cardTitle,
      cardSubtitle,
      content,
+     contentType,
      onSwipe,
      darkMode
  }) => {
@@ -185,7 +187,13 @@ const CardLabelComponent: React.FC<Props> = ({
                 <IonCardTitle>{cardTitle}</IonCardTitle>
                 <IonCardSubtitle>{cardSubtitle}</IonCardSubtitle>
             </IonCardHeader>
-            <IonCardContent>{content}</IonCardContent>
+            {contentType === 1 ? (
+                <IonCardContent>
+                    <img src={content} alt="Image" className="image-fill" />
+                </IonCardContent>
+            ) : (
+                <IonCardContent>{content}</IonCardContent>
+            )}
         </IonCard>
     );
 };

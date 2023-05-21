@@ -194,7 +194,7 @@ const LabelSwipeContainerComponent: React.FC<{
         </IonCol>
         <IonCol size={"10"} className={"centerCard"}>
           {labelItems.length &&
-            getCard(labelItems[currIndex], handleSwipe, currIndex, darkMode)}
+            getCard(labelItems[currIndex], handleSwipe, currIndex, darkMode, projectData.dataType)}
         </IonCol>
         <IonCol size={"1"} className={"labelingGrid"}>
           {dropContainerChecker(true, labels, 1, "" + getDirectionIndex(1, false))}
@@ -257,7 +257,8 @@ function getCard(
   labelItem: any,
   handleSwipe: (direction: string) => void,
   currIndex: number,
-  darkMode: boolean
+  darkMode: boolean,
+  contentType: number
 ) {
   if (!labelItem) {
     return null;
@@ -268,6 +269,7 @@ function getCard(
       cardSubtitle={""}
       cardTitle={""}
       content={labelItem.content}
+      contentType={contentType}
       onSwipe={handleSwipe}
       darkMode={darkMode}
     />
