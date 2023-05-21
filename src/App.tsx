@@ -3,11 +3,10 @@ import { IonReactRouter } from "@ionic/react-router";
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import FileUploadDesktop from "./pages/FileUploadDesktop";
-import ProjectCreationDesktop from "./pages/ProjectCreationDesktop";
 import Home from "./pages/home";
 import LabelScreen from "./pages/labelscreen/LabelScreen";
 import Login from "./pages/login";
+import FileUploadDesktop from "./pages/projectCreation/FileUploadDesktop";
 import Registration from "./pages/registration/Registration";
 import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
 import { useUserStore } from "./store/userStore";
@@ -29,6 +28,8 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
+import ProjectCreationDesktop from "./pages/projectCreation/ProjectCreationDesktop";
+import RankingPageMobile from "./pages/ranking/RankingPageMobile";
 import "./theme/variables.css";
 
 setupIonicReact();
@@ -44,6 +45,7 @@ const App: React.FC = () => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
     }
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -74,7 +76,13 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
-
+          <ProtectedRoute
+            exact
+            path="/ranking"
+            component={RankingPageMobile}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
           {/* open routes */}
           <Route exact path="/login">
             {isAuthenticated ? <Redirect to="/home" /> : <Login />}
@@ -92,7 +100,6 @@ const App: React.FC = () => {
           <Route exact path="/label/:id">
             {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
           </Route>
-
           {/* redirect routes */}
           <Route exact path="/">
             <Redirect to="/home" />

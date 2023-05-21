@@ -1,6 +1,7 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import { play } from "ionicons/icons";
 import React from "react";
+import { useHistory } from "react-router";
 import "./ProjectButton.css";
 
 export interface IProjectButtonProps {
@@ -14,6 +15,7 @@ export const ProjectButton: React.FC<IProjectButtonProps> = ({
   title,
   progress,
 }) => {
+  const history = useHistory();
   const progressBarStyle: React.CSSProperties = {
     width: `${progress}%`,
   };
@@ -23,7 +25,7 @@ export const ProjectButton: React.FC<IProjectButtonProps> = ({
       className="projectBtn-btn"
       fill="outline"
       onClick={() => {
-        window.location.href = `/label/${projectId}`;
+        history.push(`/label/${projectId}`);
       }}
     >
       <div
