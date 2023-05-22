@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { API_URL } from "../../App";
+import { ILabelData } from "../../hooks/Label";
 import { useAuthStore } from "../../store/authStore";
 import "./LabelScreen.css";
 import HelpComponent from "./components/HelpComponent";
@@ -16,11 +17,7 @@ export interface Project {
   description: string;
   labeledDataPointsCount: number;
   dataPointsCount: number;
-  labels: {
-    id: number;
-    name: string;
-    description: string;
-  }[];
+  labels: ILabelData[];
 }
 
 const LabelScreen: React.FC = () => {

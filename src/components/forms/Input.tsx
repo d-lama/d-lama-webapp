@@ -9,6 +9,7 @@ export enum InputType {
 
 export interface InputProps {
   name?: string;
+  value?: string;
   inputType: InputType;
   inputName: string;
   placeholder?: string;
@@ -25,6 +26,7 @@ export function Input(props: InputProps) {
     <IonInput
       className="ion-text-center"
       name={props.name}
+      value={props.value}
       type={props.inputType}
       placeholder={props.placeholder}
       onIonChange={props.change}

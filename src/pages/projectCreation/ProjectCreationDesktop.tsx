@@ -4,10 +4,11 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { API_URL } from "../../App";
 import { Button, ButtonType } from "../../components/forms/Button";
-import { DynamicField, ElementData } from "../../components/forms/DynamicField";
+import { DynamicField } from "../../components/forms/DynamicField";
 import { Input, InputType } from "../../components/forms/Input";
 import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import { MenuDesktop } from "../../components/menu/MenuDesktop";
+import { ILabelData } from "../../hooks/Label";
 import { useAuthStore } from "../../store/authStore";
 import "./ProjectCreationDesktop.css";
 
@@ -19,7 +20,7 @@ export default function ProjectCreationDesktop() {
     projectName: "",
     description: "",
   });
-  const [labels, setLabels] = useState<ElementData[]>([]);
+  const [labels, setLabels] = useState<ILabelData[]>([]);
   const history = useHistory();
 
   function handleChange(e: { target: { name: any; value: any } }) {
@@ -35,6 +36,7 @@ export default function ProjectCreationDesktop() {
     const updatedElements = [...labels];
     updatedElements.splice(index, 1);
     setLabels(updatedElements);
+    setLabelIndex((prevState) => prevState - 1);
   }
 
   function handleLabelChange(index: number, value: string) {
