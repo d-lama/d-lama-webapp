@@ -18,9 +18,9 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
         <IonIcon icon={homeOutline} />
         <IonLabel>Home</IonLabel>
       </IonTabButton>
-      <IonTabButton tab="search" onClick={() => handleNavigation("/rating")}>
+      <IonTabButton tab="search" onClick={() => handleNavigation("/ranking")}>
         <IonIcon icon={trophyOutline} />
-        <IonLabel>Rating</IonLabel>
+        <IonLabel>Ranking</IonLabel>
       </IonTabButton>
       <IonTabButton
         tab="settings"
