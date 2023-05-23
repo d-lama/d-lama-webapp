@@ -38,49 +38,40 @@ export default function ProjectOverviewDesktop() {
           <IonGrid>
             <IonRow>
               <IonCol size="6">
-                <IonCard>
-                  <IonCardHeader>
-                    <IonCardTitle>Project Details</IonCardTitle>
-                    <IonCardSubtitle>Subtitle</IonCardSubtitle>
-                  </IonCardHeader>
-                  <IonCardContent>
-                    {projectQuery.isError || projectQuery.data === undefined ? (
-                      "An error occurred while fetching the project information."
-                    ) : editMode ? (
-                      <>
-                        <EditProject project={projectQuery.data} />
-                        <Button
-                          toolTipText={"Cancel editing this project"}
-                          buttonText={"Cancel Edit"}
-                          buttonType={ButtonType.button}
-                          color={"primary"}
-                          action={() => {
-                            setEditMode(false);
-                          }}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <ShowProject project={projectQuery.data} />
-                        <Button
-                          toolTipText={"Edit this project"}
-                          buttonText={"Edit Project"}
-                          buttonType={ButtonType.button}
-                          color={"primary"}
-                          action={() => {
-                            setEditMode(true);
-                          }}
-                        />
-                      </>
-                    )}
-                  </IonCardContent>
-                </IonCard>
+                {projectQuery.isError || projectQuery.data === undefined ? (
+                  "An error occurred while fetching the project information."
+                ) : editMode ? (
+                  <>
+                    <EditProject project={projectQuery.data} />
+                    <Button
+                      toolTipText={"Cancel editing this project"}
+                      buttonText={"Cancel Edit"}
+                      buttonType={ButtonType.button}
+                      color={"primary"}
+                      action={() => {
+                        setEditMode(false);
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <ShowProject project={projectQuery.data} />
+                    <Button
+                      toolTipText={"Edit this project"}
+                      buttonText={"Edit Project"}
+                      buttonType={ButtonType.button}
+                      color={"primary"}
+                      action={() => {
+                        setEditMode(true);
+                      }}
+                    />
+                  </>
+                )}
               </IonCol>
               <IonCol size="6">
                 <IonCard>
-                  <IonCardHeader>
+                  <IonCardHeader color={"warning"}>
                     <IonCardTitle>Labelers</IonCardTitle>
-                    <IonCardSubtitle>Subtitle</IonCardSubtitle>
                   </IonCardHeader>
                   <IonCardContent>
                     {projectRankingQuery.isError ||

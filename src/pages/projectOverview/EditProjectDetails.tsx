@@ -1,10 +1,8 @@
-import { useIonToast } from "@ionic/react";
+import { IonButton, IonInput, useIonToast } from "@ionic/react";
 import axios from "axios";
 import { flameOutline, sparklesOutline } from "ionicons/icons";
 import { useState } from "react";
 import { API_URL } from "../../App";
-import { Button, ButtonType } from "../../components/forms/Button";
-import { Input, InputType } from "../../components/forms/Input";
 import { IProjectData } from "../../hooks/useProject";
 import { useAuthStore } from "../../store/authStore";
 
@@ -22,7 +20,7 @@ export const EditProjectDetails: React.FC<IEditProjectProps> = ({
     description: project.description,
   });
 
-  function handleChange(e: { target: { name: any; value: any } }) {
+  function handleChange(e: any) {
     setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
@@ -45,8 +43,6 @@ export const EditProjectDetails: React.FC<IEditProjectProps> = ({
           icon: sparklesOutline,
           color: "success",
         });
-        // this method is used here because the page needs to refresh -> I'm sure there're better methods
-        // window.location.href = `/project/${project.id}`;
       })
       .catch(() => {
         present({
@@ -61,31 +57,46 @@ export const EditProjectDetails: React.FC<IEditProjectProps> = ({
 
   return (
     <form onSubmit={handleProjectSubmit}>
-      <Input
+      <IonInput
+        className="ion-text-center"
         name={"projectName"}
-        value={project.projectName}
-        change={handleChange}
-        inputName={"Enter Project Name"}
+        value={mask.projectName}
+        type={"text"}
         placeholder={"D-LAMA Test Project"}
+        onIonChange={handleChange}
         helperText={"Enter a valid name"}
         errorText={"Invalid text"}
-        inputType={InputType.text}
+        labelPlacement="stacked"
+        label={"Enter Project Name"}
+        fill="outline"
+        shape="round"
+        style={{ marginTop: "15px" }}
       />
-      <Input
+      <IonInput
+        className="ion-text-center"
         name={"description"}
-        value={project.description}
-        change={handleChange}
-        inputName={"Enter Project Description"}
-        placeholder={"Text"}
-        helperText={"Enter a valid description"}
-        errorText={"Invalid type"}
-        inputType={InputType.text}
+        value={mask.description}
+        type={"text"}
+        placeholder={"Text..."}
+        onIonChange={handleChange}
+        helperText={"Enter a description"}
+        errorText={"Invalid text"}
+        labelPlacement="stacked"
+        label={"Enter Project Description"}
+        fill="outline"
+        shape="round"
+        style={{ marginTop: "15px" }}
       />
-      <Button
-        buttonText={"Save Detail Changes"}
-        buttonType={ButtonType.submit}
+      <IonButton
+        type="submit"
         color={"primary"}
-      />
+        className="ion-text-center"
+        shape="round"
+        size="large"
+        style={{ marginTop: "2rem" }}
+      >
+        Save Detail Changes
+      </IonButton>
     </form>
   );
 };

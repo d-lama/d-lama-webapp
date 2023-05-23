@@ -1,9 +1,8 @@
-import { useIonToast } from "@ionic/react";
+import { IonButton, useIonToast } from "@ionic/react";
 import axios from "axios";
 import { flameOutline, sparklesOutline } from "ionicons/icons";
 import { useRef, useState } from "react";
 import { API_URL } from "../../App";
-import { Button, ButtonType } from "../../components/forms/Button";
 import { IProjectData } from "../../hooks/useProject";
 import { useAuthStore } from "../../store/authStore";
 
@@ -77,11 +76,16 @@ export const EditProjectData: React.FC<IEditProjectProps> = ({ project }) => {
           ref={fileInputRef}
           onChange={handleFileChange}
         />
-        <Button
-          buttonText={"Append new data points"}
-          buttonType={ButtonType.submit}
+        <IonButton
+          type="submit"
           color={"primary"}
-        />
+          className="ion-text-center"
+          shape="round"
+          size="large"
+          style={{ marginTop: "2rem" }}
+        >
+          Append new data points
+        </IonButton>
       </div>
     </form>
   );
