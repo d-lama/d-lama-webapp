@@ -95,10 +95,13 @@ export const EditProjectLabel: React.FC<IEditProjectProps> = ({ project }) => {
     axios
       .post(
         `${API_URL}/project/${project.id}/labels`,
+        JSON.stringify(newLabels),
         {
-          ...newLabels,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       )
       .then(() => {
         present({

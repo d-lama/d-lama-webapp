@@ -1,11 +1,10 @@
 import {
   IonAlert,
   IonButton,
-  IonCol,
-  IonGrid,
-  IonLabel,
-  IonListHeader,
-  IonRow,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
   useIonToast,
 } from "@ionic/react";
 import axios from "axios";
@@ -48,59 +47,60 @@ export const EditProject: React.FC<IEditProjectProps> = ({ project }) => {
 
   return (
     <>
-      <IonGrid class="edit">
-        <IonRow className="border">
-          <IonCol size="12">
-            <EditProjectDetails project={project} />
-          </IonCol>
-        </IonRow>
+      <IonCard>
+        <IonCardHeader color={"tertiary"}>
+          <IonCardTitle>Details</IonCardTitle>
+        </IonCardHeader>
+        <IonCardContent>
+          <EditProjectDetails project={project} />
+        </IonCardContent>
+      </IonCard>
 
-        <IonRow className="border">
-          <IonCol size="12">
-            <EditProjectData project={project} />
-          </IonCol>
-        </IonRow>
+      <IonCard className="card-margin-top">
+        <IonCardHeader color={"tertiary"}>
+          <IonCardTitle>Data points</IonCardTitle>
+        </IonCardHeader>
+        <IonCardContent>
+          <EditProjectData project={project} />
+        </IonCardContent>
+      </IonCard>
 
-        <IonRow className="border">
-          <IonCol size="12">
-            <EditProjectLabel project={project} />
-          </IonCol>
-        </IonRow>
+      <IonCard className="card-margin-top">
+        <IonCardHeader color={"tertiary"}>
+          <IonCardTitle>Labels</IonCardTitle>
+        </IonCardHeader>
+        <IonCardContent>
+          <EditProjectLabel project={project} />
+        </IonCardContent>
+      </IonCard>
 
-        <IonRow>
-          <IonCol size="12">
-            <IonButton
-              id="present-alert"
-              size="large"
-              className="ion-text-center"
-              expand="block"
-              shape="round"
-              style={{ marginBottom: "10px", minWidth: "260px" }}
-              color="danger"
-            >
-              Delete Project
-            </IonButton>
-            <IonAlert
-              header="Are you sure you want to delete the current project?"
-              trigger="present-alert"
-              buttons={[
-                {
-                  text: "Cancel",
-                  role: "cancel",
-                  handler: () => {},
-                },
-                {
-                  text: "OK",
-                  role: "confirm",
-                  handler: () => {
-                    handleProjectDelete;
-                  },
-                },
-              ]}
-            />
-          </IonCol>
-        </IonRow>
-      </IonGrid>
+      <IonButton
+        id="present-alert"
+        size="large"
+        className="ion-text-center"
+        expand="block"
+        shape="round"
+        style={{ marginBottom: "10px", minWidth: "260px" }}
+        color="danger"
+      >
+        Delete Project
+      </IonButton>
+      <IonAlert
+        header="Are you sure you want to delete the current project?"
+        trigger="present-alert"
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+            handler: () => {},
+          },
+          {
+            text: "OK",
+            role: "confirm",
+            handler: handleProjectDelete,
+          },
+        ]}
+      />
     </>
   );
 };

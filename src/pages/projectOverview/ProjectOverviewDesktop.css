@@ -32,7 +32,6 @@ ion-card-subtitle {
   font-size: 1.6rem;
 }
 
-.edit ion-row.border {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--ion-color-primary-contrast);
+.card-margin-top {
+  margin-top: 2rem;
 }
