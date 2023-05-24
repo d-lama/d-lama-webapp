@@ -1,9 +1,9 @@
 ion-card-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 ion-card-subtitle {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
 }
 
 .panel {
@@ -20,12 +20,12 @@ ion-card-subtitle {
 }
 
 .details .label {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
 .details .value {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 .details ion-list-header ion-label {
