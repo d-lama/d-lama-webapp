@@ -1,6 +1,7 @@
 import { IonContent, IonPage, IonProgressBar, useIonToast } from "@ionic/react";
 import { flameOutline } from "ionicons/icons";
 import { HeaderMobile } from "../../components/header/HeaderMobile";
+import BottomNavigationBar from "../../components/menu/BottomNavigationBar";
 import { UserRanking } from "../../components/ranking/UserRanking";
 import { useUserRanking } from "../../hooks/useUserRanking";
 import "./RankingPage.css";
@@ -31,6 +32,7 @@ export default function RankingPageMobile() {
         <IonContent>
           <UserRanking data={userRankingQuery.data} />
         </IonContent>
+        <BottomNavigationBar />
       </IonPage>
     </>
   );
