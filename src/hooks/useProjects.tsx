@@ -29,6 +29,6 @@ export const useProjects = () => {
   return useQuery<IProjectData[], Error>("userProjects", fetchProjects, {
     enabled: true,
     retry: 3,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 };
