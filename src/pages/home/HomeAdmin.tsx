@@ -15,12 +15,13 @@ import { useHistory } from "react-router";
 import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import { MenuDesktop } from "../../components/menu/MenuDesktop";
 import { ProjectGridAdmin } from "./ProjectGridAdmin";
+import barChart from "./asset/bar-chart-example.png";
 
 export const HomeAdmin: React.FC = () => {
   const history = useHistory();
 
   const handleCreateProject = () => {
-    history.push("/projectcreation");
+    history.push("/project/create");
   };
 
   return (
@@ -70,7 +71,10 @@ export const HomeAdmin: React.FC = () => {
                             current stats of your labeling projects
                           </IonCardSubtitle>
                         </IonCardHeader>
-                        <IonCardContent>{/* Content */}</IonCardContent>
+                        <IonCardContent>
+                          <h2>Example Data</h2>
+                          <img src={barChart} />
+                        </IonCardContent>
                       </IonCard>
                     </IonCol>
                   </IonRow>
