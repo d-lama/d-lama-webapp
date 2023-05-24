@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { API_URL } from "../../App";
+import { API_URL, MIN_DESKTOP_WIDTH } from "../../App";
 import { isEmailValid } from "../../helper/formHelper";
 import RegistrationDesktop from "./RegistrationDesktop";
 import RegistrationMobile from "./RegistrationMobile";
 
 export default function Registration() {
+  const isDesktop = window.innerWidth >= MIN_DESKTOP_WIDTH;
   const history = useHistory();
   const [labelText, setLabelText] = useState("");
   const [mask, setMask] = useState({
@@ -50,7 +51,7 @@ export default function Registration() {
         isAdmin: mask.isAdmin,
       })
       .then(() => {
-        history.push("/registrationSucceed");
+        history.push("/registration/succeed");
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
@@ -63,8 +64,6 @@ export default function Registration() {
         }
       });
   };
-
-  const isDesktop = window.innerWidth >= 768;
 
   return (
     <>
