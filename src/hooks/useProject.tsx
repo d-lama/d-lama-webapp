@@ -10,6 +10,7 @@ export interface IProjectData {
   description: string;
   dataPointsCount: number;
   labeledDataPointsCount: number;
+  dataType: number;
   labels: [];
 }
 

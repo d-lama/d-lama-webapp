@@ -14,7 +14,7 @@ interface LabelCard {
   dataPointIndex: number;
   content: string;
   projectId: number;
-  labeledDataPoints: any[];
+  labeledDataPoints: number;
 }
 
 const MAX_LABEL_LOAD_AMOUNT = 5;
@@ -28,6 +28,7 @@ const LabelSwipeContainerComponent: React.FC<{
   setUndoAction: (isUndo: boolean) => void;
   undoAction: boolean;
   setShowWin: (isShowWin: boolean) => void;
+  darkMode: boolean;
 }> = ({
   numberOfContainers,
   projectData,
@@ -35,8 +36,10 @@ const LabelSwipeContainerComponent: React.FC<{
   setUndoAction,
   undoAction,
   setShowWin,
+  darkMode,
 }) => {
   const [, setSwipeDirection] = useState<string>("");
+  const [onMove, setOnMove] = useState<string>("");
   const [labelItems, setLabelItems] = useState<LabelCard[]>([]);
   const { token } = useAuthStore();
 
@@ -69,7 +72,7 @@ const LabelSwipeContainerComponent: React.FC<{
     try {
       const response = await axios.post(
         `${API_URL}/DataPoint/${projectId}/LabelDataPoint/${labelItem.dataPointIndex}`,
-        labelItem.labeledDataPoints[0],
+        labelItem.labeledDataPoints,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -131,7 +134,8 @@ const LabelSwipeContainerComponent: React.FC<{
 
     // Update the label in the copy
     updatedLabelItems[currIndex] = { ...labelItems[currIndex] };
-    updatedLabelItems[currIndex].labeledDataPoints[0] = labels[index].id;
+    // @ts-ignore
+    updatedLabelItems[currIndex].labeledDataPoints = labels[index].id;
 
     // Set the state with the updated copy
     sendLabeledData(projectData.id, updatedLabelItems[currIndex]);
@@ -181,24 +185,24 @@ const LabelSwipeContainerComponent: React.FC<{
     <IonGrid className={"screenHeight"}>
       <IonRow>
         <IonCol className={"horizontalWidth labelingGrid"}>
-          {dropContainerChecker(false, labels, 3)}
+          {dropContainerChecker(false, labels, 3, "" + getDirectionIndex(3, false))}
         </IonCol>
       </IonRow>
       <IonRow className={"growScreen"}>
         <IonCol size={"1"} className={"labelingGrid"}>
-          {dropContainerChecker(true, labels, 0)}
+          {dropContainerChecker(true, labels, 0, "" + getDirectionIndex(0, false))}
         </IonCol>
         <IonCol size={"10"} className={"centerCard"}>
           {labelItems.length &&
-            getCard(labelItems[currIndex], handleSwipe, currIndex)}
+            getCard(labelItems[currIndex], handleSwipe, currIndex, darkMode, projectData.dataType)}
         </IonCol>
         <IonCol size={"1"} className={"labelingGrid"}>
-          {dropContainerChecker(true, labels, 1)}
+          {dropContainerChecker(true, labels, 1, "" + getDirectionIndex(1, false))}
         </IonCol>
       </IonRow>
       <IonRow>
         <IonCol className={"horizontalWidth labelingGrid"}>
-          {dropContainerChecker(false, labels, 2)}
+          {dropContainerChecker(false, labels, 2, "" + getDirectionIndex(2, false))}
         </IonCol>
       </IonRow>
     </IonGrid>
@@ -208,7 +212,8 @@ const LabelSwipeContainerComponent: React.FC<{
 function dropContainerChecker(
   isVertical: boolean,
   labels: any[],
-  index: number
+  index: number,
+  direction: string
 ) {
   let component = null;
 
@@ -219,6 +224,7 @@ function dropContainerChecker(
         labelName={labels[index].name}
         labelColor={color}
         isVertical={isVertical}
+        direction={direction}
       />
     );
   }
@@ -250,7 +256,9 @@ export function getFixedColors(index: number): string {
 function getCard(
   labelItem: any,
   handleSwipe: (direction: string) => void,
-  currIndex: number
+  currIndex: number,
+  darkMode: boolean,
+  contentType: number
 ) {
   if (!labelItem) {
     return null;
@@ -261,30 +269,19 @@ function getCard(
       cardSubtitle={""}
       cardTitle={""}
       content={labelItem.content}
+      contentType={contentType}
       onSwipe={handleSwipe}
+      darkMode={darkMode}
     />
   );
 }
 
-function getDirectionIndex(direction: string): number {
-  let directionIndex = 0;
+function getDirectionIndex(direction: string | number, toIndex: boolean = true): string | number {
+  const directions = ['left', 'right', 'down', 'up'];
+  const index = directions.indexOf(String(direction));
 
-  switch (direction) {
-    case "up":
-      directionIndex = 3;
-      break;
-    case "down":
-      directionIndex = 2;
-      break;
-    case "left":
-      directionIndex = 0;
-      break;
-    case "right":
-      directionIndex = 1;
-      break;
-  }
-
-  return directionIndex;
+  // @ts-ignore
+  return toIndex ? index : directions[direction];
 }
 
 export default LabelSwipeContainerComponent;

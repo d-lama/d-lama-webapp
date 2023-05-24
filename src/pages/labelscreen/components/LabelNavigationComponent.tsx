@@ -5,7 +5,7 @@ import { returnDownBackOutline, helpOutline, arrowUndoOutline } from 'ionicons/i
 import './LabelNavigationComponent.css';
 import {useHistory} from "react-router-dom";
 
-const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:number, setShowHelp:(isShow:boolean)=>void, undoAction:(isUndo:boolean)=>void}> = ({progress, maxNumberOfLabels, setShowHelp, undoAction}) => {
+const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:number, setShowHelp:(isShow:boolean)=>void, undoAction:(isUndo:boolean)=>void, darkMode:boolean}> = ({progress, maxNumberOfLabels, setShowHelp, undoAction, darkMode}) => {
 
     const history = useHistory();
 
@@ -23,7 +23,7 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
 
     return (
 
-        <IonGrid className={"navigationLabelingTop"}>
+        <IonGrid className={`navigationLabelingTop ${darkMode ? "dark" : "light"}`}>
             <IonRow>
                 <IonCol size={"2"}>
                     <IonButton onClick={returnActionHandler} size="small"><IonIcon slot="icon-only" icon={returnDownBackOutline}></IonIcon></IonButton>
@@ -34,7 +34,7 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
                 </IonCol>
                 <IonCol size={"2"}></IonCol>
                 <IonCol size={"8"}>
-                    {ProgressLabelingBar(progress, maxNumberOfLabels)}
+                    {ProgressLabelingBar(progress, maxNumberOfLabels, darkMode)}
                 </IonCol>
                 <IonCol size={"2"}>
                     <IonButton onClick={handleUndoAction} size="small"><IonIcon slot="icon-only" icon={arrowUndoOutline}></IonIcon></IonButton>
@@ -44,12 +44,12 @@ const LabelNavigationComponent: React.FC<{progress:number, maxNumberOfLabels:num
     );
 }
 
-function ProgressLabelingBar(progress:number, maxNumberOfLabels:number) {
+function ProgressLabelingBar(progress:number, maxNumberOfLabels:number, darkMode:boolean) {
     let widthPercent = progress / maxNumberOfLabels * 100;
 
     return (
-        <div className={"maxLabelingProgress"}>
-            <div className={"labelingProgress"} style={{width: widthPercent + "%"}}></div>
+        <div className={`maxLabelingProgress ${darkMode ? "dark" : ""}`}>
+            <div className={`labelingProgress ${darkMode ? "dark" : ""}`} style={{width: widthPercent + "%"}}></div>
             <div className={"labelingProgressText"}>{progress} / {maxNumberOfLabels}</div>
         </div>
     );
