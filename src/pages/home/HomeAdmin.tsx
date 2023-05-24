@@ -34,7 +34,7 @@ export const HomeAdmin: React.FC = () => {
             <IonRow>
               <IonCol size="6">
                 <IonCard>
-                  <IonCardHeader>
+                  <IonCardHeader color={"tertiary"}>
                     <IonCardTitle>My Projects</IonCardTitle>
                     <IonCardSubtitle>
                       In this section you can see an overview of your current
@@ -60,25 +60,19 @@ export const HomeAdmin: React.FC = () => {
                 </IonCard>
               </IonCol>
               <IonCol size="6">
-                <IonGrid>
-                  <IonRow>
-                    <IonCol size="12">
-                      <IonCard>
-                        <IonCardHeader>
-                          <IonCardTitle>Statistics</IonCardTitle>
-                          <IonCardSubtitle>
-                            In this section you can see an overview of the
-                            current stats of your labeling projects
-                          </IonCardSubtitle>
-                        </IonCardHeader>
-                        <IonCardContent>
-                          <h2>Example Data</h2>
-                          <img src={barChart} />
-                        </IonCardContent>
-                      </IonCard>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
+                <IonCard>
+                  <IonCardHeader color={"tertiary"}>
+                    <IonCardTitle>Statistics</IonCardTitle>
+                    <IonCardSubtitle>
+                      In this section you can see an overview of the current
+                      stats of your labeling projects
+                    </IonCardSubtitle>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <h2>Example Data</h2>
+                    <img src={barChart} />
+                  </IonCardContent>
+                </IonCard>
               </IonCol>
             </IonRow>
           </IonGrid>
