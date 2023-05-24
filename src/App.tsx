@@ -32,6 +32,8 @@ import "@ionic/react/css/text-transformation.css";
 /* Theme variables */
 import "./theme/variables.css";
 
+import ProjectOverviewDesktop from "./pages/projectOverview/ProjectOverviewDesktop";
+
 setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
@@ -64,14 +66,14 @@ const App: React.FC = () => {
           />
           <ProtectedRoute
             exact
-            path="/project/create"
+            path="/project-create"
             component={ProjectCreationDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
           <ProtectedRoute
             exact
-            path="/fileUpload/:projectId"
+            path="/fileUpload/:projectId/:dataType"
             component={FileUploadDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
@@ -99,6 +101,9 @@ const App: React.FC = () => {
           </Route>
           <Route exact path="/label/:id">
             {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/project/:id">
+            <ProjectOverviewDesktop />
           </Route>
           {/* redirect routes */}
           <Route exact path="/">

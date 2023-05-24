@@ -21,7 +21,7 @@ export const HomeAdmin: React.FC = () => {
   const history = useHistory();
 
   const handleCreateProject = () => {
-    history.push("/project/create");
+    history.push("/project-create");
   };
 
   return (
