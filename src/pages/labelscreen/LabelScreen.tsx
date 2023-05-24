@@ -17,7 +17,12 @@ export interface Project {
   description: string;
   labeledDataPointsCount: number;
   dataPointsCount: number;
-  labels: ILabelData[];
+  dataType: number;
+  labels: {
+    id: number;
+    name: string;
+    description: string;
+  }[];
 }
 
 const LabelScreen: React.FC = () => {
@@ -28,11 +33,19 @@ const LabelScreen: React.FC = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [undoAction, setUndoAction] = useState<boolean>(false);
   const [showWin, setShowWin] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const { token } = useAuthStore();
 
   const projectParams: { id: string | undefined } = useParams();
   const projectId = projectParams.id;
   const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem("dark-theme") === "true") {
+      setDarkMode(true);
+      document.body.classList.add("dark");
+    }
+  }, []);
 
   useEffect(() => {
     async function getProjectInfo() {
@@ -66,7 +79,7 @@ const LabelScreen: React.FC = () => {
     async function getDataPointsAmount() {
       try {
         const response = await axios.get(
-          `${API_URL}/DataPoint/${projectId}/GetNumberOfTextDataPoints`,
+          `${API_URL}/DataPoint/${projectId}/GetNumberOfDataPoints`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -101,6 +114,7 @@ const LabelScreen: React.FC = () => {
           maxNumberOfLabels={dataPointAmount}
           setShowHelp={setShowHelp}
           undoAction={setUndoAction}
+          darkMode={darkMode}
         />
         <LabelSwipeContainerComponent
           numberOfContainers={containerNumber}
@@ -109,6 +123,7 @@ const LabelScreen: React.FC = () => {
           setUndoAction={setUndoAction}
           undoAction={undoAction}
           setShowWin={setShowWin}
+          darkMode={darkMode}
         />
       </IonContent>
 
