@@ -1,13 +1,14 @@
 .home-title {
-    font-size: 2.1rem;
-    font-weight: bold;
+  font-size: 2.1rem;
+  font-weight: bold;
+  text-align: left;
 }
 
 .home-add-project-icon {
-    font-size: 2rem;
-    height: 100%;
+  font-size: 2rem;
+  height: 100%;
 }
 
 .home-add-project-icon:active {
-    color: var(--ion-color-primary);
+  color: var(--ion-color-primary);
 }
