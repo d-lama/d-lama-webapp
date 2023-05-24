@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -11,7 +12,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Button, ButtonType } from "../../components/forms/Button";
 import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import { MenuDesktop } from "../../components/menu/MenuDesktop";
@@ -28,6 +29,11 @@ export default function ProjectOverviewDesktop() {
   const projectRankingQuery = useProjectRanking(projectId);
   const projectQuery = useProject(projectId);
   const [editMode, setEditMode] = useState(false);
+  const history = useHistory();
+
+  const handleOverview = () => {
+    history.push("/home");
+  };
 
   return (
     <>
@@ -44,8 +50,8 @@ export default function ProjectOverviewDesktop() {
                   <>
                     <EditProject project={projectQuery.data} />
                     <Button
-                      toolTipText={"Cancel editing this project"}
-                      buttonText={"Cancel Edit"}
+                      toolTipText={"Back to project overview"}
+                      buttonText={"Back to project"}
                       buttonType={ButtonType.button}
                       color={"primary"}
                       action={() => {
@@ -65,6 +71,19 @@ export default function ProjectOverviewDesktop() {
                         setEditMode(true);
                       }}
                     />
+                    <IonButton
+                      title="Back to the overview"
+                      type="button"
+                      size="large"
+                      className="ion-text-center"
+                      expand="full"
+                      shape="round"
+                      color="primary"
+                      onClick={handleOverview}
+                      style={{ marginTop: "2rem" }}
+                    >
+                      Back to the overview
+                    </IonButton>
                   </>
                 )}
               </IonCol>
