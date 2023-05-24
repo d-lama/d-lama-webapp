@@ -20,7 +20,7 @@ export const ProjectButtonAdmin: React.FC<IProjectButtonAdminProps> = ({
       className="projectBtn-btn"
       fill="outline"
       onClick={() => {
-        history.push(`/label/${projectId}`);
+        history.push(`/project/${projectId}`);
       }}
     >
       <span className="projectBtn-title" role="title">
