@@ -185,24 +185,51 @@ const LabelSwipeContainerComponent: React.FC<{
     <IonGrid className={"screenHeight"}>
       <IonRow>
         <IonCol className={"horizontalWidth labelingGrid"}>
-          {dropContainerChecker(false, labels, 3, "" + getDirectionIndex(3, false))}
+          {dropContainerChecker(
+            false,
+            labels,
+            3,
+            "" + getDirectionIndex(3, false)
+          )}
         </IonCol>
       </IonRow>
       <IonRow className={"growScreen"}>
         <IonCol size={"1"} className={"labelingGrid"}>
-          {dropContainerChecker(true, labels, 0, "" + getDirectionIndex(0, false))}
+          {dropContainerChecker(
+            true,
+            labels,
+            0,
+            "" + getDirectionIndex(0, false)
+          )}
         </IonCol>
         <IonCol size={"10"} className={"centerCard"}>
           {labelItems.length &&
-            getCard(labelItems[currIndex], handleSwipe, currIndex, darkMode, projectData.dataType)}
+            getCard(
+              labelItems[currIndex],
+              handleSwipe,
+              currIndex,
+              darkMode,
+              projectData.dataType,
+              projectData.id
+            )}
         </IonCol>
         <IonCol size={"1"} className={"labelingGrid"}>
-          {dropContainerChecker(true, labels, 1, "" + getDirectionIndex(1, false))}
+          {dropContainerChecker(
+            true,
+            labels,
+            1,
+            "" + getDirectionIndex(1, false)
+          )}
         </IonCol>
       </IonRow>
       <IonRow>
         <IonCol className={"horizontalWidth labelingGrid"}>
-          {dropContainerChecker(false, labels, 2, "" + getDirectionIndex(2, false))}
+          {dropContainerChecker(
+            false,
+            labels,
+            2,
+            "" + getDirectionIndex(2, false)
+          )}
         </IonCol>
       </IonRow>
     </IonGrid>
@@ -258,26 +285,34 @@ function getCard(
   handleSwipe: (direction: string) => void,
   currIndex: number,
   darkMode: boolean,
-  contentType: number
+  contentType: number,
+  projectId: number
 ) {
   if (!labelItem) {
     return null;
   }
 
+  let content = contentType === 1 ? labelItem : labelItem.content;
+
   return (
     <CardLabelComponent
       cardSubtitle={""}
       cardTitle={""}
-      content={labelItem.content}
+      content={content}
       contentType={contentType}
       onSwipe={handleSwipe}
       darkMode={darkMode}
+      dataPointIndex={content.dataPointIndex}
+      projectId={projectId}
     />
   );
 }
 
-function getDirectionIndex(direction: string | number, toIndex: boolean = true): string | number {
-  const directions = ['left', 'right', 'down', 'up'];
+function getDirectionIndex(
+  direction: string | number,
+  toIndex: boolean = true
+): string | number {
+  const directions = ["left", "right", "down", "up"];
   const index = directions.indexOf(String(direction));
 
   // @ts-ignore
