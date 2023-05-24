@@ -66,7 +66,7 @@ const App: React.FC = () => {
           />
           <ProtectedRoute
             exact
-            path="/project/create"
+            path="/project-create"
             component={ProjectCreationDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
