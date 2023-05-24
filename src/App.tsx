@@ -7,6 +7,8 @@ import Home from "./pages/home";
 import LabelScreen from "./pages/labelscreen/LabelScreen";
 import Login from "./pages/login";
 import FileUploadDesktop from "./pages/projectCreation/FileUploadDesktop";
+import ProjectCreationDesktop from "./pages/projectCreation/ProjectCreationDesktop";
+import RankingPageMobile from "./pages/ranking/RankingPageMobile";
 import Registration from "./pages/registration/Registration";
 import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
 import { useUserStore } from "./store/userStore";
@@ -28,9 +30,9 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
-import ProjectCreationDesktop from "./pages/projectCreation/ProjectCreationDesktop";
-import RankingPageMobile from "./pages/ranking/RankingPageMobile";
 import "./theme/variables.css";
+
+import ProjectOverviewDesktop from "./pages/projectOverview/ProjectOverviewDesktop";
 
 setupIonicReact();
 
@@ -64,14 +66,14 @@ const App: React.FC = () => {
           />
           <ProtectedRoute
             exact
-            path="/projectcreation"
+            path="/project-create"
             component={ProjectCreationDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
           <ProtectedRoute
             exact
-            path="/fileUpload/:projectId"
+            path="/fileUpload/:projectId/:dataType"
             component={FileUploadDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
@@ -90,7 +92,7 @@ const App: React.FC = () => {
           <Route exact path="/registration">
             {isAuthenticated ? <Redirect to="/home" /> : <Registration />}
           </Route>
-          <Route exact path="/registrationsucceed">
+          <Route exact path="/registration/succeed">
             {isAuthenticated ? (
               <Redirect to="/home" />
             ) : (
@@ -99,6 +101,9 @@ const App: React.FC = () => {
           </Route>
           <Route exact path="/label/:id">
             {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/project/:id">
+            <ProjectOverviewDesktop />
           </Route>
           {/* redirect routes */}
           <Route exact path="/">

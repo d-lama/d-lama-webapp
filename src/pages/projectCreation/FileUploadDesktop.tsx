@@ -11,6 +11,7 @@ import "./ProjectCreationDesktop.css";
 
 interface RouteParams {
   projectId: string;
+  dataType: string;
 }
 
 export default function FileUploadDesktop() {
@@ -18,18 +19,21 @@ export default function FileUploadDesktop() {
   const [labelText, setLabelText] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { projectId } = useParams<RouteParams>();
+  const { projectId, dataType } = useParams<RouteParams>();
   const history = useHistory();
 
-  function handleFileSubmit(e: React.SyntheticEvent) {
+  function handleTextFileSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     if (selectedFile) {
       const formData = new FormData();
       formData.append("uploadedFile", selectedFile);
 
+      const dataTypeEndpoint =
+        dataType === "0" ? "UploadTextDataPoints" : "UploadImageDataPoints";
+
       axios
         .post(
-          `${API_URL}/Datapoint/${projectId}/UploadTextDataPoints`,
+          `${API_URL}/datapoint/${projectId}/${dataTypeEndpoint}`,
           formData,
           {
             headers: {
@@ -78,7 +82,7 @@ export default function FileUploadDesktop() {
             <form
               className={"custom-border"}
               style={{ width: "80%", maxWidth: "500px" }}
-              onSubmit={handleFileSubmit}
+              onSubmit={handleTextFileSubmit}
             >
               <div>
                 <div className="file-input" onClick={handleFileUpload}>
@@ -90,7 +94,7 @@ export default function FileUploadDesktop() {
                 </div>
                 <input
                   type="file"
-                  accept=".csv,.txt"
+                  accept=".csv,.txt,.zip"
                   style={{ display: "none" }}
                   ref={fileInputRef}
                   onChange={handleFileChange}

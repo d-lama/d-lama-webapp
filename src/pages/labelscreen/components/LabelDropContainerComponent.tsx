@@ -1,25 +1,35 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './LabelDropContainerComponent.css';
 
-const LabelDropContainerComponent: React.FC<{labelName:string, labelColor:string, isVertical:boolean, size?:number}> = ({labelName, labelColor, isVertical , size = 100}) => {
+const LabelDropContainerComponent: React.FC<{labelName:string, labelColor:string, isVertical:boolean, size?:number, direction:string}> = ({labelName, labelColor, isVertical , size = 100, direction}) => {
+
     if (isVertical) {
         return (
-            <VerticalContainer labelName={labelName} labelColor={labelColor} height={size} />
+            <VerticalContainer
+                labelName={labelName}
+                labelColor={labelColor}
+                height={size}
+                direction={direction}
+            />
         );
     }
 
     return (
-        <HorizontalContainer labelName={labelName} labelColor={labelColor} width={size} />
+        <HorizontalContainer
+            labelName={labelName}
+            labelColor={labelColor}
+            width={size}
+            direction={direction}
+        />
     );
 }
 
-const HorizontalContainer:  React.FC<{labelName:string, labelColor:string, width:number}> = ({
-    labelName,
-    labelColor,
-    width
+const HorizontalContainer: React.FC<{labelName:string, labelColor:string, width:number, direction:string}> = ({
+  labelName,
+  labelColor,
+  width,
+  direction,
 }) => {
-    const [isChildVisible, setIsChildVisible] = useState(false);
-
     let horizontalStyle = {
         width: width + "%",
         backgroundColor: "#" + labelColor,
@@ -31,19 +41,21 @@ const HorizontalContainer:  React.FC<{labelName:string, labelColor:string, width
     }
 
     return (
-        <div className={"dropContainer"}  style={horizontalStyle} onDragEnter={() => setIsChildVisible(true)} onDragLeave={() => setIsChildVisible(false)} onDrop={tagInfo}>
-            <div className={`labelName ${isChildVisible ? '' : 'notvisible'}`} style={backgroundColor}>{labelName}</div>
+        <div
+            className={`dropContainer card-animation-${direction}`}
+            style={horizontalStyle}
+        >
+            <div className={`labelName`} style={backgroundColor}>{labelName}</div>
         </div>
     );
 }
 
-const VerticalContainer: React.FC<{labelName:string, labelColor:string, height:number}> = ({
-   labelName,
-   labelColor,
-   height
-}) => {
-    const [isChildVisible, setIsChildVisible] = useState(false);
-
+const VerticalContainer: React.FC<{labelName:string, labelColor:string, height:number, direction:string}> = ({
+     labelName,
+     labelColor,
+     height,
+     direction,
+ }) => {
     let verticalStyle = {
         height: height + "%",
         backgroundColor: "#" + labelColor,
@@ -55,14 +67,13 @@ const VerticalContainer: React.FC<{labelName:string, labelColor:string, height:n
     }
 
     return (
-        <div className={"dropContainer"} style={verticalStyle} onMouseEnter={() => setIsChildVisible(true)} onMouseLeave={() => setIsChildVisible(false)}>
-            <div className={`labelName ${isChildVisible ? '' : 'notvisible'}`} style={backgroundColor}>{labelName}</div>
+        <div
+            className={`dropContainer card-animation-${direction}`}
+            style={verticalStyle}
+        >
+            <div className={`labelName`} style={backgroundColor}>{labelName}</div>
         </div>
     );
-}
-
-function tagInfo() {
-
 }
 
 export default LabelDropContainerComponent;

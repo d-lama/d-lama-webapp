@@ -1,3 +1,9 @@
 .label-map {
     margin-top: 16px;
 }
+
+.label-point {
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}

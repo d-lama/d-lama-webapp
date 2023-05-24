@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { API_URL } from "../App";
 import { useAuthStore } from "../store/authStore";
+import { ILabelData } from "./Label";
 
 export interface IProjectData {
   id: number;
@@ -10,8 +11,16 @@ export interface IProjectData {
   description: string;
   dataPointsCount: number;
   labeledDataPointsCount: number;
-  labels: [];
+  dataType: number;
+  labels: ILabelData[];
 }
+
+export enum EProjectDataType {
+  text = 0,
+  image = 1,
+}
+
+export const DATA_TYPE = ["Text", "Image"];
 
 export const useProject = (projectId: number) => {
   const { token } = useAuthStore();
@@ -34,9 +43,9 @@ export const useProject = (projectId: number) => {
     }
   };
 
-  return useQuery<IProjectData, Error>("userProject", fetchProject, {
+  return useQuery<IProjectData, Error>("useProject", fetchProject, {
     enabled: true,
     retry: 3,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 };
