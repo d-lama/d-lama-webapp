@@ -73,7 +73,7 @@ const App: React.FC = () => {
           />
           <ProtectedRoute
             exact
-            path="/fileUpload/:projectId"
+            path="/fileUpload/:projectId/:dataType"
             component={FileUploadDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"

@@ -1,5 +1,14 @@
-import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
+import {
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonPage,
+  IonSelect,
+  IonSelectOption,
+  useIonToast,
+} from "@ionic/react";
 import axios from "axios";
+import { flameOutline } from "ionicons/icons";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { API_URL } from "../../App";
@@ -15,16 +24,21 @@ import "./ProjectCreationDesktop.css";
 export default function ProjectCreationDesktop() {
   const { token } = useAuthStore();
   const [labelIndex, setLabelIndex] = useState(0);
-  const [labelText, setLabelText] = useState("");
   const [mask, setMask] = useState({
     projectName: "",
     description: "",
   });
+  const [dataType, setDataType] = useState(0);
   const [labels, setLabels] = useState<ILabelData[]>([]);
   const history = useHistory();
+  const [present] = useIonToast();
 
   function handleChange(e: { target: { name: any; value: any } }) {
     setMask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  function handleSelectChange(e: any) {
+    setDataType(Number(e.target.value));
   }
 
   function addElement() {
@@ -53,18 +67,22 @@ export default function ProjectCreationDesktop() {
         {
           projectName: mask.projectName,
           description: mask.description,
+          dataType: dataType,
           labels: labels,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then(function (response) {
-        history.push(`/fileUpload/${response.data.id}`);
+      .then((response) => {
+        history.push(`/fileUpload/${response.data.id}/${dataType}`);
       })
-      .catch(function () {
-        setLabelText("Connection failed!");
-        setTimeout(() => {
-          setLabelText("");
-        }, 3000);
+      .catch(() => {
+        present({
+          message: `An error occurred while uploading the data points.`,
+          duration: 5000,
+          position: "top",
+          icon: flameOutline,
+          color: "danger",
+        });
       });
   }
 
@@ -84,7 +102,7 @@ export default function ProjectCreationDesktop() {
             }}
           >
             <form
-              className={"custom-border"}
+              className="custom-border create"
               style={{ width: "80%", maxWidth: "600px" }}
               onSubmit={handleProjectSubmit}
             >
@@ -96,7 +114,9 @@ export default function ProjectCreationDesktop() {
                 helperText={"Enter a valid name"}
                 errorText={"Invalid text"}
                 inputType={InputType.text}
+                required={true}
               />
+
               <Input
                 name={"description"}
                 change={handleChange}
@@ -106,23 +126,34 @@ export default function ProjectCreationDesktop() {
                 errorText={"Invalid type"}
                 inputType={InputType.text}
               />
+
+              <IonSelect
+                name="dataType"
+                label="Select Project Datatype"
+                placeholder="Select Datatype"
+                className="ion-text-center"
+                fill="outline"
+                shape="round"
+                onIonChange={handleSelectChange}
+                interface="popover"
+                labelPlacement="stacked"
+                aria-label="dataType"
+              >
+                <IonSelectOption value="0">Text</IonSelectOption>
+                <IonSelectOption value="1">Image</IonSelectOption>
+              </IonSelect>
+
               <DynamicField
                 elements={labels}
                 onLabelChange={handleLabelChange}
                 addElement={addElement}
                 removeElement={removeElement}
               />
-              {labelText && (
-                <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
-                  <IonLabel className="ion-text-center" color="danger">
-                    {labelText}
-                  </IonLabel>
-                </IonItem>
-              )}
+
               <Button
                 toolTipText={"new screen for uploading file"}
                 data-testid="create-button"
-                buttonText={"Continue with fileupload"}
+                buttonText={"Continue with file upload"}
                 buttonType={ButtonType.submit}
                 color={"secondary"}
               />
