@@ -10,11 +10,13 @@ export const DarkModeToggle: React.FC = () => {
       setDarkMode(true);
       document.body.classList.add("dark");
     }
+    localStorage.setItem("dark-theme", "" + document.body.classList.contains("dark"));
   }, []);
 
   const handleToggle = () => {
     setDarkMode((prev) => !prev);
     document.body.classList.toggle("dark");
+    localStorage.setItem("dark-theme", "" + document.body.classList.contains("dark"));
   };
 
   return (

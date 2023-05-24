@@ -1,21 +1,48 @@
-.dropContainer{
-    position: absolute;
+.dropContainer {
+    position: relative;
     left: 0;
     right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
+.dropContainer:hover,
+.dropContainer.active {
+    opacity: 1;
+}
 
 .labelName {
     overflow: visible;
     padding: 10px;
     z-index: 3;
     color: #fff;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.notvisible {
-    visibility: hidden;
+.dropContainer.card-animation-up:hover .labelName,
+.dropContainer.card-animation-up.active .labelName {
+    transform: translateY(100%);
+    opacity: 1;
+}
+
+.dropContainer.card-animation-down:hover .labelName,
+.dropContainer.card-animation-down.active .labelName {
+    transform: translateY(-100%);
+    opacity: 1;
+}
+
+.dropContainer.card-animation-left:hover .labelName,
+.dropContainer.card-animation-left.active .labelName {
+    transform: translateX(100%);
+    opacity: 1;
+}
+
+.dropContainer.card-animation-right:hover .labelName,
+.dropContainer.card-animation-right.active .labelName {
+    transform: translateX(-100%);
+    opacity: 1;
 }
