@@ -40,6 +40,6 @@ export const useMyProjects = () => {
   return useQuery<IMyProjectData[], Error>("useMyProjects", fetchProjects, {
     enabled: true,
     retry: 3,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 };
