@@ -2,23 +2,62 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonCol,
   IonGrid,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
   IonRow,
+  useIonToast,
 } from "@ionic/react";
+import { flameOutline } from "ionicons/icons";
+import moment from "moment";
+import { API_URL } from "../../App";
+import { Button, ButtonType } from "../../components/forms/Button";
 import { DATA_TYPE, IProjectData } from "../../hooks/useProject";
+import { useAuthStore } from "../../store/authStore";
 
 interface IShowProjectProps {
   project: IProjectData;
 }
 
 export const ShowProject: React.FC<IShowProjectProps> = ({ project }) => {
+  const { token } = useAuthStore();
+  const [present] = useIonToast();
+  const currentDate = moment().format("YYYY-MM-DD HH:MM:SS");
+
+  const handleDownloadLabeledData = async () => {
+    try {
+      const response = await fetch(
+        `${API_URL}/datapoint/${project.id}/GetLabeledData`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+
+      const jsonData = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${currentDate}_${project.projectName}.json`;
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      present({
+        message: "An error occurred while downloading the results.",
+        duration: 5000,
+        position: "top",
+        icon: flameOutline,
+        color: "danger",
+      });
+    }
+  };
   return (
     <>
       <IonCard>
@@ -76,6 +115,13 @@ export const ShowProject: React.FC<IShowProjectProps> = ({ project }) => {
           </IonGrid>
         </IonCardContent>
       </IonCard>
+      <Button
+        toolTipText={"Download the labeled data"}
+        buttonText={"Download Labeled Data"}
+        buttonType={ButtonType.button}
+        color={"primary"}
+        action={handleDownloadLabeledData}
+      />
     </>
   );
 };
