@@ -8,11 +8,13 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonIcon,
   IonItem,
   IonLabel,
   IonPage,
   IonRow,
 } from "@ionic/react";
+import { addOutline } from "ionicons/icons";
 import { useHistory } from "react-router";
 import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import { MenuDesktop } from "../../components/menu/MenuDesktop";
@@ -57,6 +59,7 @@ export const HomeAdmin: React.FC = () => {
                       style={{ marginTop: "2rem" }}
                     >
                       Create new project
+                      <IonIcon slot="end" icon={addOutline}></IonIcon>
                     </IonButton>
                   </IonCardContent>
                 </IonCard>
