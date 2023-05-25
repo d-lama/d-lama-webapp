@@ -48,7 +48,7 @@ export const EditProject: React.FC<IEditProjectProps> = ({ project }) => {
   return (
     <>
       <IonCard>
-        <IonCardHeader color={"tertiary"}>
+        <IonCardHeader color={"secondary"}>
           <IonCardTitle>Details</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
@@ -57,7 +57,7 @@ export const EditProject: React.FC<IEditProjectProps> = ({ project }) => {
       </IonCard>
 
       <IonCard className="card-margin-top">
-        <IonCardHeader color={"tertiary"}>
+        <IonCardHeader color={"secondary"}>
           <IonCardTitle>Data points</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
@@ -66,7 +66,7 @@ export const EditProject: React.FC<IEditProjectProps> = ({ project }) => {
       </IonCard>
 
       <IonCard className="card-margin-top">
-        <IonCardHeader color={"tertiary"}>
+        <IonCardHeader color={"secondary"}>
           <IonCardTitle>Labels</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
