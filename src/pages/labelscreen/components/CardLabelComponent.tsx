@@ -56,7 +56,7 @@ const CardLabelComponent: React.FC<Props> = ({
         })
         .catch(() => {});
     }
-  }, []);
+  }, [dataPointIndex]);
 
   useEffect(() => {
     const gestureY = initGesture("y");
