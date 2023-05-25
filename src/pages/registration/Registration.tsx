@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { API_URL, MIN_DESKTOP_WIDTH } from "../../App";
 import { isEmailValid } from "../../helper/formHelper";
+import "./Registration.css";
 import RegistrationDesktop from "./RegistrationDesktop";
 import RegistrationMobile from "./RegistrationMobile";
 
@@ -67,27 +68,23 @@ export default function Registration() {
 
   return (
     <>
-      (
-      <div>
-        {isDesktop ? (
-          <RegistrationDesktop
-            mask={mask}
-            handleChange={handleChange}
-            handleLogin={handleSubmit}
-            handleIsAdminChange={handleIsAdminChange}
-            labelText={labelText}
-          />
-        ) : (
-          <RegistrationMobile
-            mask={mask}
-            handleChange={handleChange}
-            handleLogin={handleSubmit}
-            handleIsAdminChange={handleIsAdminChange}
-            labelText={labelText}
-          />
-        )}
-      </div>
-      );
+      {isDesktop ? (
+        <RegistrationDesktop
+          mask={mask}
+          handleChange={handleChange}
+          handleLogin={handleSubmit}
+          handleIsAdminChange={handleIsAdminChange}
+          labelText={labelText}
+        />
+      ) : (
+        <RegistrationMobile
+          mask={mask}
+          handleChange={handleChange}
+          handleLogin={handleSubmit}
+          handleIsAdminChange={handleIsAdminChange}
+          labelText={labelText}
+        />
+      )}
     </>
   );
 }
