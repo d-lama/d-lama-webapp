@@ -1,4 +1,11 @@
-import { IonItem, IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
+import {
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonSegment,
+  IonSegmentButton,
+} from "@ionic/react";
+import { personAddOutline } from "ionicons/icons";
 import { Button, ButtonType } from "../../components/forms/Button";
 import { Input, InputType } from "../../components/forms/Input";
 
@@ -105,7 +112,9 @@ export default function RegistrationForm(props: any) {
             buttonText={props.isSettings ? "Submit Changes" : "Register"}
             buttonType={ButtonType.submit}
             color={"primary"}
-          ></Button>
+          >
+            <IonIcon slot="end" icon={personAddOutline}></IonIcon>
+          </Button>
         </form>
       </div>
     </>
