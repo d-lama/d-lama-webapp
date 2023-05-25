@@ -153,7 +153,6 @@ const Settings: React.FC = () => {
             <HeaderMobile />
             <IonContent>
                 <>
-                    (
                     <div>
                         {isDesktop ? (
                             <RegistrationDesktop
@@ -175,7 +174,6 @@ const Settings: React.FC = () => {
                             />
                         )}
                     </div>
-                    );
                 </>
             </IonContent>
             <BottomNavigationBar />
