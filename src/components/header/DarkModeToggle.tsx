@@ -3,18 +3,36 @@ import { moon, sunny } from "ionicons/icons";
 import { useEffect, useState } from "react";
 
 export const DarkModeToggle: React.FC = () => {
+  const currState = localStorage.getItem("dark-theme");
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setDarkMode(true);
-      document.body.classList.add("dark");
+    if (currState) {
+      currState === "true" && addDarkMode();
+    } else {
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        addDarkMode();
+      }
     }
+    refreshLocalStorage();
   }, []);
+
+  const addDarkMode = () => {
+    setDarkMode(true);
+    document.body.classList.add("dark");
+  };
+
+  const refreshLocalStorage = () => {
+    localStorage.setItem(
+      "dark-theme",
+      "" + document.body.classList.contains("dark")
+    );
+  };
 
   const handleToggle = () => {
     setDarkMode((prev) => !prev);
     document.body.classList.toggle("dark");
+    refreshLocalStorage();
   };
 
   return (
