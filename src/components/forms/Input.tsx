@@ -18,6 +18,7 @@ export interface InputProps {
   minLength?: number;
   maxLength?: number;
   required?: boolean;
+  disabled?:boolean;
 }
 
 export function Input(props: InputProps) {
@@ -38,6 +39,7 @@ export function Input(props: InputProps) {
       fill="outline"
       shape="round"
       style={{ marginTop: "15px" }}
+      disabled={props.disabled}
     />
   );
 }
