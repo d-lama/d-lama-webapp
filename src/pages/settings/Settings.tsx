@@ -9,6 +9,7 @@ import {useHistory} from "react-router-dom";
 import RegistrationDesktop from "../registration/RegistrationDesktop";
 import RegistrationMobile from "../registration/RegistrationMobile";
 import {isEmailValid} from "../../helper/formHelper";
+import BottomNavigationBar from "../../components/menu/BottomNavigationBar";
 
 interface User {
     email: string;
@@ -177,6 +178,7 @@ const Settings: React.FC = () => {
                     );
                 </>
             </IonContent>
+            <BottomNavigationBar />
         </IonPage>
     );
 };
