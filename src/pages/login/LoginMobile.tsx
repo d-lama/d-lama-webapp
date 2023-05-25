@@ -1,8 +1,10 @@
-import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
+import { IonContent, IonIcon, IonItem, IonLabel, IonPage } from "@ionic/react";
+import { logInOutline, personAddOutline } from "ionicons/icons";
 import { Button, ButtonType } from "../../components/forms/Button";
 import { Input, InputType } from "../../components/forms/Input";
 import { HeaderMobile } from "../../components/header/HeaderMobile";
 import "./Login.css";
+import lama5 from "./lama5.jpg";
 
 export default function LoginMobile(props: any) {
   return (
@@ -17,7 +19,9 @@ export default function LoginMobile(props: any) {
             justifyContent: "center",
             height: "80vh",
           }}
+          className="login"
         >
+          <img src={lama5} />
           <form
             style={{ width: "80%", maxWidth: "400px" }}
             onSubmit={props.handleLogin}
@@ -27,7 +31,6 @@ export default function LoginMobile(props: any) {
               inputName={"Email"}
               change={props.handleChange}
               placeholder={"max.muster@gmail.com"}
-              helperText={"Enter a valid email"}
               errorText={"Invalid email"}
               inputType={InputType.email}
             />
@@ -36,7 +39,6 @@ export default function LoginMobile(props: any) {
               inputName={"Password"}
               change={props.handleChange}
               placeholder={"**************"}
-              helperText={"Enter a valid password"}
               errorText={"error"}
               inputType={InputType.password}
             />
@@ -61,12 +63,17 @@ export default function LoginMobile(props: any) {
               buttonType={ButtonType.submit}
               buttonText={"Login"}
               color={"primary"}
-            ></Button>
+            >
+              <IonIcon slot="end" icon={logInOutline}></IonIcon>
+            </Button>
             <Button
               link={"/registration"}
               buttonText={"Sign Up"}
               buttonType={ButtonType.button}
-            ></Button>
+              color={"primary"}
+            >
+              <IonIcon slot="end" icon={personAddOutline}></IonIcon>
+            </Button>
           </form>
         </div>
       </IonContent>

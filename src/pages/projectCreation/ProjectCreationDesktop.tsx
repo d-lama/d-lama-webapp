@@ -155,7 +155,7 @@ export default function ProjectCreationDesktop() {
                 data-testid="create-button"
                 buttonText={"Continue with file upload"}
                 buttonType={ButtonType.submit}
-                color={"secondary"}
+                color={"primary"}
               />
             </form>
           </div>

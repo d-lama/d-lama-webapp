@@ -1,36 +1,60 @@
 .projectBtn-btn {
-    position: relative;
-    padding-right: 0;
-    border-radius: 25px;
-    width: 100%;
-    height: 4rem;
-    --border-color: var(--ion-color-light);
-    --background-hover: none;
-    --background-activated: var(--ion-color-light);
+  position: relative;
+  padding-right: 0;
+  border-radius: 25px;
+  width: 100%;
+  height: 4rem;
+  --border-color: var(--ion-color-light);
+  --background-hover: none;
+  --background-activated: var(--ion-color-light);
 }
 
 .projectBtn-title {
-    color: var(--ion-color-primary-contrast);
-    font-weight: bold;
-    font-size: 1.5rem;
-    z-index: 1;
-}
-
-.projectBtn-progressBar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: #48EB08CC;
-    z-index: 1;
+  color: #000;
+  font-weight: bold;
+  font-size: 1.5rem;
+  z-index: 1;
 }
 
 .projectBtn-icon {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    font-size: 2.5rem;
-    z-index: 1;
-    color: var(--ion-color-primary-contrast);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  z-index: 1;
+  color: #000;
+}
+
+.projectBtn-progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1;
+  /* background-color: var(--ion-color-primary); */
+  background: linear-gradient(
+    to right,
+    var(--ion-color-primary),
+    var(--ion-color-secondary)
+  );
+  background-size: 200% 100%;
+  animation: wave 10s linear infinite;
+}
+
+body.dark .projectBtn-title,
+body.dark .projectBtn-icon {
+  color: #fff;
+}
+
+@keyframes wave {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }

@@ -5,13 +5,15 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
   IonMenu,
   IonMenuToggle,
   IonRow,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { closeOutline } from "ionicons/icons";
+import { addOutline, closeOutline } from "ionicons/icons";
 import { useUserStore } from "../../store/userStore";
 import { DarkModeToggle } from "../header/DarkModeToggle";
 import { LogOut } from "../header/LogOut";
@@ -26,9 +28,17 @@ export const MenuDesktop: React.FC = () => {
           <IonHeader>
             <IonToolbar>
               <IonTitle>Menu</IonTitle>
-              <IonMenuToggle slot="primary">
+              <IonMenuToggle
+                slot="primary"
+                className="ion-activatable ion-focusable"
+                style={{ cursor: "pointer" }}
+              >
                 <IonButtons>
-                  <IonIcon icon={closeOutline} style={{ fontSize: "2rem" }} />
+                  <IonIcon
+                    icon={closeOutline}
+                    style={{ fontSize: "2rem" }}
+                    color="secondary"
+                  />
                 </IonButtons>
               </IonMenuToggle>
             </IonToolbar>
@@ -36,15 +46,31 @@ export const MenuDesktop: React.FC = () => {
           <IonContent className="ion-padding">
             <IonGrid>
               <IonRow>
-                <IonCol>Dark/Light Mode</IonCol>
-                <IonCol size="auto">
-                  <DarkModeToggle />
+                <IonCol>
+                  <IonItem href="/home" detail={true}>
+                    <IonLabel>Home</IonLabel>
+                  </IonItem>
                 </IonCol>
               </IonRow>
               <IonRow>
-                <IonCol>Log Out</IonCol>
-                <IonCol size="auto">
-                  <LogOut />
+                <IonCol>
+                  <IonItem
+                    href="/project-create"
+                    detail={true}
+                    detailIcon={addOutline}
+                  >
+                    <IonLabel>Create New Project</IonLabel>
+                  </IonItem>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <DarkModeToggle isMenu={true} />
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <LogOut isMenu={true} />
                 </IonCol>
               </IonRow>
             </IonGrid>

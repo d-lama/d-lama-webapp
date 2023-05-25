@@ -3,7 +3,6 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonCol,
   IonContent,
@@ -38,7 +37,7 @@ export default function ProjectOverviewDesktop() {
   return (
     <>
       <MenuDesktop />
-      <IonPage id="main-content">
+      <IonPage id="main-content" className="projectOverview">
         <HeaderDesktop />
         <IonContent>
           <IonGrid>
@@ -80,7 +79,6 @@ export default function ProjectOverviewDesktop() {
                       shape="round"
                       color="primary"
                       onClick={handleOverview}
-                      style={{ marginTop: "2rem" }}
                     >
                       Back to the overview
                     </IonButton>
@@ -89,7 +87,7 @@ export default function ProjectOverviewDesktop() {
               </IonCol>
               <IonCol size="6">
                 <IonCard>
-                  <IonCardHeader color={"warning"}>
+                  <IonCardHeader color={"secondary"}>
                     <IonCardTitle>Labelers</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>

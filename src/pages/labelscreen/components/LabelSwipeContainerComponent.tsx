@@ -264,16 +264,16 @@ export function getFixedColors(index: number): string {
 
   switch (index) {
     case 0:
-      color = "ECD407";
+      color = "820cc2";
       break;
     case 1:
-      color = "0956BF";
+      color = "02c9ac";
       break;
     case 2:
-      color = "379711";
+      color = "f93cfa";
       break;
     case 3:
-      color = "D72600";
+      color = "028999";
       break;
   }
 

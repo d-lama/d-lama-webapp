@@ -23,7 +23,7 @@ export function DynamicField(props: DynamicFieldProps) {
           />
           <IonButton
             className={"delete-button"}
-            color={"warning"}
+            color={"danger"}
             onClick={() => props.removeElement(index)}
           >
             Delete

@@ -1,8 +1,17 @@
-import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/react";
+import {
+  IonAvatar,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonPage,
+} from "@ionic/react";
+import { logInOutline, personAddOutline } from "ionicons/icons";
 import { Button, ButtonType } from "../../components/forms/Button";
 import { Input, InputType } from "../../components/forms/Input";
 import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import "./LoginDesktop.css";
+import lama5 from "./lama5.jpg";
 
 export default function LoginDesktop(props: any) {
   return (
@@ -17,9 +26,13 @@ export default function LoginDesktop(props: any) {
             justifyContent: "center",
             height: "80vh",
           }}
+          className="login"
         >
+          <IonAvatar className="item-avatar-login">
+            <img src={lama5} alt="Lama" />
+          </IonAvatar>
           <form
-            className={"custom-border"}
+            className={""}
             style={{ width: "80%", maxWidth: "600px" }}
             onSubmit={props.handleLogin}
           >
@@ -28,7 +41,6 @@ export default function LoginDesktop(props: any) {
               inputName={"Email"}
               change={props.handleChange}
               placeholder={"max.muster@gmail.com"}
-              helperText={"Enter a valid email"}
               errorText={"Invalid email"}
               inputType={InputType.email}
             />
@@ -37,7 +49,6 @@ export default function LoginDesktop(props: any) {
               inputName={"Password"}
               change={props.handleChange}
               placeholder={"**************"}
-              helperText={"Enter a valid password"}
               errorText={"error"}
               inputType={InputType.password}
             />
@@ -67,14 +78,18 @@ export default function LoginDesktop(props: any) {
               <Button
                 buttonType={ButtonType.submit}
                 buttonText={"Login"}
-                color={"success"}
-              ></Button>
+                color={"primary"}
+              >
+                <IonIcon slot="end" icon={logInOutline}></IonIcon>
+              </Button>
               <Button
                 link={"/registration"}
                 buttonText={"Sign Up"}
                 buttonType={ButtonType.button}
-                color={"success"}
-              ></Button>
+                color={"primary"}
+              >
+                <IonIcon slot="end" icon={personAddOutline}></IonIcon>
+              </Button>
             </div>
           </form>
         </div>

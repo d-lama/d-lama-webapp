@@ -35,3 +35,7 @@ ion-card-subtitle {
 .card-margin-top {
   margin-top: 2rem;
 }
+
+.projectOverview ion-button {
+  margin: 1.5rem 0;
+}
