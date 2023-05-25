@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Home from "./pages/home";
+import Settings from "./pages/settings/Settings";
 import LabelScreen from "./pages/labelscreen/LabelScreen";
 import Login from "./pages/login";
 import FileUploadDesktop from "./pages/projectCreation/FileUploadDesktop";
@@ -82,6 +83,13 @@ const App: React.FC = () => {
             exact
             path="/ranking"
             component={RankingPageMobile}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
+          <ProtectedRoute
+            exact
+            path="/settings"
+            component={Settings}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
