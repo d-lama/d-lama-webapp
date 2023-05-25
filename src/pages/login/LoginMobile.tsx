@@ -3,6 +3,7 @@ import { Button, ButtonType } from "../../components/forms/Button";
 import { Input, InputType } from "../../components/forms/Input";
 import { HeaderMobile } from "../../components/header/HeaderMobile";
 import "./Login.css";
+import lama5 from "./lama5.jpg";
 
 export default function LoginMobile(props: any) {
   return (
@@ -18,6 +19,7 @@ export default function LoginMobile(props: any) {
             height: "80vh",
           }}
         >
+          <img src={lama5} />
           <form
             style={{ width: "80%", maxWidth: "400px" }}
             onSubmit={props.handleLogin}

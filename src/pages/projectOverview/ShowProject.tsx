@@ -22,7 +22,7 @@ export const ShowProject: React.FC<IShowProjectProps> = ({ project }) => {
   return (
     <>
       <IonCard>
-        <IonCardHeader color={"tertiary"}>
+        <IonCardHeader color={"secondary"}>
           <IonCardTitle>Details</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
@@ -58,7 +58,7 @@ export const ShowProject: React.FC<IShowProjectProps> = ({ project }) => {
       </IonCard>
 
       <IonCard className="card-margin-top">
-        <IonCardHeader color={"tertiary"}>
+        <IonCardHeader color={"secondary"}>
           <IonCardTitle>Labels</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>

@@ -89,7 +89,7 @@ export default function ProjectOverviewDesktop() {
               </IonCol>
               <IonCol size="6">
                 <IonCard>
-                  <IonCardHeader color={"warning"}>
+                  <IonCardHeader color={"secondary"}>
                     <IonCardTitle>Labelers</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>

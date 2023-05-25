@@ -1,8 +1,17 @@
 .centered {
-    position: absolute;
-    left: 35%;
+  position: absolute;
+  left: 35%;
 }
 
 .custom-input {
-    border-radius: 20px;
+  border-radius: 20px;
+}
+
+.item-avatar-login {
+  width: 50%;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  display: table-cell;
+  margin-bottom: 1rem;
 }

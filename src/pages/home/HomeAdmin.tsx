@@ -34,7 +34,7 @@ export const HomeAdmin: React.FC = () => {
             <IonRow>
               <IonCol size="6">
                 <IonCard>
-                  <IonCardHeader color={"tertiary"}>
+                  <IonCardHeader color={"secondary"}>
                     <IonCardTitle>My Projects</IonCardTitle>
                     <IonCardSubtitle>
                       In this section you can see an overview of your current
@@ -61,7 +61,7 @@ export const HomeAdmin: React.FC = () => {
               </IonCol>
               <IonCol size="6">
                 <IonCard>
-                  <IonCardHeader color={"tertiary"}>
+                  <IonCardHeader color={"secondary"}>
                     <IonCardTitle>Statistics</IonCardTitle>
                     <IonCardSubtitle>
                       In this section you can see an overview of the current
