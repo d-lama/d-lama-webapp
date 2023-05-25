@@ -1,7 +1,7 @@
-import {IonCol, IonContent, IonGrid, IonIcon, IonPage, IonRow} from "@ionic/react";
+import {IonCol, IonContent, IonGrid, IonIcon, IonPage, IonRow, useIonToast} from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import {HeaderMobile} from "../../components/header/HeaderMobile";
-import {add} from "ionicons/icons";
+import {add, checkmarkOutline} from "ionicons/icons";
 import axios from "axios";
 import {API_URL} from "../../App";
 import {useAuthStore} from "../../store/authStore";
@@ -30,6 +30,8 @@ const Settings: React.FC = () => {
     });
     const [labelText, setLabelText] = useState("");
 
+    const [present] = useIonToast();
+
     const { token } = useAuthStore();
     const history = useHistory();
     const isSettings = true;
@@ -57,8 +59,17 @@ const Settings: React.FC = () => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            })
+            }).then(() => {
+                getMyUserInfo();
 
+                present({
+                    message: "Success updating Profile.",
+                    duration: 3000,
+                    position: "top",
+                    icon: checkmarkOutline,
+                    color: "success",
+                });
+            })
             .catch((error) => {
                 if (axios.isAxiosError(error)) {
                     setLabelText(error.message);
@@ -71,7 +82,7 @@ const Settings: React.FC = () => {
             });
     };
 
-    useEffect(() => {
+    const getMyUserInfo = () => {
         async function getUserInfo() {
             try {
                 const response = await axios.get(`${API_URL}/User/Me`, {
@@ -89,7 +100,9 @@ const Settings: React.FC = () => {
         }
 
         getUserInfo();
-    }, []);
+    }
+
+    useEffect(getMyUserInfo, []);
 
     useEffect(() => {
         const lastNameElement = document.querySelector('input[name="lastName"]');
@@ -104,11 +117,30 @@ const Settings: React.FC = () => {
 
         const birthDateElement = document.querySelector('input[name="birthDate"]');
         if (birthDateElement instanceof HTMLInputElement) {
-            console.log( userInfo.birthDate)
-            const dateParts = userInfo.birthDate?.split('-');
-            const formattedDate = dateParts ? `${dateParts[2].split('T')[0]}.${dateParts[1]}.${dateParts[0]}` : '';
-            console.log(formattedDate);
-            birthDateElement.value = formattedDate;
+            const dateParts = userInfo.birthDate?.split('T');
+            birthDateElement.value = dateParts[0];
+        }
+
+        const emailElement = document.querySelector('input[name="email"]');
+        if (emailElement instanceof HTMLInputElement) {
+            emailElement.value = userInfo.email;
+        }
+
+        const passwordElement = document.querySelector('input[name="password"]');
+        if (passwordElement instanceof HTMLInputElement) {
+            passwordElement.value = userInfo.password;
+        }
+
+        const roleSegment = document.querySelector('ion-segment');
+        if (roleSegment) {
+            const AdminCheck = roleSegment.querySelector('ion-segment-button[value="admin"]')
+            const LabelerCheck = roleSegment.querySelector('ion-segment-button[value="labeler"]')
+
+            if (userInfo.isAdmin && AdminCheck) {
+                AdminCheck.classList.add("segment-button-checked");
+            } else if (!userInfo.isAdmin && LabelerCheck) {
+                LabelerCheck.classList.add("segment-button-checked");
+            }
         }
     }, [userInfo]);
 
