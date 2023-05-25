@@ -1,8 +1,8 @@
-import { IonIcon } from "@ionic/react";
+import { IonIcon, IonItem, IonLabel } from "@ionic/react";
 import { moon, sunny } from "ionicons/icons";
 import { useEffect, useState } from "react";
 
-export const DarkModeToggle: React.FC = () => {
+export const DarkModeToggle = (props: any) => {
   const currState = localStorage.getItem("dark-theme");
   const [darkMode, setDarkMode] = useState(false);
 
@@ -36,11 +36,25 @@ export const DarkModeToggle: React.FC = () => {
   };
 
   return (
-    <IonIcon
-      icon={darkMode ? moon : sunny}
-      onClick={handleToggle}
-      className="header-icon"
-      aria-label="Switch between dark and light mode"
-    />
+    <>
+      {props.isMenu ? (
+        <IonItem
+          onClick={handleToggle}
+          detail={true}
+          detailIcon={darkMode ? sunny : moon}
+          className="ion-activatable ion-focusable"
+          style={{ cursor: "pointer" }}
+        >
+          <IonLabel>{darkMode ? "Light" : "Dark"} Mode</IonLabel>
+        </IonItem>
+      ) : (
+        <IonIcon
+          icon={darkMode ? sunny : moon}
+          onClick={handleToggle}
+          className="header-icon"
+          aria-label="Switch between dark and light mode"
+        />
+      )}
+    </>
   );
 };

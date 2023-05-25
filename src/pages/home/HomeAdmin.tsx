@@ -8,6 +8,8 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonItem,
+  IonLabel,
   IonPage,
   IonRow,
 } from "@ionic/react";
@@ -15,7 +17,7 @@ import { useHistory } from "react-router";
 import { HeaderDesktop } from "../../components/header/HeaderDesktop";
 import { MenuDesktop } from "../../components/menu/MenuDesktop";
 import { ProjectGridAdmin } from "./ProjectGridAdmin";
-import barChart from "./asset/bar-chart-example.png";
+import lama3 from "./asset/lama3.jpg";
 
 export const HomeAdmin: React.FC = () => {
   const history = useHistory();
@@ -69,8 +71,12 @@ export const HomeAdmin: React.FC = () => {
                     </IonCardSubtitle>
                   </IonCardHeader>
                   <IonCardContent>
-                    <h2>Example Data</h2>
-                    <img src={barChart} />
+                    <img src={lama3} style={{ maxWidth: "400px" }} />
+                    <IonItem color={"primary"} className="ion-text-center">
+                      <IonLabel>
+                        <h1>Coming soon</h1>
+                      </IonLabel>
+                    </IonItem>
                   </IonCardContent>
                 </IonCard>
               </IonCol>
