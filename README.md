@@ -36,6 +36,8 @@ npm run dev
 
 ### Branching workflow
 
+Feature branch (feat/...) or fix branch (fix/...) is merged directly into the main branch. This ensures an efficient deployment and allows a fast response to customer / team feedback.
+
 ### Developers
 
 - [Schazad Mohammad](https://github.com/schazadm)
