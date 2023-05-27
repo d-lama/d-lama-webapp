@@ -51,6 +51,7 @@ npm run dev
 
 ### Branching workflow
 
+Generally, every feature branch is based on an issue from the project board and its naming plus issue number in the title `e.g.: feat/17-settings-page-mobile`.
 Feature branch (feat/...) or fix branch (fix/...) is merged directly into the main branch. This ensures an efficient deployment and allows a fast response to customer / team feedback.
 
 ### Developers
