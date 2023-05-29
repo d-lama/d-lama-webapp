@@ -25,7 +25,7 @@ export const ProjectButton: React.FC<IProjectButtonProps> = ({
       className="projectBtn-btn"
       fill="outline"
       onClick={() => {
-        history.push(`/label/${projectId}`);
+        window.location.href = `/label/${projectId}`;
       }}
     >
       <div

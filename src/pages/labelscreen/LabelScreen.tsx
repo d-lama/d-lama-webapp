@@ -130,7 +130,7 @@ const LabelScreen: React.FC = () => {
       {showHelp && (
         <HelpComponent projectInfo={projectInfo} setShowHelp={setShowHelp} />
       )}
-      {showWin && <WinComponent />}
+      {showWin && <WinComponent setShowWin={setShowWin} />}
     </IonPage>
   );
 };

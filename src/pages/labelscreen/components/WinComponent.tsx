@@ -5,12 +5,13 @@ import './HelpComponent.css';
 import {returnDownBackOutline} from "ionicons/icons";
 import {useHistory} from "react-router-dom";
 
-const WinComponent: React.FC = () => {
+const WinComponent: React.FC<{setShowWin: (isShowWin: boolean) => void;}> = ({setShowWin}) => {
 
     const history = useHistory();
 
     const returnActionHandler = function returnActionHandler() {
         history.push('/home');
+        setShowWin(false);
     }
 
     return (

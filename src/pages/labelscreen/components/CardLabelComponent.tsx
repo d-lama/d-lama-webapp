@@ -136,7 +136,7 @@ const CardLabelComponent: React.FC<Props> = ({
         setTimeout(() => {
           style.transform = "none";
           setResetAnimation(false);
-        }, 10);
+        }, 50);
         setResetAnimation(true);
 
         ["up", "down", "left", "right"].forEach((dir) => {
@@ -210,7 +210,7 @@ const CardLabelComponent: React.FC<Props> = ({
         setTimeout(() => {
           style.transform = "none";
           setResetAnimation(false);
-        }, 10);
+        }, 50);
         setResetAnimation(true);
 
         ["up", "down", "left", "right"].forEach((dir) => {
