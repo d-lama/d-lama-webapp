@@ -32,7 +32,7 @@ export const useProjectRanking = (projectId: number) => {
     {
       enabled: true,
       retry: 3,
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
     }
   );
 };
