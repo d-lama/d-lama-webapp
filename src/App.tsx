@@ -4,14 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Home from "./pages/home";
-import Settings from "./pages/settings/Settings";
 import LabelScreen from "./pages/labelscreen/LabelScreen";
 import Login from "./pages/login";
 import FileUploadDesktop from "./pages/projectCreation/FileUploadDesktop";
 import ProjectCreationDesktop from "./pages/projectCreation/ProjectCreationDesktop";
+import ProjectOverviewDesktop from "./pages/projectOverview/ProjectOverviewDesktop";
 import RankingPageMobile from "./pages/ranking/RankingPageMobile";
 import Registration from "./pages/registration/Registration";
 import RegistrationSucceed from "./pages/registration/registrationSucceed/RegistrationSucceed";
+import Settings from "./pages/settings/Settings";
 import { useUserStore } from "./store/userStore";
 
 /* Core CSS required for Ionic components to work properly */
@@ -33,8 +34,6 @@ import "@ionic/react/css/text-transformation.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import ProjectOverviewDesktop from "./pages/projectOverview/ProjectOverviewDesktop";
-
 setupIonicReact();
 
 export const API_URL = "https://backend-dlama-stage.pm4.init-lab.ch/api";
@@ -42,13 +41,13 @@ export const MIN_DESKTOP_WIDTH = 768;
 
 const App: React.FC = () => {
   let isAuthenticated = useUserStore().user?.isAuthenticated || false;
+  let isAdmin = useUserStore().user?.isAdmin || false;
   const [, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
     }
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -71,6 +70,8 @@ const App: React.FC = () => {
             component={ProjectCreationDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
+            isAdmin={isAdmin}
+            nonAdminPath="/home"
           />
           <ProtectedRoute
             exact
@@ -78,6 +79,8 @@ const App: React.FC = () => {
             component={FileUploadDesktop}
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
+            isAdmin={isAdmin}
+            nonAdminPath="/home"
           />
           <ProtectedRoute
             exact
@@ -93,6 +96,22 @@ const App: React.FC = () => {
             isAuthenticated={isAuthenticated}
             authenticationPath="/login"
           />
+          <ProtectedRoute
+            exact
+            path="/label/:id"
+            component={LabelScreen}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+          />
+          <ProtectedRoute
+            exact
+            path="/project/:id"
+            component={ProjectOverviewDesktop}
+            isAuthenticated={isAuthenticated}
+            authenticationPath="/login"
+            isAdmin={isAdmin}
+            nonAdminPath="/home"
+          />
           {/* open routes */}
           <Route exact path="/login">
             {isAuthenticated ? <Redirect to="/home" /> : <Login />}
@@ -106,12 +125,6 @@ const App: React.FC = () => {
             ) : (
               <RegistrationSucceed />
             )}
-          </Route>
-          <Route exact path="/label/:id">
-            {isAuthenticated ? <LabelScreen /> : <Redirect to="/home" />}
-          </Route>
-          <Route exact path="/project/:id">
-            <ProjectOverviewDesktop />
           </Route>
           {/* redirect routes */}
           <Route exact path="/">
