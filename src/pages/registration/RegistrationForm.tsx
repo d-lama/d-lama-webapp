@@ -92,14 +92,14 @@ export default function RegistrationForm(props: any) {
             />
           )}
 
-          <IonSegment onIonChange={props.handleIsAdminChange}>
+          {/* <IonSegment onIonChange={props.handleIsAdminChange}>
             <IonSegmentButton value="labeler">
               <IonLabel>Labeler</IonLabel>
             </IonSegmentButton>
             <IonSegmentButton value="admin">
               <IonLabel>Administrator</IonLabel>
             </IonSegmentButton>
-          </IonSegment>
+          </IonSegment> */}
           {props.labelText && (
             <IonItem id="{{error}}" style={{ marginBottom: "15px" }}>
               <IonLabel className="ion-text-center" color="danger">

@@ -46,6 +46,6 @@ export const useProject = (projectId: number) => {
   return useQuery<IProjectData, Error>("useProject", fetchProject, {
     enabled: true,
     retry: 3,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 };

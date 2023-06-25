@@ -34,6 +34,6 @@ export const useUserRanking = () => {
   return useQuery<IUserRankingData, Error>("useUserRanking", fetchUserRanking, {
     enabled: true,
     retry: 3,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 };
